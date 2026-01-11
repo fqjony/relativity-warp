@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relativity Warp - Control Plane</title>
+    <meta name="description" content="Automation isn't about moving objects; it's about warping the environment until the result is a constant.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent: #6b9eff;
+            --border: #27272a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            padding: 1.5rem 0 0.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .motto {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.375rem 0.875rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0 0.25rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+        }
+
+        .about {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .section h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .section p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .list-item {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            padding-left: 1rem;
+            line-height: 1.5;
+        }
+
+        .list-item a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .list-item a:hover {
+            text-decoration: underline;
+        }
+
+        .list-label {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .collapsible {
+            background: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            text-align: left;
+            font-size: 0.8125rem;
+            margin-right: 0.5rem;
+            font-family: inherit;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .collapsible:hover {
+            color: var(--accent);
+            border-color: var(--text-muted);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .collapsible-content.active {
+            max-height: 500px;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .prompt-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .code-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .about p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: all 0.2s;
+        }
+
+        .social-link:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            .motto {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dmytro Smirnov 🇺🇦</h1>
+            <p class="motto">"Automation isn't about moving objects; it's about warping the environment until the result is a constant."</p>
+        </header>
+
+        <main>
+            <section class="about">
+                <p>Software Engineer and Head of DevSecOps at <a href="https://udx.io" target="_blank">UDX</a> is here.</p>
+                <p>Github Account: <a href="https://github.com/fqjony" target="_blank">fqjony</a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/fqjony" target="_blank">linkedin.com/in/fqjony</a></p>
+                <p class="list-label">Email:</p>
+                <p class="list-item">• <a href="mailto:fq.jony@gmail.com">fq.jony@gmail.com</a> <span style="color: var(--text-muted);">(personal)</span></p>
+                <p class="list-item">• <a href="mailto:dmitry.smirnov@usabilitydynamics.com">dmitry.smirnov@usabilitydynamics.com</a> <span style="color: var(--text-muted);">(work)</span></p>
+                
+                <p style="margin-top: 0.75rem;">
+                    <span style="margin-right: 1rem;">Ask AI:</span>
+                    <button class="collapsible" onclick="toggleCollapse('ai-prompt-me')">About me</button>
+                    <button class="collapsible" onclick="toggleCollapse('ai-prompt-udx')">About UDX</button>
+                    <button class="collapsible" onclick="toggleCollapse('ai-prompt-tenets')">About UDX software engineering tenets</button>
+                </p>
+
+                <div id="ai-prompt-me" class="collapsible-content">
+                    <div class="prompt-box">
+                        Tell me about Dmytro Smirnov, his expertise in DevSecOps, public resources, and worker deployment methodologies.
+                    </div>
+                </div>
+                
+                <div id="ai-prompt-udx" class="collapsible-content">
+                    <div class="prompt-box">
+                        Tell me about UDX, their approach to DevSecOps, cloud automation, and the worker deployment platform.
+                    </div>
+                </div>
+                
+                <div id="ai-prompt-tenets" class="collapsible-content">
+                    <div class="prompt-box">
+                        Tell me about UDX software engineering tenets, their operational principles, and the philosophy behind repo-centric orchestration and fail-safe integrity.
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Worker Deployment</h2>
+                <p>Deploy any software with worker containers using worker CLI.</p>
+                <div id="worker-code">
+                    <div class="code-block">npm install -g @udx/worker-deployment
+worker-config
+worker-run</div>
+                    <p style="margin-top: 0.75rem; font-size: 0.8125rem; color: var(--text-muted);">
+                        <a href="https://npmjs.com/package/@udx/worker-deployment" target="_blank" style="color: var(--accent); text-decoration: none; margin-right: 1rem;">Worker CLI</a>
+                        <a href="https://github.com/udx/worker" target="_blank" style="color: var(--accent); text-decoration: none; margin-right: 1rem;">Github Source</a>
+                        <a href="https://hub.docker.com/r/usabilitydynamics/udx-worker" target="_blank" style="color: var(--accent); text-decoration: none;">Docker Hub Build</a>
+                    </p>
+                </div>
+                <p style="margin-top: 0.75rem;">
+                    <span style="margin-right: 1rem;">Ask AI:</span>
+                    <button class="collapsible" onclick="toggleCollapse('worker-code')">How to deploy?</button>
+                    <button class="collapsible" onclick="toggleCollapse('worker-code')">How to make own worker?</button>
+                    <button class="collapsible" onclick="toggleCollapse('worker-code')">Why I need to use worker?</button>
+                </p>
+            </section>
+            
+            <section class="section">
+                <h2>References</h2>
+                <div id="refs-list">
+                    <p class="list-item">• <a href="https://udx.io/devops-manual/12-factor-environment-automation" target="_blank">12-Factor Environment Automation</a></p>
+                    <p class="list-item">• <a href="https://udx.io/cloud-automation-book/foreword" target="_blank">Cloud Automation Book</a></p>
+                    <p class="list-item">• <a href="https://udx.io/devops-manual" target="_blank">DevOps Manual</a></p>
+                </div>
+                <p style="margin-top: 0.75rem;">
+                    <span style="margin-right: 1rem;">Ask AI:</span>
+                    <button class="collapsible" onclick="toggleCollapse('refs-list')">Show all UDX public resources on software engineering</button>
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        function toggleCollapse(id) {
+            var content = document.getElementById(id);
+            var isActive = content.classList.contains('active');
+            
+            // Close all other collapsibles
+            var allCollapsibles = document.querySelectorAll('.collapsible-content');
+            allCollapsibles.forEach(function(item) {
+                item.classList.remove('active');
+            });
+            
+            // If the clicked one wasn't active, open it
+            if (!isActive) {
+                content.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
