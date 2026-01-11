@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "version": "1.1.0",
+    "owner": "Dmytro (fqjony)",
+    "role": ["Discoverer", "Engineer", "Scientist"],
+    "motto": "Unit Ready. My space. My frequency. Orbit Achieved."
+  },
+  "core_mission": {
+    "statement": "Mastering complexity with calm strategy; making the hard stuff easy.",
+    "philosophy": "Automation isn't about moving objects; it's about warping the environment until the result is a constant."
+  },
+  "operational_architecture": {
+    "control_plane": "fqjony/relativity-warp",
+    "paradigm": "Repo-Centric Orchestration",
+    "delivery_model": "Software Logistics & High-Security Supply Chain",
+    "factory_components": {
+      "the_standard": {
+        "ref": "udx/worker",
+        "desc": "Universal, secure, stateless deployment environment; multi-cloud auth (GCP, AWS, Azure, Bitwarden)."
+      },
+      "the_blueprint": {
+        "ref": "udx/reusable-workflows",
+        "desc": "Delivery engine automating versioning and multi-registry publishing."
+      },
+      "the_catalyst": {
+        "ref": "@udx/worker-deployment",
+        "desc": "Interface for instant Ignition; collapsing deployment complexity."
+      }
+    }
+  },
+  "strategic_logic": {
+    "software_logistics": {
+      "focus": "Integrity & Supply Chain Security",
+      "why": "Eliminate 'dark matter' (vulnerabilities, non-compliance, configuration drift).",
+      "how": "Rigorous Spectral Analysis before any unit enters orbit; payload verification."
+    },
+    "performance_flow": {
+      "geodesic_path": "Shortest possible route from first line of code to production-ready state.",
+      "full_throttle": "Instantaneous execution; immutable state once coordinates are set."
+    }
+  },
+  "engineering_physics": {
+    "tenets": [
+      {
+        "principle": "Fail-Safe Integrity",
+        "logic": "Deployment never occurs if it risks breaking previous executions or active services."
+      },
+      {
+        "principle": "Impunity in Flow",
+        "logic": "Continuous deployment with total confidence via standardized worker units."
+      },
+      {
+        "principle": "Modularization & Controllers",
+        "logic": "Decoupled logic for granular management of complex automation."
+      },
+      {
+        "principle": "12-Factor Environment Automation",
+        "logic": "Declarative formats to minimize divergence between environments."
+      }
+    ]
+  },
+  "knowledge_base": {
+    "core_publications": [
+      {
+        "title": "Cloud Automation Book",
+        "co_author": "Andy Potanin",
+        "focus": "Principles of modern environment automation."
+      }
+    ],
+    "theoretical_references": [
+      {
+        "label": "12-Factor Environment Automation",
+        "url": "https://udx.io/devops-manual/12-factor-environment-automation"
+      },
+      {
+        "label": "Why Software Logistics Matter",
+        "url": "https://udx.io/guidance/why-software-logistics-matter"
+      },
+      {
+        "label": "Embracing Digital Transformation",
+        "url": "https://udx.io/guidance/embracing-digital-transformation"
+      },
+      {
+        "label": "Delivery Platform Strategy",
+        "url": "https://udx.dev/delivery-platform/"
+      }
+    ]
+  },
+  "hud_mapping": {
+    "ignition": "Full Throttle",
+    "success": "Orbit Achieved / Match Point",
+    "failure": "Mechanical Failure / Gravity Well",
+    "analysis": "Frequency Check"
+  }
+}
