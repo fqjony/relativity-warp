@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Generated documentation">
+  <meta name="author" content="UDX">
+  <meta name="version" content="v8">
+  <meta name="date" content="January 12, 2026">
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="UDX: Portable DevSecOps Framework">
+  <meta property="og:description" content="Generated documentation">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://udx.dev/docs/architecture/deploying-with-impunity/">
+  <meta property="og:site_name" content="UDX.dev">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "UDX: Portable DevSecOps Framework",
+    "description": "Generated documentation",
+    "author": {
+      "@type": "Organization",
+      "name": "UDX"
+    },
+    "datePublished": "January 12, 2026",
+    "dateModified": "January 12, 2026",
+    "publisher": {
+      "@type": "Organization",
+      "name": "UDX.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://udx.dev/static/images/logo.png"
+      }
+    }
+  }
+  </script>
+  
+  <title>UDX: Portable DevSecOps Framework</title>
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TNKNKJN2');</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          typography: {
+            DEFAULT: {
+              css: {
+                maxWidth: '65ch',
+                /* Optimized for reading */
+                color: '#333',
+                fontSize: '18px',
+                lineHeight: '1.6',
+                p: {
+                  marginTop: '0',
+                  marginBottom: '0',
+                  fontSize: '18px',
+                  lineHeight: '1.6',
+                },
+                /* Removed problematic adjacent selector rule */
+                h1: {
+                  fontSize: '64px',
+                  marginTop: '3rem',
+                  marginBottom: '2rem',
+                  fontWeight: '700',
+                  lineHeight: '1.2',
+                },
+                h2: {
+                  fontSize: '48px',
+                  marginTop: '2.5rem',
+                  marginBottom: '1.5rem',
+                  fontWeight: '600',
+                  lineHeight: '1.3',
+                },
+                h3: {
+                  fontSize: '36px',
+                  marginTop: '2.2rem',
+                  marginBottom: '1.2rem',
+                  fontWeight: '600',
+                  lineHeight: '1.4',
+                },
+                h4: {
+                  fontSize: '28px',
+                  marginTop: '2rem',
+                  marginBottom: '1rem',
+                  fontWeight: '600',
+                  lineHeight: '1.4',
+                },
+                h5: {
+                  fontSize: '22px',
+                  marginTop: '2rem',
+                  marginBottom: '1rem',
+                  fontWeight: '600',
+                  lineHeight: '1.4',
+                },
+                'h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p': {
+                  marginTop: '1em',
+                },
+                ul: {
+                  marginTop: '1.2em',
+                  marginBottom: '2.2em',
+                  paddingLeft: '2rem',
+                },
+                'ul > li': {
+                  marginBottom: '0.5em',
+                  position: 'relative',
+                  paddingLeft: '0.25em',
+                },
+                ol: {
+                  marginTop: '1.2em',
+                  marginBottom: '2.2em',
+                  paddingLeft: '2rem',
+                },
+                'ol > li': {
+                  marginBottom: '0.5em',
+                  paddingLeft: '0.25em',
+                },
+                'ul ul, ol ol, ul ol, ol ul': {
+                  marginTop: '0.2em',
+                  marginBottom: '0.2em',
+                },
+                'ol > li > ul, ol > li > ol': {
+                  marginTop: '0.2em',
+                  marginBottom: '0.5em',
+                },
+                'ul + p, ol + p, ul + pre, ol + pre': {
+                  marginTop: '2em',
+                },
+                img: {
+                  marginTop: '2em',
+                  marginBottom: '0.5em',
+                  borderRadius: '0.25em',
+                },
+                figure: {
+                  marginTop: '2em',
+                  marginBottom: '2em',
+                },
+                table: {
+                  width: '100%',
+                  tableLayout: 'fixed',
+                  marginTop: '2em',
+                  marginBottom: '2em',
+                },
+                'thead th': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                  fontWeight: '600',
+                  padding: '0.75em 1em',
+                },
+                'tbody td': {
+                  padding: '0.75em 1em',
+                  verticalAlign: 'top',
+                  borderColor: 'rgba(0, 0, 0, 0.1)',
+                },
+                pre: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  color: '#f8f8f2',
+                  marginTop: '2em',
+                  marginBottom: '2em',
+                  padding: '1.5em',
+                  borderRadius: '0.5em',
+                  overflow: 'auto',
+                },
+                code: {
+                  fontFamily: 'Monaco, Consolas, "Courier New", monospace',
+                  fontSize: '16px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                  padding: '0.2em 0.4em',
+                  borderRadius: '0.25em',
+                  color: '#333',
+                  fontWeight: '500',
+                },
+                'pre code': {
+                  backgroundColor: 'transparent',
+                  color: '#f8f8f2',
+                  padding: '0',
+                  fontSize: '16px',
+                },
+                a: {
+                  color: '#2563eb',
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                },
+                strong: {
+                  fontWeight: '600',
+                  color: '#111',
+                },
+                blockquote: {
+                  fontStyle: 'italic',
+                  borderLeftWidth: '0.25rem',
+                  borderLeftColor: '#e5e7eb',
+                  paddingLeft: '1rem',
+                  color: '#4b5563',
+                },
+                hr: {
+                  marginTop: '3em',
+                  marginBottom: '3em',
+                },
+              }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+  <!-- External dependencies are commented out to reduce load time and avoid unnecessary dependencies -->
+  <!-- <link rel="stylesheet" href="https://udx.dev/site/static/shared/css/science.usability.v1.css"> -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+  <!-- <script src="https://udx.dev/site/static/shared/js/science.usability.v1.js"></script> -->
+  
+  <style>
+    @media print {
+  pre, pre code {
+    white-space: pre-wrap !important;
+    overflow-x: hidden !important;
+    page-break-inside: avoid;
+  }
+  
+  body {
+    font-size: 18px !important;
+  }
+  
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  .content-container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  article {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Base document styles */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.content-container {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-size: 18px !important;
+  /* Magazine-style container */
+}
+
+/* Fix for Safari which doesn't support :has */
+html:not(:has(details[open])) {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Core typography fixes that tailwind sometimes doesn't handle well */
+.prose p {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
+
+.prose p + p {
+  margin-top: 1.2em !important;
+}
+
+.prose h1 + p, .prose h2 + p, .prose h3 + p, .prose h4 + p, .prose h5 + p, .prose h6 + p {
+  margin-top: 1em !important;
+}
+
+/* List styling */
+.prose ul, .prose ol {
+  padding-left: 2rem !important;
+  margin-top: 1.2em !important;
+  margin-bottom: 2.2em !important;
+}
+
+.prose ul ul, .prose ol ol, .prose ul ol, .prose ol ul {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+.prose li {
+  font-size: 18px !important;
+  margin-bottom: 0.5em !important;
+  line-height: 1.6 !important;
+  position: relative !important;
+}
+
+.prose li::marker {
+  color: #666 !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure nested lists under a numbered list have proper spacing */
+.prose ol > li > ul, .prose ol > li > ol {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Give some extra padding after a list */
+.prose ul + p, .prose ol + p, .prose ul + pre, .prose ol + pre {
+  margin-top: 2em !important;
+}
+
+/* Heading sizes with strong important overrides */
+.prose h1 {
+  font-size: 64px !important;
+  margin-top: 3rem !important;
+  margin-bottom: 2rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+}
+
+.prose h2 {
+  font-size: 48px !important;
+  margin-top: 2.5rem !important;
+  margin-bottom: 1.5rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+
+.prose h3 {
+  font-size: 36px !important;
+  margin-top: 2.2rem !important;
+  margin-bottom: 1.2rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+.prose h4 {
+  font-size: 28px !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+.prose h5 {
+  font-size: 22px !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+.prose h6 {
+  font-size: 18px !important;
+  margin-top: 1.8rem !important;
+  margin-bottom: 0.8rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+
+/* Code elements get 16px */
+code[style*="font-size"], pre[style*="font-size"], .language-bash[style*="font-size"] {
+  font-size: 16px !important;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 2em 0;
+  padding: 1em 1.5em;
+  border-left: 4px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-style: italic;
+}
+
+blockquote p {
+  margin: 0.5em 0;
+}
+
+blockquote + p {
+  margin-top: 2em;
+}
+
+/* Enhanced table styling with true full width enforcement */
+.prose table,
+table.w-full,
+article table,
+div table,
+.table-responsive table {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  margin: 2em 0 !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+  display: table !important;
+}
+
+/* Table wrapper to handle overflow properly */
+.table-responsive,
+div.overflow-x-auto {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  margin: 2em 0 !important;
+  display: block !important;
+}
+
+.prose table th, .prose table td {
+  padding: 0.75em 1em !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  text-align: left !important;
+  vertical-align: top !important;
+}
+
+.prose table th {
+  font-weight: 600 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Grid-based tables for special formatting needs */
+.grid-table {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  gap: 0.5em 1em;
+  width: 100%;
+  margin: 2em 0;
+}
+
+.grid-table-cell {
+  padding: 0.5em;
+  align-self: start;
+}
+
+.grid-table-header {
+  font-weight: 600;
+}
+
+/* Specific formatting for scaling operations tables */
+.scaling-table {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  width: 100%;
+  margin: 2em 0;
+  gap: 0.75em;
+}
+
+.scaling-table > div {
+  padding: 0.5em;
+}
+
+.scaling-item {
+  font-weight: 600;
+}
+
+.scaling-compare {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Code blocks with proper contrast */
+.prose pre {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  margin: 2em 0 !important;
+  padding: 1.5em !important;
+  border-radius: 0.5em !important;
+  overflow-x: auto !important;
+  position: relative !important;
+}
+
+/* Fix for inline code blocks to ensure visibility with proper contrast */
+.prose :not(pre) > code {
+  font-family: Monaco, Consolas, "Courier New", monospace !important;
+  font-size: 16px !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #333 !important;
+  padding: 0.2em 0.4em !important;
+  border-radius: 0.25em !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+/* Code within pre blocks should have proper contrast */
+.prose pre code {
+  font-family: Monaco, Consolas, "Courier New", monospace !important;
+  font-size: 16px !important;
+  color: #f8f8f2 !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  white-space: pre !important;
+}
+
+/* Code block copy button */
+.copy-button {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.25em 0.5em;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: background-color 0.2s;
+  opacity: 0;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+pre:hover .copy-button {
+  opacity: 1;
+}
+
+/* File type badge */
+.file-type-badge {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.25em 0.5em;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 0.25em;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+pre:has(.file-type-badge) .copy-button {
+  top: 2.5em;
+}
+
+/* Hide "code" label when no specific language is set */
+.file-type-badge.code {
+  display: none;
+}
+
+/* Image handling */
+figure {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.25em;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+figcaption {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Alt text is visually hidden but accessible for screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Imgix handling */
+img[src*="imgix.net"] {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Links */
+a {
+  color: #3182ce;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Footer style */
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
+}
+
+/* Ultra-specific heading overrides that will take precedence over any inheritance */
+.prose h1, h1, article h1, body h1, div h1, *:not(.not-prose) h1, * h1 {
+  font-size: 56px !important;
+  margin-top: 3rem !important;
+  margin-bottom: 2rem !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  color: #000 !important;
+}
+
+.prose h2, h2, article h2, body h2, div h2 {
+  font-size: 36px !important;
+  margin-top: 2.5rem !important;
+  margin-bottom: 1.5rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+
+.prose h3, h3, article h3, body h3, div h3 {
+  font-size: 32px !important;
+  margin-top: 2.2rem !important;
+  margin-bottom: 1.2rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+.prose h4, h4, article h4, body h4, div h4, *:not(.not-prose) h4, * h4 {
+  font-size: 24px !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  color: #333 !important;
+}
+
+.prose h5, h5, article h5, body h5, div h5 {
+  font-size: 22px !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+.prose h6, h6, article h6, body h6, div h6 {
+  font-size: 18px !important;
+  margin-top: 1.8rem !important;
+  margin-bottom: 0.8rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+.border-t {
+  border-top: 1px solid #E2E8F0;
+}
+
+.border-gray-200 {
+  border-color: #E2E8F0;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-gray-500 {
+  color: #718096;
+}
+
+/* Math styles */
+.math-block {
+  margin: 2em 0;
+  overflow-x: auto;
+  padding: 1em;
+  background-color: rgba(247, 250, 252, 0.8);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.math-inline {
+  padding: 0 0.2em;
+}
+
+/* Increase specificity for MathJax elements */
+.MathJax {
+  font-size: 1.1em !important;
+}
+
+/* Chapter Navigation Styles */
+:root {
+  --chapter-nav-width: 180px;
+  --chapter-nav-text-color: #333;
+  --chapter-nav-text-faded: rgba(51, 51, 51, 0.4);
+  --chapter-text-normal-size: 0.9rem;
+  --chapter-text-active-size: calc(var(--chapter-text-normal-size) * 1.5);
+  --chapter-text-inactive-size: calc(var(--chapter-text-normal-size) * 0.8);
+}
+
+/* Container for the floating navigation */
+.chapter-nav-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Floating navigation styles - clean and minimal */
+.chapter-navigation {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  width: var(--chapter-nav-width);
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: transparent;
+  padding: 10px 0;
+  z-index: 100;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  transition: transform 0.3s ease;
+  border: 0 none transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chapter-navigation::-webkit-scrollbar {
+  display: none;
+}
+
+.chapter-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chapter-nav-item {
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.chapter-nav-link {
+  display: block;
+  padding: 4px 0;
+  font-size: var(--chapter-text-inactive-size);
+  color: var(--chapter-nav-text-faded);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border-radius: 0;
+  line-height: 1.3;
+}
+
+.chapter-nav-link:hover {
+  color: var(--chapter-nav-text-color);
+}
+
+.chapter-nav-item.active .chapter-nav-link {
+  font-size: var(--chapter-text-active-size);
+  color: var(--chapter-nav-text-color);
+  font-weight: 500;
+}
+
+/* Mobile dropdown styles - native-looking and minimal */
+.mobile-chapter-nav {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  padding: 8px 12px;
+}
+
+.mobile-chapter-dropdown {
+  position: relative;
+}
+
+.chapter-dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chapter-dropdown-btn:hover,
+.chapter-dropdown-btn:focus {
+  border-color: rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.current-chapter {
+  font-weight: 500;
+}
+
+.dropdown-icon {
+  transition: transform 0.3s ease;
+  opacity: 0.6;
+}
+
+.chapter-dropdown-btn.active .dropdown-icon {
+  transform: rotate(180deg);
+  opacity: 0.9;
+}
+
+.chapter-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+  z-index: 101;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: none; /* Initially hidden */
+}
+
+.chapter-dropdown-menu ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+
+.chapter-dropdown-menu li {
+  padding: 0;
+}
+
+.chapter-dropdown-menu a {
+  display: block;
+  padding: 10px 12px;
+  color: var(--chapter-nav-text-faded);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chapter-dropdown-menu a:hover,
+.chapter-dropdown-menu a:focus {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--chapter-nav-text-color);
+  outline: none;
+}
+
+.chapter-dropdown-menu li.active a {
+  font-weight: 500;
+  color: var(--chapter-nav-text-color);
+  font-size: calc(0.95rem * 1.2);
+}
+
+/* Add padding to the content to prevent floating nav from overlapping */
+.chapter-content {
+  padding-left: calc(var(--chapter-nav-width) + 40px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .chapter-content {
+    padding-left: calc(var(--chapter-nav-width) + 30px);
+  }
+}
+
+@media (max-width: 768px) {
+  .chapter-navigation {
+    display: none;
+  }
+  
+  .mobile-chapter-nav {
+    display: block;
+  }
+  
+  .chapter-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* Hide nav when printing */
+@media print {
+  .chapter-navigation,
+  .mobile-chapter-nav {
+    display: none;
+  }
+  
+  .chapter-content {
+    padding-left: 0;
+  }
+}
+
+  </style>
+</head>
+<body class="bg-primary-100">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNKNKJN2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <div class="min-h-screen bg-primary-100">
+    <div class="chapter-nav-container">
+      <nav id="chapter-navigation" class="chapter-navigation" aria-label="Chapter navigation">
+        <ul class="chapter-nav-list" role="list">
+              <li class="chapter-nav-item" data-chapter-id="index-overview" role="listitem">
+                <a href="#index-overview" class="chapter-nav-link">🚀 Overview</a>
+              </li>
+              <li class="chapter-nav-item" data-chapter-id="index-system-components" role="listitem">
+                <a href="#index-system-components" class="chapter-nav-link">🏗️ System Components</a>
+              </li>
+              <li class="chapter-nav-item" data-chapter-id="index-key-features" role="listitem">
+                <a href="#index-key-features" class="chapter-nav-link">🌟 Key Features</a>
+              </li>
+              <li class="chapter-nav-item" data-chapter-id="index-monetization" role="listitem">
+                <a href="#index-monetization" class="chapter-nav-link">💰 Monetization</a>
+              </li>
+              <li class="chapter-nav-item" data-chapter-id="index-roadmap-critical-todos" role="listitem">
+                <a href="#index-roadmap-critical-todos" class="chapter-nav-link">🛠️ Roadmap &amp; Critical TODOs</a>
+              </li>
+        </ul>
+      </nav>
+      <!-- Mobile dropdown navigation -->
+      <nav class="mobile-chapter-nav" aria-label="Chapter navigation on mobile">
+        <div class="mobile-chapter-dropdown">
+          <button id="chapter-dropdown-btn" class="chapter-dropdown-btn" aria-expanded="false" aria-controls="chapter-dropdown-menu" aria-haspopup="true">
+            <span class="current-chapter" aria-live="polite">Current Section</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+          </button>
+          <div id="chapter-dropdown-menu" class="chapter-dropdown-menu" role="menu">
+            <ul>
+                  <li data-chapter-id="index-overview" role="menuitem">
+                    <a href="#index-overview">🚀 Overview</a>
+                  </li>
+                  <li data-chapter-id="index-system-components" role="menuitem">
+                    <a href="#index-system-components">🏗️ System Components</a>
+                  </li>
+                  <li data-chapter-id="index-key-features" role="menuitem">
+                    <a href="#index-key-features">🌟 Key Features</a>
+                  </li>
+                  <li data-chapter-id="index-monetization" role="menuitem">
+                    <a href="#index-monetization">💰 Monetization</a>
+                  </li>
+                  <li data-chapter-id="index-roadmap-critical-todos" role="menuitem">
+                    <a href="#index-roadmap-critical-todos">🛠️ Roadmap &amp; Critical TODOs</a>
+                  </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 chapter-content">
+      <article class="prose prose-lg lg:prose-xl mx-auto max-w-4xl" data-document-version="v8" data-document-id="udx-portable-devsecops-framework">
+        <main class="article">
+          <!-- START SECTION: index -->
+<section id="index" class="content-section" data-chapter-id="index" data-file="index">
+
+<h1>UDX: Portable DevSecOps Framework</h1>
+<svg width="800" height="520" xmlns="http://www.w3.org/2000/svg"><style>.box{fill:#fff;stroke:#2c3e50;stroke-width:2}.text{font-family:&quot;Segoe UI&quot;,sans-serif;font-size:13px;fill:#2c3e50;text-anchor:middle}.arrow{stroke:#34495e;stroke-width:1.5;fill:none;marker-end:url(#arrowhead)}.label{font-size:10px;fill:#2980b9;font-weight:600;text-anchor:middle}</style><defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path fill="#34495e" d="m0 0 10 3.5L0 7z"/></marker></defs><rect x="40" y="20" width="180" height="80" rx="8" style="fill:#fff4e6;stroke:#e67e22;stroke-width:2"/><text x="130" y="55" class="text" style="font-weight:700">VSCode Extension</text><text x="130" y="75" class="text" style="font-size:11px">(YAML Config UI)</text><path d="M130 100v180" class="arrow"/><text x="185" y="125" class="label" style="fill:#e67e22">Update config.yml</text><rect x="240" y="120" width="520" height="360" rx="12" stroke-dasharray="10,5" style="fill:#e1f5fe;stroke:#0288d1;stroke-width:2"/><text x="500" y="145" class="text" style="font-weight:700;fill:#0288d1">Docker: udx-mcp-service</text><rect x="270" y="270" width="200" height="100" rx="8" class="box" style="fill:#f8f9fa;stroke:#2980b9;stroke-dasharray:5,5"/><text x="370" y="315" class="text" style="font-weight:700;fill:#2980b9">UDX MCP HOST</text><text x="370" y="335" class="text" style="font-size:11px">(Environment and MCP management)</text><rect x="270" y="170" width="200" height="60" rx="8" class="box"/><text x="370" y="195" class="text" style="font-weight:700">MCP Server</text><text x="370" y="212" class="text" style="font-size:11px">(Context7 / APIs)</text><rect x="580" y="290" width="150" height="60" rx="8" class="box"/><text x="655" y="325" class="text" style="font-weight:700">LLM Engine</text><rect x="40" y="290" width="120" height="60" rx="8" class="box"/><text x="100" y="325" class="text" style="font-weight:700">User Input</text><path d="M160 310h100" class="arrow"/><text x="210" y="300" class="label">Normalize</text><path d="M340 270v-32" class="arrow"/><path d="M400 238v32" class="arrow"/><text x="370" y="255" class="label">Context Enrichment</text><path d="M470 310h100" class="arrow"/><path d="M570 335H470" class="arrow"/><text x="520" y="300" class="label">Prompt</text><text x="520" y="355" class="label">Tool/RPC</text><path d="M270 350H100v8" class="arrow" style="marker-end:none"/><path d="M100 358v-8" class="arrow"/><text x="185" y="375" class="label">Final Output</text><path d="M220 60h280v60" class="arrow" style="stroke:#e67e22"/><text x="500" y="50" class="label" style="fill:#e67e22">Trigger Container Re-deploy</text></svg>
+
+<h2 id="index-overview" data-heading="🚀 Overview"><span>🚀 Overview</span></h2>
+<p>UDX is a containerized ecosystem that solves the AI &quot;execution gap&quot; by providing models with standardized &quot;hands&quot; (Docker Workers) and &quot;memory&quot; (Context7). It decouples abstract reasoning from infrastructure action, ensuring that every command is grounded in 12-factor best practices and executed in a secure, identical environment across any IDE.</p>
+<h2 id="index-system-components" data-heading="🏗️ System Components"><span>🏗️ System Components</span></h2>
+<h3 id="heading-1" data-heading="1. MCP (The Interface &amp; Orchestrator)"><span>1. MCP (The Interface &amp; Orchestrator)</span></h3>
+<p>The <strong>Model Context Protocol</strong> serves as the standardized communication bus (JSON-RPC) between the AI brain and your local/cloud tools. It acts as both a host for real-time data fetching and a builder for specialized, portable worker environments.</p>
+<h3 id="heading-2" data-heading="2. Context7 (The Grounding Layer)"><span>2. Context7 (The Grounding Layer)</span></h3>
+<p>The &quot;Environmental Memory&quot; containing proprietary blueprints for HA/DR, WordPress optimization, and 12-factor standards. It physically injects high-fidelity experience snippets into the LLM&#39;s prompt, preventing hallucinations and ensuring suggestions match your specific architecture.</p>
+<h3 id="heading-3" data-heading="3. UDX Extension (Sensory &amp; Acquisition)"><span>3. UDX Extension (Sensory &amp; Acquisition)</span></h3>
+<p>The primary UI and sensory input that monitors Git events, terminal errors, and TDD progress. It proactively surfaces advice and SVG diagrams while serving as a growth funnel via &quot;Open in UDX&quot; web-to-IDE buttons.</p>
+<h3 id="heading-4" data-heading="4. AI Normalization (The Intent Firewall)"><span>4. AI Normalization (The Intent Firewall)</span></h3>
+<p>A translation layer that converts raw human prompts into schema-validated technical intents. It enforces security headers and compliance rules before any command reaches the execution phase.</p>
+<hr>
+<h2 id="index-key-features" data-heading="🌟 Key Features"><span>🌟 Key Features</span></h2>
+<ul>
+<li><strong>Standardized Docker Execution:</strong> Hardened, identical worker containers ensure &quot;it works on my machine&quot; security and reliability for every AI action.</li>
+<li><strong>Knowledge-Grounded Reasoning:</strong> Direct injection of Context7 expertise ensures AI advice follows senior engineering standards by default.</li>
+<li><strong>Proactive Guardrails:</strong> Background monitoring of local workflows to suggest Git hygiene, TDD patterns, and architecture improvements.</li>
+<li><strong>Visual Logic Mapping:</strong> Automated SVG diagram generation to make complex infrastructure plans transparent and auditable.</li>
+<li><strong>Instant Portability:</strong> Spin up secure automation workers on any machine via a single CLI command or a web-link click.</li>
+</ul>
+<hr>
+<h2 id="index-monetization" data-heading="💰 Monetization"><span>💰 Monetization</span></h2>
+<ul>
+<li><strong>Access Model:</strong> Usage of basic features is free; access to advanced DevSecOps workers, premium architectural guidance, and specific automation tools requires a <strong>UDX API Key (Subscription)</strong>.</li>
+</ul>
+<hr>
+<h2 id="heading-5" data-heading="🛠️ Roadmap &amp; Critical TODOs"><span>🛠️ Roadmap &amp; Critical TODOs</span></h2>
+<ol>
+<li><strong>Documentation Sync:</strong> Update all worker docs to be dual-friendly (Human/Robot) and integrate Context7 prompts across all technical guides.</li>
+<li><strong>Data Validation:</strong> Test and fix Context7 sync logic to ensure data fits both &quot;component&quot; and &quot;standalone MCP&quot; use cases.</li>
+<li><strong>Lingua Franca:</strong> Determine the optimal standard/language for defining LLM mappings and rules to maximize effectivity.</li>
+<li><strong>Context Awareness:</strong> Refine logic for accurately capturing workspace-level, project-level, and global context.</li>
+<li><strong>Permission Strategy:</strong> Establish a balanced permission model that ensures security without creating friction or user distrust.</li>
+</ol>
+</section>
+<!-- END SECTION: index -->
+
+
+<script type="application/json" id="document-chapters-data">[
+  {
+    "id": "index-overview",
+    "title": "🚀 Overview",
+    "level": 2,
+    "file": "index"
+  },
+  {
+    "id": "index-system-components",
+    "title": "🏗️ System Components",
+    "level": 2,
+    "file": "index"
+  },
+  {
+    "id": "index-key-features",
+    "title": "🌟 Key Features",
+    "level": 2,
+    "file": "index"
+  },
+  {
+    "id": "index-monetization",
+    "title": "💰 Monetization",
+    "level": 2,
+    "file": "index"
+  },
+  {
+    "id": "index-roadmap-critical-todos",
+    "title": "🛠️ Roadmap & Critical TODOs",
+    "level": 2,
+    "file": "index"
+  }
+]</script>
+
+        </main>
+      </article>
+    </main>
+  </div>
+  
+  <script>
+    // Apply syntax highlighting
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Apply syntax highlighting
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightElement(block);
+  });
+
+  // Add copy buttons to code blocks
+  document.querySelectorAll('pre').forEach((pre) => {
+    if (!pre.querySelector('.copy-button')) {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.textContent = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').textContent;
+        navigator.clipboard.writeText(code);
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+          button.textContent = 'Copy';
+        }, 2000);
+      });
+      pre.appendChild(button);
+    }
+  });
+
+  // Add heading IDs for anchor links if they don't exist
+  document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
+    if (!heading.id) {
+      const id = heading.textContent
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .trim();
+      heading.id = id;
+    }
+  });
+
+  // Make all external links open in new tabs
+  document.querySelectorAll('a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('http') && !href.startsWith('#')) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+
+  // Ensure all tables are 100% width with stronger enforcement
+  document.querySelectorAll('table').forEach(table => {
+    // Force full width with inline style AND classes
+    table.style.width = '100%';
+    table.style.tableLayout = 'fixed';
+    table.setAttribute('width', '100%');
+    table.classList.add('w-full');
+    table.classList.add('table-fixed');
+    
+    // Add responsive wrapper if not already wrapped
+    if (table.parentElement.tagName !== 'DIV' || !table.parentElement.classList.contains('table-responsive')) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-responsive w-full overflow-x-auto my-8';
+      wrapper.style.width = '100%';
+      wrapper.style.maxWidth = '100%';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    }
+    
+    // Add proper classes and styles to table headers
+    table.querySelectorAll('th').forEach(th => {
+      th.classList.add('bg-gray-50');
+      th.classList.add('font-semibold');
+      th.classList.add('p-3');
+      th.classList.add('text-left');
+      th.classList.add('border');
+      th.classList.add('border-gray-200');
+      th.style.padding = '0.75rem 1rem';
+    });
+    
+    // Add proper classes and styles to table cells
+    table.querySelectorAll('td').forEach(td => {
+      td.classList.add('p-3');
+      td.classList.add('text-left');
+      td.classList.add('border');
+      td.classList.add('border-gray-200');
+      td.style.padding = '0.75rem 1rem';
+      td.style.borderColor = 'rgba(0, 0, 0, 0.1)';
+    });
+    
+    // Force table to use entire container width
+    const parentWidth = table.parentElement.offsetWidth;
+    if (parentWidth > 0) {
+      table.style.minWidth = parentWidth + 'px';
+    }
+  });
+
+  // Remove any blue highlights
+  document.querySelectorAll('.highlight, [style*="background-color: rgb(173, 214, 255)"]').forEach(el => {
+    el.classList.remove('highlight');
+    el.style.backgroundColor = 'transparent';
+    el.style.boxShadow = 'none';
+  });
+  
+  // Format tabular data with scaling operations
+  document.querySelectorAll('p').forEach(p => {
+    const text = p.textContent.trim();
+    if (text.includes('IT/SRE for every') || text.includes('DevOps Engineer for every')) {
+      // Find the paragraph containing the scaling information
+      const container = document.createElement('div');
+      container.className = 'scaling-table';
+      
+      // Parse the content and create a grid layout
+      const content = p.textContent.trim();
+      const parts = content.split(',').map(part => part.trim());
+      
+      parts.forEach(part => {
+        const itemDiv = document.createElement('div');
+        itemDiv.textContent = part;
+        itemDiv.className = 'scaling-item';
+        container.appendChild(itemDiv);
+      });
+      
+      // Replace the paragraph with the grid container
+      p.parentNode.replaceChild(container, p);
+    }
+  });
+  
+  // Improve table layout and ensure proper alignment
+  document.querySelectorAll('table').forEach(table => {
+    // Add a container for horizontal scrolling if needed
+    const wrapper = document.createElement('div');
+    wrapper.style.width = '100%';
+    wrapper.style.overflowX = 'auto';
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+    
+    // Ensure consistent styling
+    table.querySelectorAll('th, td').forEach(cell => {
+      cell.style.padding = '0.75em 1em';
+      cell.style.verticalAlign = 'top';
+      cell.style.textAlign = 'left';
+      cell.style.fontSize = '18px';
+    });
+  });
+  
+  // Process quote attributions with em dash
+  document.querySelectorAll('blockquote + p').forEach(p => {
+    const text = p.textContent || '';
+    if (text.startsWith('—') || text.startsWith('-') || text.startsWith('–')) {
+      p.style.textAlign = 'right';
+      p.style.fontStyle = 'italic';
+      p.style.marginTop = '-1.5em';
+      p.style.marginBottom = '2em';
+    }
+  });
+
+  // Style numbered items that are not in a list (like "1. Title")
+  document.querySelectorAll('p').forEach(p => {
+    const text = p.textContent.trim();
+    const match = text.match(/^(\d+)\.\s+(.+)$/);
+    if (match && match[1] && match[2]) {
+      const number = match[1];
+      const content = match[2];
+      
+      // Don't apply this to short numbers followed by short content (likely actual content, not a title)
+      if (content.length > 5) {
+        p.innerHTML = `<span style="display: inline-block; min-width: 1.5em; margin-right: 0.5em; text-align: right; font-weight: bold;">${number}.</span>${content}`;
+        p.style.marginTop = '1.5em';
+        p.style.marginBottom = '0.75em';
+        p.style.fontWeight = '600';
+        p.style.fontSize = '22px';
+      }
+    }
+  });
+
+  // Convert imgix images to use w=1600 parameter
+  document.querySelectorAll('img[src*="imgix.net"]').forEach(img => {
+    const src = img.getAttribute('src');
+    if (src) {
+      const separator = src.includes('?') ? '&' : '?';
+      if (!src.includes('w=')) {
+        img.setAttribute('src', `${src}${separator}w=1600`);
+      }
+    }
+  });
+  
+  window.initChapterNavigation = () => {
+    const chapterNavItems = document.querySelectorAll('.chapter-nav-item');
+    const chapterDropdownBtn = document.getElementById('chapter-dropdown-btn');
+    const chapterDropdownMenu = document.getElementById('chapter-dropdown-menu');
+    const currentChapterText = document.querySelector('.current-chapter');
+    
+    if (chapterDropdownMenu) {
+      chapterDropdownMenu.style.display = 'none';
+    }
+    
+    const throttle = (func, limit) => {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    };
+    
+    window.updateActiveChapter = () => {
+      try {
+        // Only target H2 headings
+        const headings = Array.from(document.querySelectorAll('h2'));
+        
+        if (!headings.length || !chapterNavItems.length) return;
+        
+        // Calculate which heading is most visible in the viewport
+        const viewportHeight = window.innerHeight;
+        const viewportMiddle = viewportHeight / 2;
+        
+        let bestVisibleHeading = null;
+        let bestVisibleScore = -1;
+        
+        headings.forEach(heading => {
+          if (!heading) return;
+          
+          const rect = heading.getBoundingClientRect();
+          
+          if (rect.bottom < 0 || rect.top > viewportHeight) return;
+          
+          const visibleTop = Math.max(0, rect.top);
+          const visibleBottom = Math.min(viewportHeight, rect.bottom);
+          const visibleHeight = visibleBottom - visibleTop;
+          
+          const distanceFromMiddle = Math.abs(rect.top + rect.height / 2 - viewportMiddle);
+          const normalizedDistance = 1 - (distanceFromMiddle / viewportHeight);
+          
+          const score = visibleHeight * normalizedDistance * 2;
+          
+          if (score > bestVisibleScore) {
+            bestVisibleScore = score;
+            bestVisibleHeading = heading;
+          }
+        });
+        
+        if (bestVisibleHeading) {
+          const headingId = bestVisibleHeading.getAttribute('id');
+          const headingText = bestVisibleHeading.textContent.trim();
+          
+          chapterNavItems.forEach(item => {
+            if (!item) return;
+            
+            const navLink = item.querySelector('.chapter-nav-link');
+            if (!navLink) return;
+            
+            const itemText = navLink.textContent.trim();
+            const isActive = itemText === headingText || item.getAttribute('data-chapter-id') === headingId;
+            
+            if (isActive) {
+              item.classList.add('active');
+              
+              const navContainer = document.querySelector('.chapter-navigation');
+              if (navContainer) {
+                const itemOffset = item.offsetTop;
+                const navHeight = navContainer.offsetHeight;
+                const itemHeight = item.offsetHeight;
+                
+                navContainer.scrollTop = itemOffset - (navHeight / 2) + (itemHeight / 2);
+              }
+              
+              if (currentChapterText) {
+                currentChapterText.textContent = itemText;
+              }
+            } else {
+              item.classList.remove('active');
+            }
+          });
+          
+          const mobileDropdownItems = document.querySelectorAll('#chapter-dropdown-menu li');
+          mobileDropdownItems.forEach(item => {
+            if (!item) return;
+            
+            const link = item.querySelector('a');
+            if (!link) return;
+            
+            const itemText = link.textContent.trim();
+            const isActive = itemText === headingText || item.getAttribute('data-chapter-id') === headingId;
+            
+            if (isActive) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        } else if (headings.length > 0) {
+          const firstHeading = headings[0];
+          const firstHeadingText = firstHeading.textContent.trim();
+          
+          chapterNavItems.forEach(item => {
+            if (!item) return;
+            
+            const navLink = item.querySelector('.chapter-nav-link');
+            if (!navLink) return;
+            
+            const itemText = navLink.textContent.trim();
+            const isActive = itemText === firstHeadingText;
+            
+            if (isActive) {
+              item.classList.add('active');
+              if (currentChapterText) {
+                currentChapterText.textContent = itemText;
+              }
+            } else {
+              item.classList.remove('active');
+            }
+          });
+          
+          const mobileDropdownItems = document.querySelectorAll('#chapter-dropdown-menu li');
+          mobileDropdownItems.forEach(item => {
+            if (!item) return;
+            
+            const link = item.querySelector('a');
+            if (!link) return;
+            
+            const itemText = link.textContent.trim();
+            const isActive = itemText === firstHeadingText;
+            
+            if (isActive) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error updating active chapter:', error);
+      }
+    };
+    
+    if (chapterDropdownBtn && chapterDropdownMenu) {
+      chapterDropdownBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        chapterDropdownBtn.classList.toggle('active');
+        
+        const isCurrentlyHidden = chapterDropdownMenu.style.display === 'none' || chapterDropdownMenu.style.display === '';
+        chapterDropdownMenu.style.display = isCurrentlyHidden ? 'block' : 'none';
+        
+        chapterDropdownBtn.setAttribute('aria-expanded', isCurrentlyHidden ? 'true' : 'false');
+        
+        console.log('Dropdown toggled, now visible:', isCurrentlyHidden);
+      });
+      
+      chapterDropdownBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        chapterDropdownBtn.classList.toggle('active');
+        
+        const isCurrentlyHidden = chapterDropdownMenu.style.display === 'none' || chapterDropdownMenu.style.display === '';
+        chapterDropdownMenu.style.display = isCurrentlyHidden ? 'block' : 'none';
+        
+        chapterDropdownBtn.setAttribute('aria-expanded', isCurrentlyHidden ? 'true' : 'false');
+        
+        console.log('Dropdown touched, now visible:', isCurrentlyHidden);
+      }, { passive: false });
+    }
+    
+    document.addEventListener('click', (e) => {
+      if (chapterDropdownMenu && chapterDropdownBtn && !e.target.closest('.mobile-chapter-dropdown')) {
+        chapterDropdownBtn.classList.remove('active');
+        chapterDropdownMenu.style.display = 'none';
+        chapterDropdownBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    document.querySelectorAll('.chapter-nav-link, #chapter-dropdown-menu a').forEach(link => {
+      if (!link) return;
+      
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        if (!targetId) return;
+        
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          if (chapterDropdownMenu && chapterDropdownBtn) {
+            chapterDropdownMenu.style.display = 'none';
+            chapterDropdownBtn.classList.remove('active');
+            chapterDropdownBtn.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+    });
+    
+    window.addEventListener('scroll', throttle(updateActiveChapter, 100));
+    
+    updateActiveChapter();
+  };
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.initChapterNavigation);
+  } else {
+    window.initChapterNavigation();
+  }
+});
+
+  </script>
+  
+  <!-- Analytics and tracking - DO NOT REMOVE -->
+  <script>
+    window.onload = () => setTimeout(() => {
+      // Create data-version attribute on article for tracking
+      const articleEl = document.querySelector('article');
+      const docVersion = 'v8' || 'v1';
+      if (articleEl && !articleEl.hasAttribute('data-version')) {
+        articleEl.setAttribute('data-version', docVersion);
+      }
+      console.debug(`Document Version: ${docVersion}`);
+      
+      // Track page view with dataLayer
+      if (window.dataLayer) {
+        dataLayer.push({
+          'event': 'page_view',
+          'page_title': document.title,
+          'page_location': window.location.href,
+          'page_path': window.location.pathname,
+          'document_version': docVersion
+        });
+      }
+      
+      // Initialize the annotation system if available
+      if (window.ScienceUsability && typeof ScienceUsability.init === 'function') {
+        console.log('Initializing ScienceUsability annotation system...');
+        ScienceUsability.init({
+          dataEndpoint: '/static/api/web/',
+          defaultArticle: 'udx-portable-devsecops-framework',
+          smoothScroll: true,
+          revealAnimations: true
+        });
+      } else {
+        console.debug('ScienceUsability annotation system not available.');
+      }
+      
+      // Track downloads and outbound links
+      document.querySelectorAll('a').forEach(link => {
+        if (!link.hasAttribute('data-tracked')) {
+          link.setAttribute('data-tracked', 'true');
+          link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            const isDownload = link.hasAttribute('download') || href.match(/\.(pdf|docx?|xlsx?|zip|rar|gz|tar)$/i);
+            const isExternal = href && href.startsWith('http') && !href.includes('udx.dev');
+            
+            if ((isDownload || isExternal) && window.dataLayer) {
+              dataLayer.push({
+                'event': isDownload ? 'file_download' : 'outbound_link',
+                'event_category': isDownload ? 'Downloads' : 'Outbound Links',
+                'event_label': href,
+                'value': 1
+              });
+              console.debug(`Tracked ${isDownload ? 'download' : 'outbound link'}: ${href}`);
+            }
+          });
+        }
+      });
+    }, 100);
+  </script>
+</body>
+</html>
