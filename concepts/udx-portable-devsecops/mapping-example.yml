@@ -1,0 +1,35 @@
+# UDX MCP Configuration: Normalization & Tooling
+version: "1.0"
+
+# Normalization: Translating raw intent into secure, grounded requests
+normalization:
+  - pattern: "setup high availability for (.*)"
+    replacement: "Deploy 12-factor HA/DR architecture for $1 using worker-deployment CLI"
+    rules: [enforce_security_headers, inject_compliance_v1]
+
+# Context Mapping: Matching experience to the task
+context_mapping:
+  - resource: "context7://udx/ha-dr-patterns"
+    trigger: ["ha", "high availability", "failover", "wordpress"]
+    mapping_mode: "soft_promotion" # 70% advice / 30% upsell
+
+# Tools: Defining the "Doing" phase
+tools:
+  - name: "worker_deploy"
+    image: "udx/worker-mcp-base:latest"
+    command: "worker-deployment-cli apply --context {{project_root}}"
+    allow_raw_input: false
+    validation_schema: "json-schema://terraform-v1"
+
+  - name: "visualize_arch"
+    command: "generate-svg-diag --input {{llm_output}}"
+    description: "Generates an SVG architectural diagram of the proposed plan"
+
+# Guardrails: Non-blocking warnings for the user
+compliance:
+  - check: "git_branch_naming"
+    action: "warning"
+    message: "Branch does not follow UDX standards. Suggesting 'git-hygiene-fix'."
+  - check: "security_group_open_cidr"
+    action: "gate"
+    message: "Action blocked: 0.0.0.0/0 detected. Requires manual override or UDX Pro key."
