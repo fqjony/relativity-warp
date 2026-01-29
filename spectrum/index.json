@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Engineering Tips",
+    "title": "Engineering Tips",
+    "description": "Curated engineering guidance grouped by domain.",
+    "category": "Common",
+    "format": "json",
+    "path": "spectrum/engineering-tips.json"
+  },
+  {
+    "name": "Identity",
+    "title": "Identity Profile",
+    "description": "Mission, philosophy, and operating model snapshot.",
+    "category": "Profile",
+    "format": "json",
+    "path": "spectrum/identity.json"
+  },
+  {
+    "name": "References",
+    "title": "References",
+    "description": "Reserved for curated external references and sources.",
+    "category": "Reference",
+    "format": "json",
+    "path": "spectrum/refs.json"
+  }
+]
