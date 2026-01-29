@@ -230,10 +230,123 @@ function loadSpectrumIndex() {
     });
 }
 
+function renderPrompts(items) {
+  var container = document.getElementById("prompts-grid");
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = "";
+
+  if (!items || !items.length) {
+    var empty = document.createElement("p");
+    empty.className = "list-item";
+    empty.textContent = "• No prompts available.";
+    container.appendChild(empty);
+    return;
+  }
+
+  items.forEach(function (item) {
+    var card = document.createElement("div");
+    card.className = "spectrum-card";
+
+    var title = document.createElement("div");
+    title.className = "spectrum-title";
+    title.textContent = item.title || item.name || "Untitled";
+
+    var description = document.createElement("div");
+    description.className = "spectrum-description";
+    description.textContent = item.description || "No description provided.";
+
+    var meta = document.createElement("div");
+    meta.className = "spectrum-meta";
+
+    if (item.category) {
+      var category = document.createElement("span");
+      category.className = "pill";
+      category.textContent = item.category;
+      meta.appendChild(category);
+    }
+
+    if (item.format) {
+      var format = document.createElement("span");
+      format.className = "pill";
+      format.textContent = item.format;
+      meta.appendChild(format);
+    }
+
+    if (item.path) {
+      var link = document.createElement("a");
+      link.className = "pill";
+      link.textContent = "Open prompt";
+      link.href = item.path;
+      link.target = "_blank";
+      link.rel = "noopener";
+      meta.appendChild(link);
+    }
+
+    card.appendChild(title);
+    card.appendChild(description);
+    card.appendChild(meta);
+    container.appendChild(card);
+  });
+}
+
+function loadPromptsIndex() {
+  fetch("src/prompts/index.json", { cache: "no-store" })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Failed to load prompts index");
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      var items = Array.isArray(data) ? data : data.items;
+      renderPrompts(items || []);
+    })
+    .catch(function () {
+      renderPrompts([]);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   loadResearchLinks();
   loadTips();
   loadSpectrumIndex();
+  loadPromptsIndex();
+
+  var themeToggle = document.getElementById("theme-toggle");
+  var themeJoke = document.getElementById("theme-joke");
+  var savedTheme = window.localStorage.getItem("rw-theme");
+
+  if (savedTheme) {
+    document.body.setAttribute("data-theme", savedTheme);
+  } else {
+    document.body.setAttribute("data-theme", "dark");
+  }
+
+  function updateThemeNotice() {
+    if (!themeJoke) {
+      return;
+    }
+    if (document.body.getAttribute("data-theme") === "light") {
+      themeJoke.textContent = "Light mode? Bold choice. Sunglasses engaged.";
+    } else {
+      themeJoke.textContent = "";
+    }
+  }
+
+  updateThemeNotice();
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var nextTheme =
+        document.body.getAttribute("data-theme") === "light" ? "dark" : "light";
+      document.body.setAttribute("data-theme", nextTheme);
+      window.localStorage.setItem("rw-theme", nextTheme);
+      updateThemeNotice();
+    });
+  }
 
   var refreshButton = document.getElementById("tip-refresh");
   if (refreshButton) {

@@ -13,12 +13,22 @@
   </head>
   <body>
     <div class="container">
-      <header>
-        <h1>Dmytro Smirnov 🇺🇦</h1>
-        <p class="motto">
+      <header class="hero">
+        <div class="hero-meta">
+          <span class="badge">Control Plane</span>
+          <span class="badge badge-muted">Orbit Achieved</span>
+        </div>
+        <div class="theme-switcher">
+          <button id="theme-toggle" class="button" type="button">
+            Toggle theme
+          </button>
+          <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
+        </div>
+        <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
+        <p class="hero-subtitle">
           Software Engineering, DevSecOps, Automation, Cybersecurity
-        </p>        
-        <p class="contact-links">
+        </p>
+        <div class="hero-links">
           <a href="https://github.com/fqjony" target="_blank"
             >💻 github.com/fqjony</a
           >
@@ -26,70 +36,60 @@
             >💼 linkedin.com/in/fqjony</a
           >
           <a href="https://udx.io" target="_blank">🌐 udx.io</a>
-        </p>
+        </div>
       </header>
 
-      <main>
-
-        <section class="section">
-          <h2>Dev Kit</h2>
-          <p>Empower your engineering workflow.</p>
-          <div id="dev-kit-links">
-            <p class="list-item"><a href="https://github.com/udx/dev-kit" target="_blank">Github</a></p>
+      <main class="grid">
+        <section class="section card">
+          <div class="section-header">
+            <h2>Dev Kit</h2>
+            <span class="badge badge-accent">Tools</span>
           </div>
-        </section>        
-
-        <section class="section">
-          <h2>Worker Deployment</h2>
-          <p>Deploy any software with worker containers using worker CLI.</p>
-          <div id="worker-code">
-            <p
-              style="
-                margin-top: 0.75rem;
-                font-size: 0.8125rem;
-                color: var(--text-muted);
-              "
-            >
-              <a
-                href="https://npmjs.com/package/@udx/worker-deployment"
-                target="_blank"
-                style="
-                  color: var(--accent);
-                  text-decoration: none;
-                  margin-right: 1rem;
-                "
-                >Worker CLI</a
-              >
-              <a
-                href="https://github.com/udx/worker"
-                target="_blank"
-                style="
-                  color: var(--accent);
-                  text-decoration: none;
-                  margin-right: 1rem;
-                "
-                >Github Source</a
-              >
-              <a
-                href="https://hub.docker.com/r/usabilitydynamics/udx-worker"
-                target="_blank"
-                style="color: var(--accent); text-decoration: none"
-                >Docker Hub Build</a
-              >
-            </p>
+          <p>Empower your engineering workflow.</p>
+          <div id="dev-kit-links" class="link-row">
+            <a href="https://github.com/udx/dev-kit" target="_blank">Github</a>
           </div>
         </section>
 
-        <section class="section">
-          <h2>Research</h2>
+        <section class="section card">
+          <div class="section-header">
+            <h2>Worker Deployment</h2>
+            <span class="badge badge-accent">Delivery</span>
+          </div>
+          <p>Deploy any software with worker containers using worker CLI.</p>
+          <div id="worker-code" class="link-row">
+            <a
+              href="https://npmjs.com/package/@udx/worker-deployment"
+              target="_blank"
+              >Worker CLI</a
+            >
+            <a href="https://github.com/udx/worker" target="_blank"
+              >Github Source</a
+            >
+            <a
+              href="https://hub.docker.com/r/usabilitydynamics/udx-worker"
+              target="_blank"
+              >Docker Hub Build</a
+            >
+          </div>
+        </section>
+
+        <section class="section card">
+          <div class="section-header">
+            <h2>Research</h2>
+            <span class="badge badge-muted">Notes</span>
+          </div>
           <p>Ongoing notes and experiments.</p>
           <div id="research-links">
             <p class="list-item">• Loading research index...</p>
           </div>
         </section>
 
-        <section class="section">
-          <h2>Engineering Tip</h2>
+        <section class="section card">
+          <div class="section-header">
+            <h2>Engineering Tip</h2>
+            <span class="badge badge-muted">Daily</span>
+          </div>
           <p>One random tip per page load. Refresh for another.</p>
           <div id="tip-widget" class="tip-card">
             <p class="list-item">• Loading tip...</p>
@@ -101,16 +101,33 @@
           </div>
         </section>
 
-        <section class="section">
-          <h2>Spectrum</h2>
+        <section class="section card">
+          <div class="section-header">
+            <h2>Spectrum</h2>
+            <span class="badge badge-accent">Index</span>
+          </div>
           <p>Available JSON endpoints and references.</p>
           <div id="spectrum-grid" class="spectrum-grid">
             <p class="list-item">• Loading spectrum index...</p>
           </div>
         </section>
 
-        <section class="section">
-          <h2>Recent commits</h2>
+        <section class="section card">
+          <div class="section-header">
+            <h2>Prompts</h2>
+            <span class="badge badge-accent">AI-agnostic</span>
+          </div>
+          <p>Repo-scoped prompt templates for consistent work.</p>
+          <div id="prompts-grid" class="spectrum-grid">
+            <p class="list-item">• Loading prompt index...</p>
+          </div>
+        </section>
+
+        <section class="section card">
+          <div class="section-header">
+            <h2>Recent commits</h2>
+            <span class="badge badge-muted">GitHub</span>
+          </div>
           <p>Latest updates on GitHub.</p>
           <div id="commit-links">
             <p class="list-item">
@@ -124,9 +141,12 @@
           </div>
         </section>
 
-        <section class="section">
-          <h2>Learnings</h2>
-          <div id="refs-list">
+        <section class="section card section-wide">
+          <div class="section-header">
+            <h2>Learnings</h2>
+            <span class="badge badge-muted">Library</span>
+          </div>
+          <div id="refs-list" class="link-list">
             <p class="list-item">
               •
               <a
@@ -150,35 +170,47 @@
               >
             </p>
             <p class="list-item">
-                •
-                <a href="https://udx.io/guidance/why-software-logistics-matter" target="_blank"
+              •
+              <a
+                href="https://udx.io/guidance/why-software-logistics-matter"
+                target="_blank"
                 >Why Software Logistics Matter</a
+              >
             </p>
             <p class="list-item">
-                •
-                <a href="https://udx.dev/delivery-platform" target="_blank"
+              •
+              <a href="https://udx.dev/delivery-platform" target="_blank"
                 >Delivery Platform Strategy</a
+              >
             </p>
             <p class="list-item">
-                •
-                <a href="https://udx.io/guidance/embracing-digital-transformation" target="_blank"
+              •
+              <a
+                href="https://udx.io/guidance/embracing-digital-transformation"
+                target="_blank"
                 >Embracing Digital Transformation</a
+              >
             </p>
             <p class="list-item">
-                •
-                <a href="https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion" target="_blank"
+              •
+              <a
+                href="https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
+                target="_blank"
                 >Ukrainian Cloud Engineering vs Russian Invasion</a
+              >
             </p>
           </div>
         </section>
-
-        <footer>
-            <p class="motto" style="margin-top: 0.5rem;">
-                <a href="https://github.com/fqjony/relativity-warp" target="_blank" ">Discover More</a>
-            </p>    
-            <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
-        </footer>
       </main>
+
+      <footer class="footer">
+        <p class="motto">
+          <a href="https://github.com/fqjony/relativity-warp" target="_blank"
+            >Discover More</a
+          >
+        </p>
+        <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
+      </footer>
     </div>
   </body>
 </html>
