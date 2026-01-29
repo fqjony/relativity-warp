@@ -96,31 +96,27 @@ function renderTip(tip) {
     return;
   }
 
-  container.innerHTML = "";
+  var title = container.querySelector(".tip-inline-title");
+  var body = container.querySelector(".tip-inline-body");
+
+  if (!title || !body) {
+    container.innerHTML = "";
+    title = document.createElement("div");
+    title.className = "tip-inline-title";
+    body = document.createElement("div");
+    body.className = "tip-inline-body";
+    container.appendChild(title);
+    container.appendChild(body);
+  }
 
   if (!tip) {
-    var empty = document.createElement("p");
-    empty.className = "list-item";
-    empty.textContent = "• No tips available.";
-    container.appendChild(empty);
+    title.textContent = "Tip";
+    body.textContent = "No tips available.";
     return;
   }
 
-  var title = document.createElement("div");
-  title.className = "tip-title";
-  title.textContent = tip.Tip;
-
-  var why = document.createElement("div");
-  why.className = "tip-why";
-  why.textContent = tip.Why || "";
-
-  var meta = document.createElement("div");
-  meta.className = "tip-meta";
-  meta.textContent = tip.Group || "General";
-
-  container.appendChild(title);
-  container.appendChild(why);
-  container.appendChild(meta);
+  title.textContent = tip.Group || "Tip";
+  body.textContent = tip.Tip || "";
 }
 
 function pickRandomTip() {
@@ -151,8 +147,53 @@ function loadTips() {
     });
 }
 
-function renderSpectrum(items) {
-  var container = document.getElementById("spectrum-grid");
+function buildDataCard(item, linkLabel) {
+  var card = document.createElement("div");
+  card.className = "spectrum-card";
+
+  var title = document.createElement("div");
+  title.className = "spectrum-title";
+  title.textContent = item.title || item.name || "Untitled";
+
+  var description = document.createElement("div");
+  description.className = "spectrum-description";
+  description.textContent = item.description || "No description provided.";
+
+  var meta = document.createElement("div");
+  meta.className = "spectrum-meta";
+
+  if (item.category) {
+    var category = document.createElement("span");
+    category.className = "pill";
+    category.textContent = item.category;
+    meta.appendChild(category);
+  }
+
+  if (item.format) {
+    var format = document.createElement("span");
+    format.className = "pill";
+    format.textContent = item.format;
+    meta.appendChild(format);
+  }
+
+  if (item.path) {
+    var link = document.createElement("a");
+    link.className = "pill";
+    link.textContent = linkLabel;
+    link.href = item.path;
+    link.target = "_blank";
+    link.rel = "noopener";
+    meta.appendChild(link);
+  }
+
+  card.appendChild(title);
+  card.appendChild(description);
+  card.appendChild(meta);
+  return card;
+}
+
+function renderDataCollection(items, containerId, emptyLabel, linkLabel) {
+  var container = document.getElementById(containerId);
   if (!container) {
     return;
   }
@@ -162,55 +203,39 @@ function renderSpectrum(items) {
   if (!items || !items.length) {
     var empty = document.createElement("p");
     empty.className = "list-item";
-    empty.textContent = "• No spectrum entries available.";
+    empty.textContent = emptyLabel;
     container.appendChild(empty);
     return;
   }
 
-  items.forEach(function (item) {
-    var card = document.createElement("div");
-    card.className = "spectrum-card";
+  var expanded = container.getAttribute("data-expanded") === "true";
+  var limit = 1;
+  var visibleItems = expanded ? items : items.slice(0, limit);
 
-    var title = document.createElement("div");
-    title.className = "spectrum-title";
-    title.textContent = item.title || item.name || "Untitled";
-
-    var description = document.createElement("div");
-    description.className = "spectrum-description";
-    description.textContent = item.description || "No description provided.";
-
-    var meta = document.createElement("div");
-    meta.className = "spectrum-meta";
-
-    if (item.category) {
-      var category = document.createElement("span");
-      category.className = "pill";
-      category.textContent = item.category;
-      meta.appendChild(category);
-    }
-
-    if (item.format) {
-      var format = document.createElement("span");
-      format.className = "pill";
-      format.textContent = item.format;
-      meta.appendChild(format);
-    }
-
-    if (item.path) {
-      var link = document.createElement("a");
-      link.className = "pill";
-      link.textContent = "JSON";
-      link.href = item.path;
-      link.target = "_blank";
-      link.rel = "noopener";
-      meta.appendChild(link);
-    }
-
-    card.appendChild(title);
-    card.appendChild(description);
-    card.appendChild(meta);
-    container.appendChild(card);
+  visibleItems.forEach(function (item) {
+    container.appendChild(buildDataCard(item, linkLabel));
   });
+
+  if (items.length > limit) {
+    var toggle = document.createElement("button");
+    toggle.className = "button button-compact button-ghost expand-button";
+    toggle.type = "button";
+    toggle.textContent = expanded ? "Less" : "More";
+    toggle.addEventListener("click", function () {
+      container.setAttribute("data-expanded", expanded ? "false" : "true");
+      renderDataCollection(items, containerId, emptyLabel, linkLabel);
+    });
+    container.appendChild(toggle);
+  }
+}
+
+function renderSpectrum(items) {
+  renderDataCollection(
+    items,
+    "spectrum-grid",
+    "• No spectrum entries available.",
+    "JSON"
+  );
 }
 
 function loadSpectrumIndex() {
@@ -231,65 +256,12 @@ function loadSpectrumIndex() {
 }
 
 function renderPrompts(items) {
-  var container = document.getElementById("prompts-grid");
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = "";
-
-  if (!items || !items.length) {
-    var empty = document.createElement("p");
-    empty.className = "list-item";
-    empty.textContent = "• No prompts available.";
-    container.appendChild(empty);
-    return;
-  }
-
-  items.forEach(function (item) {
-    var card = document.createElement("div");
-    card.className = "spectrum-card";
-
-    var title = document.createElement("div");
-    title.className = "spectrum-title";
-    title.textContent = item.title || item.name || "Untitled";
-
-    var description = document.createElement("div");
-    description.className = "spectrum-description";
-    description.textContent = item.description || "No description provided.";
-
-    var meta = document.createElement("div");
-    meta.className = "spectrum-meta";
-
-    if (item.category) {
-      var category = document.createElement("span");
-      category.className = "pill";
-      category.textContent = item.category;
-      meta.appendChild(category);
-    }
-
-    if (item.format) {
-      var format = document.createElement("span");
-      format.className = "pill";
-      format.textContent = item.format;
-      meta.appendChild(format);
-    }
-
-    if (item.path) {
-      var link = document.createElement("a");
-      link.className = "pill";
-      link.textContent = "Prompt";
-      link.href = item.path;
-      link.target = "_blank";
-      link.rel = "noopener";
-      meta.appendChild(link);
-    }
-
-    card.appendChild(title);
-    card.appendChild(description);
-    card.appendChild(meta);
-    container.appendChild(card);
-  });
+  renderDataCollection(
+    items,
+    "prompts-grid",
+    "• No prompts available.",
+    "Prompt"
+  );
 }
 
 function loadPromptsIndex() {
@@ -338,8 +310,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var isLight = document.body.getAttribute("data-theme") === "light";
     if (isLight) {
       themeJoke.textContent = "Light mode? Bold choice. Sunglasses engaged.";
+      themeJoke.classList.add("is-visible");
     } else {
       themeJoke.textContent = "";
+      themeJoke.classList.remove("is-visible");
     }
     if (themeToggle) {
       themeToggle.setAttribute("aria-pressed", String(isLight));
@@ -367,6 +341,28 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
       pickRandomTip();
+    });
+  }
+
+  var tabs = document.querySelectorAll(".data-tab");
+  if (tabs.length) {
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var panelId = tab.getAttribute("data-panel");
+        tabs.forEach(function (item) {
+          item.classList.remove("is-active");
+          item.setAttribute("aria-selected", "false");
+        });
+        tab.classList.add("is-active");
+        tab.setAttribute("aria-selected", "true");
+        document.querySelectorAll(".data-panel").forEach(function (panel) {
+          if (panel.id === panelId) {
+            panel.classList.remove("is-hidden");
+          } else {
+            panel.classList.add("is-hidden");
+          }
+        });
+      });
     });
   }
 });

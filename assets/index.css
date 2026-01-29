@@ -96,9 +96,32 @@ body::before {
     padding-left: 0.4rem;
 }
 
+.control-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
 .theme-joke {
-    font-size: 0.75rem;
+    position: absolute;
+    left: calc(100% + 0.6rem);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.72rem;
     color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    max-width: 260px;
+    white-space: normal;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.theme-joke.is-visible {
+    opacity: 1;
 }
 
 .theme-switcher {
@@ -194,6 +217,36 @@ body::before {
 
 .link-icon {
     font-size: 0.95em;
+}
+
+.tip-inline {
+    align-self: stretch;
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.6rem 2rem 0.6rem 0.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card-muted);
+    font-size: 0.72rem;
+    position: relative;
+}
+
+.tip-inline .button {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.45rem;
+}
+
+.tip-inline-title {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+}
+
+.tip-inline-body {
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 .motto {
@@ -318,6 +371,10 @@ a:hover {
 .button-compact {
     padding: 0.35rem 0.75rem;
     font-size: 0.72rem;
+}
+
+.button-ghost {
+    background: transparent;
 }
 
 .button:hover {
@@ -460,6 +517,46 @@ a:hover {
     padding: 0.15rem 0.5rem;
 }
 
+.data-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+    margin-bottom: 0.35rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem;
+    background: var(--card-muted);
+}
+
+.data-tab {
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.data-tab.is-active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.data-panel.is-hidden {
+    display: none;
+}
+
+.expand-button {
+    justify-self: start;
+    margin-top: 0.4rem;
+}
+
 .footer {
     text-align: center;
     margin-top: 2rem;
@@ -565,8 +662,17 @@ a:hover {
     .hero-links {
         grid-column: 1;
         grid-row: auto;
-        flex-direction: row;
+        flex-direction: column;
         align-items: flex-start;
+    }
+
+    .theme-joke {
+        position: static;
+        transform: none;
+        margin-left: 0.5rem;
+        background: transparent;
+        border: none;
+        padding: 0;
     }
 }
 

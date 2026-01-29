@@ -17,15 +17,17 @@
     <div class="container">
       <div class="control-bar" aria-label="Quick controls">
         <div class="control-label">Quick actions</div>
-        <button
-          id="theme-toggle"
-          class="button button-compact"
-          type="button"
-          aria-pressed="false"
-        >
-          🌗 Theme
-        </button>
-        <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
+        <div class="control-item">
+          <button
+            id="theme-toggle"
+            class="button button-compact"
+            type="button"
+            aria-pressed="false"
+          >
+            🌗 Theme
+          </button>
+          <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
+        </div>
       </div>
       <header class="hero">
         <div class="hero-meta">
@@ -49,6 +51,18 @@
           <a href="https://udx.io" target="_blank" rel="noopener"
             ><span class="link-icon">🌐</span> UDX</a
           >
+          <div id="tip-widget" class="tip-inline">
+            <div class="tip-inline-title">Tip</div>
+            <div class="tip-inline-body">Loading tip...</div>
+            <button
+              id="tip-refresh"
+              class="button button-compact button-ghost"
+              type="button"
+              aria-label="New tip"
+            >
+              ↻
+            </button>
+          </div>
         </div>
       </header>
 
@@ -191,45 +205,35 @@
             <span class="badge badge-accent">Indexes</span>
           </div>
           <p>Data endpoints and AI-agnostic prompt templates.</p>
-          <div class="subsection">
-            <div class="subsection-title">Spectrum indexes</div>
+          <div class="data-switcher" role="tablist" aria-label="Spectrum and prompts">
+            <button
+              class="data-tab is-active"
+              type="button"
+              data-panel="spectrum-panel"
+              role="tab"
+              aria-selected="true"
+            >
+              Spectrum
+            </button>
+            <button
+              class="data-tab"
+              type="button"
+              data-panel="prompts-panel"
+              role="tab"
+              aria-selected="false"
+            >
+              Prompts
+            </button>
+          </div>
+          <div id="spectrum-panel" class="data-panel">
             <div id="spectrum-grid" class="spectrum-grid">
               <p class="list-item">• Loading spectrum index...</p>
             </div>
           </div>
-          <div class="subsection">
-            <div class="subsection-title">Prompt library</div>
+          <div id="prompts-panel" class="data-panel is-hidden">
             <div id="prompts-grid" class="spectrum-grid">
               <p class="list-item">• Loading prompt index...</p>
             </div>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Updates</h2>
-            <span class="badge badge-muted">Live</span>
-            <div class="section-actions">
-              <button
-                id="tip-refresh"
-                class="button button-compact"
-                type="button"
-                aria-label="New tip"
-              >
-                ↻ Tip
-              </button>
-              <a
-                class="button button-compact"
-                href="https://github.com/fqjony/relativity-warp/commits/main"
-                target="_blank"
-                rel="noopener"
-                >Commits</a
-              >
-            </div>
-          </div>
-          <p>One random tip per load and latest GitHub activity.</p>
-          <div id="tip-widget" class="tip-card">
-            <p class="list-item">• Loading tip...</p>
           </div>
         </section>
       </main>
@@ -240,7 +244,7 @@
             href="https://github.com/fqjony/relativity-warp"
             target="_blank"
             rel="noopener"
-            >Discover More</a
+            >GitHub repo</a
           >
         </p>
         <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
