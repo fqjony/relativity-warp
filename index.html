@@ -16,17 +16,17 @@
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <div class="control-bar" aria-label="Quick controls">
-        <button id="tip-refresh" class="button" type="button">
-          New tip
-        </button>
-        <button
-          id="theme-toggle"
-          class="button"
-          type="button"
-          aria-pressed="false"
-        >
-          Toggle theme
-        </button>
+        <div class="control-label">Quick actions</div>
+        <div class="control-actions">
+          <button
+            id="theme-toggle"
+            class="button button-compact"
+            type="button"
+            aria-pressed="false"
+          >
+            🌗 Theme
+          </button>
+        </div>
         <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
       </div>
       <header class="hero">
@@ -40,16 +40,16 @@
         </p>
         <div class="hero-links">
           <a href="https://github.com/fqjony" target="_blank" rel="noopener"
-            >💻 github.com/fqjony</a
+            ><span class="link-icon">💻</span> GitHub</a
           >
           <a
             href="https://linkedin.com/in/fqjony"
             target="_blank"
             rel="noopener"
-            >💼 linkedin.com/in/fqjony</a
+            ><span class="link-icon">💼</span> LinkedIn</a
           >
           <a href="https://udx.io" target="_blank" rel="noopener"
-            >🌐 udx.io</a
+            ><span class="link-icon">🌐</span> UDX</a
           >
         </div>
       </header>
@@ -57,139 +57,189 @@
       <main class="grid" id="content">
         <section class="section card">
           <div class="section-header">
-            <h2>Projects</h2>
-            <span class="badge badge-accent">Core</span>
+            <div class="section-title">
+              <h2>Projects</h2>
+              <span class="badge badge-accent">Core</span>
+            </div>
           </div>
           <p>Tools and deployment engines powering the stack.</p>
-          <div class="link-row">
-            <strong>Dev Kit</strong>
-            <a href="https://github.com/udx/dev-kit" target="_blank" rel="noopener"
-              >Github</a
-            >
-          </div>
-          <div class="link-row">
-            <strong>Worker Deployment</strong>
-            <a
-              href="https://npmjs.com/package/@udx/worker-deployment"
-              target="_blank"
-              rel="noopener"
-              >Worker CLI</a
-            >
-            <a href="https://github.com/udx/worker" target="_blank" rel="noopener"
-              >Github Source</a
-            >
-            <a
-              href="https://hub.docker.com/r/usabilitydynamics/udx-worker"
-              target="_blank"
-              rel="noopener"
-              >Docker Hub Build</a
-            >
+          <div class="stack-list">
+            <div class="stack-item">
+              <div class="stack-header">
+                <strong>Dev Kit</strong>
+                <span class="pill">CLI</span>
+              </div>
+              <div class="stack-links">
+                <a
+                  href="https://github.com/udx/dev-kit"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-header">
+                <strong>Worker Deployment</strong>
+                <span class="pill">Runtime</span>
+              </div>
+              <div class="stack-links">
+                <a
+                  href="https://npmjs.com/package/@udx/worker-deployment"
+                  target="_blank"
+                  rel="noopener"
+                  >CLI</a
+                >
+                <a
+                  href="https://github.com/udx/worker"
+                  target="_blank"
+                  rel="noopener"
+                  >Source</a
+                >
+                <a
+                  href="https://hub.docker.com/r/usabilitydynamics/udx-worker"
+                  target="_blank"
+                  rel="noopener"
+                  >Docker</a
+                >
+              </div>
+            </div>
           </div>
         </section>
 
         <section class="section card">
           <div class="section-header">
-            <h2>Research & Learnings</h2>
-            <span class="badge badge-muted">Library</span>
+            <div class="section-title">
+              <h2>Research & Learnings</h2>
+              <span class="badge badge-muted">Library</span>
+            </div>
           </div>
           <p>Ongoing notes, experiments, and curated publications.</p>
-          <div id="research-links">
-            <p class="list-item">• Loading research index...</p>
+          <div class="subsection">
+            <div class="subsection-title">Notes</div>
+            <div id="research-links" class="link-list">
+              <p class="list-item">• Loading research index...</p>
+            </div>
           </div>
-          <div id="refs-list" class="link-list">
-            <p class="list-item">
-              •
-              <a
-                href="https://udx.io/devops-manual/12-factor-environment-automation"
-                target="_blank"
-                rel="noopener"
-                >12-Factor Environment Automation</a
-              >
-            </p>
-            <p class="list-item">
-              •
-              <a
-                href="https://udx.io/cloud-automation-book/foreword"
-                target="_blank"
-                rel="noopener"
-                >Cloud Automation Book</a
-              >
-            </p>
-            <p class="list-item">
-              •
-              <a href="https://udx.io/devops-manual" target="_blank" rel="noopener"
-                >DevOps Manual</a
-              >
-            </p>
-            <p class="list-item">
-              •
-              <a
-                href="https://udx.io/guidance/why-software-logistics-matter"
-                target="_blank"
-                rel="noopener"
-                >Why Software Logistics Matter</a
-              >
-            </p>
-            <p class="list-item">
-              •
-              <a href="https://udx.dev/delivery-platform" target="_blank" rel="noopener"
-                >Delivery Platform Strategy</a
-              >
-            </p>
-            <p class="list-item">
-              •
-              <a
-                href="https://udx.io/guidance/embracing-digital-transformation"
-                target="_blank"
-                rel="noopener"
-                >Embracing Digital Transformation</a
-              >
-            </p>
-            <p class="list-item">
-              •
-              <a
-                href="https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
-                target="_blank"
-                rel="noopener"
-                >Ukrainian Cloud Engineering vs Russian Invasion</a
-              >
-            </p>
+          <div class="subsection">
+            <div class="subsection-title">Reading shelf</div>
+            <div id="refs-list" class="link-list">
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.io/devops-manual/12-factor-environment-automation"
+                  target="_blank"
+                  rel="noopener"
+                  >12-Factor Environment Automation</a
+                >
+              </p>
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.io/cloud-automation-book/foreword"
+                  target="_blank"
+                  rel="noopener"
+                  >Cloud Automation Book</a
+                >
+              </p>
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.io/devops-manual"
+                  target="_blank"
+                  rel="noopener"
+                  >DevOps Manual</a
+                >
+              </p>
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.io/guidance/why-software-logistics-matter"
+                  target="_blank"
+                  rel="noopener"
+                  >Why Software Logistics Matter</a
+                >
+              </p>
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.dev/delivery-platform"
+                  target="_blank"
+                  rel="noopener"
+                  >Delivery Platform Strategy</a
+                >
+              </p>
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.io/guidance/embracing-digital-transformation"
+                  target="_blank"
+                  rel="noopener"
+                  >Embracing Digital Transformation</a
+                >
+              </p>
+              <p class="list-item">
+                •
+                <a
+                  href="https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
+                  target="_blank"
+                  rel="noopener"
+                  >Ukrainian Cloud Engineering vs Russian Invasion</a
+                >
+              </p>
+            </div>
           </div>
         </section>
 
         <section class="section card">
           <div class="section-header">
-            <h2>Spectrum & Prompts</h2>
-            <span class="badge badge-accent">Indexes</span>
+            <div class="section-title">
+              <h2>Spectrum & Prompts</h2>
+              <span class="badge badge-accent">Indexes</span>
+            </div>
           </div>
           <p>Data endpoints and AI-agnostic prompt templates.</p>
-          <div id="spectrum-grid" class="spectrum-grid">
-            <p class="list-item">• Loading spectrum index...</p>
+          <div class="subsection">
+            <div class="subsection-title">Spectrum indexes</div>
+            <div id="spectrum-grid" class="spectrum-grid">
+              <p class="list-item">• Loading spectrum index...</p>
+            </div>
           </div>
-          <div id="prompts-grid" class="spectrum-grid">
-            <p class="list-item">• Loading prompt index...</p>
+          <div class="subsection">
+            <div class="subsection-title">Prompt library</div>
+            <div id="prompts-grid" class="spectrum-grid">
+              <p class="list-item">• Loading prompt index...</p>
+            </div>
           </div>
         </section>
 
         <section class="section card">
           <div class="section-header">
-            <h2>Updates</h2>
-            <span class="badge badge-muted">Live</span>
+            <div class="section-title">
+              <h2>Updates</h2>
+              <span class="badge badge-muted">Live</span>
+            </div>
+            <div class="section-actions">
+              <button
+                id="tip-refresh"
+                class="button button-compact"
+                type="button"
+                aria-label="New tip"
+              >
+                ↻ Tip
+              </button>
+              <a
+                class="button button-compact"
+                href="https://github.com/fqjony/relativity-warp/commits/main"
+                target="_blank"
+                rel="noopener"
+                >Commits</a
+              >
+            </div>
           </div>
           <p>One random tip per load and latest GitHub activity.</p>
           <div id="tip-widget" class="tip-card">
             <p class="list-item">• Loading tip...</p>
-          </div>
-          <div id="commit-links">
-            <p class="list-item">
-              •
-              <a
-                href="https://github.com/fqjony/relativity-warp/commits/main"
-                target="_blank"
-                rel="noopener"
-                >View commit history</a
-              >
-            </p>
           </div>
         </section>
       </main>

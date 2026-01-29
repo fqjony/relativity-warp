@@ -199,7 +199,7 @@ function renderSpectrum(items) {
     if (item.path) {
       var link = document.createElement("a");
       link.className = "pill";
-      link.textContent = "Open JSON";
+      link.textContent = "JSON";
       link.href = item.path;
       link.target = "_blank";
       link.rel = "noopener";
@@ -278,7 +278,7 @@ function renderPrompts(items) {
     if (item.path) {
       var link = document.createElement("a");
       link.className = "pill";
-      link.textContent = "Open prompt";
+      link.textContent = "Prompt";
       link.href = item.path;
       link.target = "_blank";
       link.rel = "noopener";
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (themeToggle) {
       themeToggle.setAttribute("aria-pressed", String(isLight));
-      themeToggle.textContent = isLight ? "Switch to dark" : "Switch to light";
+      themeToggle.textContent = isLight ? "🌙 Dark" : "🌞 Light";
     }
   }
 
