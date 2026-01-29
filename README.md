@@ -59,4 +59,14 @@ Engineering is a rhythm. Like a BMW M-Series hitting the apex or a perfect table
 - **[DevOps Manual](https://udx.io/devops-manual)**: Deep knowledge-base for environment automation inspired by [12factor.net](https://12factor.net/).
 - **[Ukrainian Cloud Engineering vs Russian Invasion](https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion)**: UDX is helping to ensure the success of Ukrainian cloud engineering and protect the industry from the effects of Russian aggression.
 
+---
+
+### 🧪 Research Index
+
+To refresh the research links used on the homepage, run:
+
+```
+node scripts/generate-research-index.mjs
+```
+
 > _"Unit Ready. My space. My frequency. Orbit Achieved."_

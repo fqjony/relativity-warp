@@ -10,7 +10,7 @@ On real projects the same patterns repeat. The most common is prompt overload: w
 
 Then there is weak decomposition. If the first breakdown is wrong, every later step is wrong, and complexity makes errors compound. You also see fluent but shallow output: it reads well, but it lacks concrete inputs, outputs, and verification. Evaluation often stays vague; without acceptance criteria or tests, the output is hard to validate, so it gets accepted too early. Finally, tooling mismatch shows up late, when a plan assumes data access, permissions, or tools that are not actually available.
 
-<img src="../assets/ai-complex/prompt-overload-vs-workflow.svg" alt="Prompt overload versus prompt as workflow" />
+<img src="../../assets/ai-complex/prompt-overload-vs-workflow.svg" alt="Prompt overload versus prompt as workflow" />
 
 <details>
 <summary>Mermaid source</summary>
@@ -35,7 +35,7 @@ flowchart TD
 ## A Better Mental Model
 The core issue is not intelligence, it is structure. Complex work needs boundaries, explicit inputs, and verification. The safest mental model is “prompt as workflow,” where each step is constrained and testable, and big steps can become their own sub‑workflows or prompts. This shifts the problem from “generate the answer” to “generate the next bounded step,” which is far more reliable.
 
-<img src="../assets/ai-complex/workflow-step-structure.svg" alt="Workflow step structure with inputs, actions, outputs, and verification" />
+<img src="../../assets/ai-complex/workflow-step-structure.svg" alt="Workflow step structure with inputs, actions, outputs, and verification" />
 
 <details>
 <summary>Mermaid source</summary>
@@ -57,7 +57,7 @@ Make your knowledgebase dynamic. Treat the current repo, docs, workflow schemas,
 
 Mix prompts with real verification. Use prompts for reasoning, then bind outcomes to checks you can run: tests, linting, diffs, or CLI validation. Finally, validate each step against acceptance criteria before moving on and keep ownership human. A good workflow makes assumptions visible early, and makes failure cheap.
 
-<img src="../assets/ai-complex/dynamic-knowledge-loop.svg" alt="Dynamic knowledgebase loop for prompt-as-workflow" />
+<img src="../../assets/ai-complex/dynamic-knowledge-loop.svg" alt="Dynamic knowledgebase loop for prompt-as-workflow" />
 
 <details>
 <summary>Mermaid source</summary>
@@ -75,4 +75,4 @@ flowchart TD
 ## Keep Going
 This is the foundation. The next step is to turn these ideas into concrete templates: how to draft workflows with explicit inputs/outputs, when to extract child workflows, and how to design acceptance criteria that are cheap, fast, and real.
 
-Diagrams referenced above live in `research/ai/ai-complex/` and are intended to be exported to SVG.
+Diagram sources live in `research/ai/ai-complex/` and are exported to `assets/ai-complex/`.
