@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "title": "12-Factor Environment Automation",
+      "url": "https://udx.io/devops-manual/12-factor-environment-automation"
+    },
+    {
+      "title": "Cloud Automation Book",
+      "url": "https://udx.io/cloud-automation-book/foreword"
+    },
+    {
+      "title": "DevOps Manual",
+      "url": "https://udx.io/devops-manual"
+    },
+    {
+      "title": "Why Software Logistics Matter",
+      "url": "https://udx.io/guidance/why-software-logistics-matter"
+    },
+    {
+      "title": "Delivery Platform Strategy",
+      "url": "https://udx.dev/delivery-platform/"
+    },
+    {
+      "title": "Embracing Digital Transformation",
+      "url": "https://udx.io/guidance/embracing-digital-transformation"
+    },
+    {
+      "title": "Ukrainian Cloud Engineering vs Russian Invasion",
+      "url": "https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
+    }
+  ]
+}

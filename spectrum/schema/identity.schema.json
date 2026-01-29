@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metadata",
+    "core_mission",
+    "operational_architecture",
+    "strategic_logic",
+    "engineering_physics",
+    "knowledge_base",
+    "hud_mapping"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "owner", "role", "motto"],
+      "properties": {
+        "version": { "type": "string" },
+        "owner": { "type": "string" },
+        "role": { "type": "array", "items": { "type": "string" } },
+        "motto": { "type": "string" }
+      }
+    },
+    "core_mission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "philosophy"],
+      "properties": {
+        "statement": { "type": "string" },
+        "philosophy": { "type": "string" }
+      }
+    },
+    "operational_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_plane",
+        "paradigm",
+        "delivery_model",
+        "factory_components"
+      ],
+      "properties": {
+        "control_plane": { "type": "string" },
+        "paradigm": { "type": "string" },
+        "delivery_model": { "type": "string" },
+        "factory_components": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["the_standard", "the_blueprint", "the_catalyst"],
+          "properties": {
+            "the_standard": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ref", "desc"],
+              "properties": {
+                "ref": { "type": "string" },
+                "desc": { "type": "string" }
+              }
+            },
+            "the_blueprint": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ref", "desc"],
+              "properties": {
+                "ref": { "type": "string" },
+                "desc": { "type": "string" }
+              }
+            },
+            "the_catalyst": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ref", "desc"],
+              "properties": {
+                "ref": { "type": "string" },
+                "desc": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "strategic_logic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["software_logistics", "performance_flow"],
+      "properties": {
+        "software_logistics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["focus", "why", "how"],
+          "properties": {
+            "focus": { "type": "string" },
+            "why": { "type": "string" },
+            "how": { "type": "string" }
+          }
+        },
+        "performance_flow": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["geodesic_path", "full_throttle"],
+          "properties": {
+            "geodesic_path": { "type": "string" },
+            "full_throttle": { "type": "string" }
+          }
+        }
+      }
+    },
+    "engineering_physics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tenets"],
+      "properties": {
+        "tenets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["principle", "logic"],
+            "properties": {
+              "principle": { "type": "string" },
+              "logic": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "knowledge_base": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["core_publications", "theoretical_references"],
+      "properties": {
+        "core_publications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "co_author", "focus"],
+            "properties": {
+              "title": { "type": "string" },
+              "co_author": { "type": "string" },
+              "focus": { "type": "string" }
+            }
+          }
+        },
+        "theoretical_references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "url"],
+            "properties": {
+              "label": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "hud_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ignition", "success", "failure", "analysis"],
+      "properties": {
+        "ignition": { "type": "string" },
+        "success": { "type": "string" },
+        "failure": { "type": "string" },
+        "analysis": { "type": "string" }
+      }
+    }
+  }
+}

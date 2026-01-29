@@ -1,0 +1,414 @@
+{
+  "generatedAt": "2026-01-29T22:39:08.038Z",
+  "items": [
+    {
+      "name": "Engineering Tips",
+      "title": "Engineering Tips",
+      "description": "Curated engineering guidance grouped by domain.",
+      "category": "Common",
+      "format": "json",
+      "path": "spectrum/engineering-tips.json",
+      "payload": [
+        {
+          "Group": "Common",
+          "Tips": [
+            {
+              "Tip": "Prefer clear, descriptive names over brevity",
+              "Why": "Readable code reduces onboarding time and lowers the risk of misinterpretation during maintenance."
+            },
+            {
+              "Tip": "Write small, composable functions with single responsibilities",
+              "Why": "Smaller units are easier to test, reason about, and change without unintended side effects."
+            },
+            {
+              "Tip": "Document decisions, not mechanics",
+              "Why": "Rationale and trade-offs help future maintainers understand context and avoid repeating past mistakes."
+            },
+            {
+              "Tip": "Treat tests as part of the API",
+              "Why": "Well-structured tests communicate expected behavior and protect critical flows from regressions."
+            },
+            {
+              "Tip": "Fail fast with explicit validation and error handling",
+              "Why": "Clear errors shorten debugging cycles and improve reliability in production."
+            },
+            {
+              "Tip": "Prefer deterministic builds and reproducible environments",
+              "Why": "Reproducibility makes CI trustworthy and reduces \"it works on my machine\" failures."
+            },
+            {
+              "Tip": "Keep dependencies current with a review cadence",
+              "Why": "Planned upgrades reduce security exposure and avoid disruptive catch-up work."
+            },
+            {
+              "Tip": "Use version control for all work, including experiments",
+              "Why": "History enables safe iteration, easier collaboration, and rapid rollback."
+            },
+            {
+              "Tip": "Review code for correctness, readability, and operability",
+              "Why": "Balanced reviews catch defects and ensure code can be supported in production."
+            },
+            {
+              "Tip": "Design APIs with stability and clarity in mind",
+              "Why": "Predictable interfaces reduce downstream churn and simplify integrations."
+            },
+            {
+              "Tip": "Instrument critical paths with metrics and logs",
+              "Why": "Operational visibility is essential for troubleshooting and capacity planning."
+            },
+            {
+              "Tip": "Automate repetitive tasks with scripts or tooling",
+              "Why": "Automation reduces human error and frees time for higher-impact work."
+            },
+            {
+              "Tip": "Establish clear ownership for services and components",
+              "Why": "Ownership improves response times and encourages long-term stewardship."
+            },
+            {
+              "Tip": "Use meaningful branch names and structured commits",
+              "Why": "Good metadata makes code history searchable and change intent clear."
+            },
+            {
+              "Tip": "Adopt linting and formatting as part of CI",
+              "Why": "Consistent style reduces review noise and prevents avoidable defects."
+            },
+            {
+              "Tip": "Prefer migrations and feature flags for risky changes",
+              "Why": "Controlled rollouts reduce downtime and allow fast rollback."
+            },
+            {
+              "Tip": "Back up critical data and test restores",
+              "Why": "Backups only matter if recovery is proven and timely."
+            },
+            {
+              "Tip": "Optimize after measuring, not before",
+              "Why": "Data-driven performance work prevents wasted effort and unexpected regressions."
+            },
+            {
+              "Tip": "Use containerization or standard runbooks for services",
+              "Why": "Consistent execution environments simplify deployment and incident response."
+            },
+            {
+              "Tip": "Keep documentation close to the code",
+              "Why": "Proximity increases the chance that docs stay current and actionable."
+            }
+          ]
+        },
+        {
+          "Group": "AI",
+          "Tips": [
+            {
+              "Tip": "Prefer prompt-as-workflow for multi-step AI tasks",
+              "Why": "Structured steps with explicit inputs and outputs keep automation deterministic and auditable."
+            },
+            {
+              "Tip": "Declare a single output type per artifact",
+              "Why": "Separating machine prompts from narrative avoids ambiguity and aligns with output contracts."
+            },
+            {
+              "Tip": "Bound the work with explicit step and file limits",
+              "Why": "Guardrails prevent scope creep and enforce manageable iteration sizes."
+            },
+            {
+              "Tip": "Make AI outputs repo-scoped and tool-oriented",
+              "Why": "Concrete paths and CLI steps are easier to execute and review than vague guidance."
+            },
+            {
+              "Tip": "Capture rationale when generating workflows",
+              "Why": "Decision context helps reviewers understand why a step exists and what it protects."
+            },
+            {
+              "Tip": "Avoid hidden side effects in AI-generated changes",
+              "Why": "Explicitly declared modifications make reviews faster and reduce risk."
+            },
+            {
+              "Tip": "Use deterministic language and avoid recursive prompt chains",
+              "Why": "Determinism improves repeatability and reduces unexpected tool behavior."
+            },
+            {
+              "Tip": "Separate execution from artifact generation",
+              "Why": "Keeping agents in artifact-only mode preserves safety boundaries."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Learnings",
+      "title": "Research & Learnings",
+      "description": "Curated research and learning references.",
+      "category": "Learning",
+      "format": "json",
+      "path": "spectrum/learnings.json",
+      "payload": {
+        "items": [
+          {
+            "title": "12-Factor Environment Automation",
+            "url": "https://udx.io/devops-manual/12-factor-environment-automation"
+          },
+          {
+            "title": "Cloud Automation Book",
+            "url": "https://udx.io/cloud-automation-book/foreword"
+          },
+          {
+            "title": "DevOps Manual",
+            "url": "https://udx.io/devops-manual"
+          },
+          {
+            "title": "Why Software Logistics Matter",
+            "url": "https://udx.io/guidance/why-software-logistics-matter"
+          },
+          {
+            "title": "Delivery Platform Strategy",
+            "url": "https://udx.dev/delivery-platform/"
+          },
+          {
+            "title": "Embracing Digital Transformation",
+            "url": "https://udx.io/guidance/embracing-digital-transformation"
+          },
+          {
+            "title": "Ukrainian Cloud Engineering vs Russian Invasion",
+            "url": "https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tooling",
+      "title": "Tooling Stack",
+      "description": "Primary tools and delivery components.",
+      "category": "Tooling",
+      "format": "json",
+      "path": "spectrum/tooling.json",
+      "payload": {
+        "items": [
+          {
+            "name": "Dev Kit",
+            "type": "CLI",
+            "description": "Tooling and deployment engines powering the stack.",
+            "links": [
+              {
+                "label": "GitHub",
+                "url": "https://github.com/udx/dev-kit"
+              }
+            ]
+          },
+          {
+            "name": "Worker Deployment",
+            "type": "Runtime",
+            "description": "Interface for instant Ignition and deployment workflows.",
+            "links": [
+              {
+                "label": "CLI",
+                "url": "https://npmjs.com/package/@udx/worker-deployment"
+              },
+              {
+                "label": "Source",
+                "url": "https://github.com/udx/worker"
+              },
+              {
+                "label": "Docker",
+                "url": "https://hub.docker.com/r/usabilitydynamics/udx-worker"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Research Index",
+      "title": "Research Index",
+      "description": "Generated index of research notes and publications.",
+      "category": "Learning",
+      "format": "json",
+      "path": "research/index.json",
+      "payload": {
+        "schemaVersion": 1,
+        "generatedAt": "2026-01-29T13:32:57.060Z",
+        "items": [
+          {
+            "title": "AI and Complex Problems: A Practical View",
+            "path": "research/ai-complex/index.html",
+            "url": "/research/ai-complex/"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Prompts Index",
+      "title": "Prompts Index",
+      "description": "Index of prompt templates and repo guides.",
+      "category": "Tooling",
+      "format": "json",
+      "path": "src/prompts/index.json",
+      "payload": [
+        {
+          "name": "Base Prompt",
+          "title": "Base Prompt (Non-AI)",
+          "description": "Deterministic, repo-scoped guidance without execution.",
+          "category": "Core",
+          "format": "markdown",
+          "path": "src/prompts/index.md"
+        },
+        {
+          "name": "Repo Overview",
+          "title": "Repo Overview",
+          "description": "Navigate the repo structure and key entry points.",
+          "category": "Core",
+          "format": "markdown",
+          "path": "src/prompts/repo-overview.md"
+        },
+        {
+          "name": "Homepage",
+          "title": "Homepage",
+          "description": "Guide content, layout, and widget updates.",
+          "category": "Frontend",
+          "format": "markdown",
+          "path": "src/prompts/homepage.md"
+        },
+        {
+          "name": "Spectrum",
+          "title": "Spectrum Data",
+          "description": "Maintain Spectrum JSON assets and schema consistency.",
+          "category": "Data",
+          "format": "markdown",
+          "path": "src/prompts/spectrum.md"
+        },
+        {
+          "name": "Research",
+          "title": "Research Index",
+          "description": "Keep research indexes stable and readable.",
+          "category": "Data",
+          "format": "markdown",
+          "path": "src/prompts/research.md"
+        },
+        {
+          "name": "Standards",
+          "title": "Standards",
+          "description": "Apply repo standards and commit conventions.",
+          "category": "Governance",
+          "format": "markdown",
+          "path": "src/prompts/standards.md"
+        }
+      ]
+    },
+    {
+      "name": "Identity",
+      "title": "Identity Profile",
+      "description": "Mission, philosophy, and operating model snapshot.",
+      "category": "Profile",
+      "format": "json",
+      "path": "spectrum/identity.json",
+      "payload": {
+        "metadata": {
+          "version": "1.1.0",
+          "owner": "Dmytro (fqjony)",
+          "role": [
+            "Discoverer",
+            "Engineer",
+            "Scientist"
+          ],
+          "motto": "Unit Ready. My space. My frequency. Orbit Achieved."
+        },
+        "core_mission": {
+          "statement": "Mastering complexity with calm strategy; making the hard stuff easy.",
+          "philosophy": "Automation isn't about moving objects; it's about warping the environment until the result is a constant."
+        },
+        "operational_architecture": {
+          "control_plane": "fqjony/relativity-warp",
+          "paradigm": "Repo-Centric Orchestration",
+          "delivery_model": "Software Logistics & High-Security Supply Chain",
+          "factory_components": {
+            "the_standard": {
+              "ref": "udx/worker",
+              "desc": "Universal, secure, stateless deployment environment; multi-cloud auth (GCP, AWS, Azure, Bitwarden)."
+            },
+            "the_blueprint": {
+              "ref": "udx/reusable-workflows",
+              "desc": "Delivery engine automating versioning and multi-registry publishing."
+            },
+            "the_catalyst": {
+              "ref": "@udx/worker-deployment",
+              "desc": "Interface for instant Ignition; collapsing deployment complexity."
+            }
+          }
+        },
+        "strategic_logic": {
+          "software_logistics": {
+            "focus": "Integrity & Supply Chain Security",
+            "why": "Eliminate 'dark matter' (vulnerabilities, non-compliance, configuration drift).",
+            "how": "Rigorous Spectral Analysis before any unit enters orbit; payload verification."
+          },
+          "performance_flow": {
+            "geodesic_path": "Shortest possible route from first line of code to production-ready state.",
+            "full_throttle": "Instantaneous execution; immutable state once coordinates are set."
+          }
+        },
+        "engineering_physics": {
+          "tenets": [
+            {
+              "principle": "Fail-Safe Integrity",
+              "logic": "Deployment never occurs if it risks breaking previous executions or active services."
+            },
+            {
+              "principle": "Impunity in Flow",
+              "logic": "Continuous deployment with total confidence via standardized worker units."
+            },
+            {
+              "principle": "Modularization & Controllers",
+              "logic": "Decoupled logic for granular management of complex automation."
+            },
+            {
+              "principle": "12-Factor Environment Automation",
+              "logic": "Declarative formats to minimize divergence between environments."
+            }
+          ]
+        },
+        "knowledge_base": {
+          "core_publications": [
+            {
+              "title": "Cloud Automation Book",
+              "co_author": "Andy Potanin",
+              "focus": "Principles of modern environment automation."
+            }
+          ],
+          "theoretical_references": [
+            {
+              "label": "12-Factor Environment Automation",
+              "url": "https://udx.io/devops-manual/12-factor-environment-automation"
+            },
+            {
+              "label": "Why Software Logistics Matter",
+              "url": "https://udx.io/guidance/why-software-logistics-matter"
+            },
+            {
+              "label": "Embracing Digital Transformation",
+              "url": "https://udx.io/guidance/embracing-digital-transformation"
+            },
+            {
+              "label": "Delivery Platform Strategy",
+              "url": "https://udx.dev/delivery-platform/"
+            }
+          ]
+        },
+        "hud_mapping": {
+          "ignition": "Full Throttle",
+          "success": "Orbit Achieved / Match Point",
+          "failure": "Mechanical Failure / Gravity Well",
+          "analysis": "Frequency Check"
+        }
+      }
+    },
+    {
+      "name": "References",
+      "title": "References",
+      "description": "Reserved for curated external references and sources.",
+      "category": "Reference",
+      "format": "json",
+      "path": "spectrum/refs.json",
+      "payload": {
+        "items": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "relativity-warp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:spectrum",
+    "build:spectrum": "node scripts/compile-spectrum.mjs",
+    "preview": "serve ."
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0",
+    "serve": "^14.2.1"
+  }
+}

@@ -2,7 +2,11 @@
   "metadata": {
     "version": "1.1.0",
     "owner": "Dmytro (fqjony)",
-    "role": ["Discoverer", "Engineer", "Scientist"],
+    "role": [
+      "Discoverer",
+      "Engineer",
+      "Scientist"
+    ],
     "motto": "Unit Ready. My space. My frequency. Orbit Achieved."
   },
   "core_mission": {
