@@ -1,68 +1,3 @@
-function toggleCollapse(id) {
-  var content = document.getElementById(id);
-  var isActive = content.classList.contains("active");
-
-  // Close all other collapsibles
-  var allCollapsibles = document.querySelectorAll(".collapsible-content");
-  allCollapsibles.forEach(function (item) {
-    item.classList.remove("active");
-  });
-
-  // If the clicked one wasn't active, open it
-  if (!isActive) {
-    content.classList.add("active");
-  }
-}
-
-function renderResearchLinks(items) {
-  var container = document.getElementById("research-links");
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = "";
-
-  if (!items || !items.length) {
-    var empty = document.createElement("p");
-    empty.className = "list-item";
-    empty.textContent = "• No research entries yet.";
-    container.appendChild(empty);
-    return;
-  }
-
-  items.forEach(function (item) {
-    var row = document.createElement("p");
-    row.className = "list-item";
-    row.appendChild(document.createTextNode("• "));
-
-    var link = document.createElement("a");
-    link.href = item.url || item.path || "#";
-    link.textContent = item.title || item.url || item.path;
-    link.target = "_blank";
-    link.rel = "noopener";
-
-    row.appendChild(link);
-    container.appendChild(row);
-  });
-}
-
-function loadResearchLinks() {
-  fetch("research/index.json", { cache: "no-store" })
-    .then(function (response) {
-      if (!response.ok) {
-        throw new Error("Failed to load research index");
-      }
-      return response.json();
-    })
-    .then(function (data) {
-      var items = Array.isArray(data) ? data : data.items;
-      renderResearchLinks(items || []);
-    })
-    .catch(function () {
-      renderResearchLinks([]);
-    });
-}
-
 var tipsCache = [];
 
 function flattenTips(groups) {
@@ -130,7 +65,7 @@ function pickRandomTip() {
 }
 
 function loadTips() {
-  fetch("spectrum/engineering-tips.json", { cache: "no-store" })
+  return fetch("spectrum/engineering-tips.json", { cache: "no-store" })
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Failed to load tips");
@@ -147,99 +82,146 @@ function loadTips() {
     });
 }
 
-function buildDataCard(item, linkLabel) {
-  var card = document.createElement("div");
-  card.className = "spectrum-card";
+var explorerCache = [];
 
-  var title = document.createElement("div");
-  title.className = "spectrum-title";
-  title.textContent = item.title || item.name || "Untitled";
-
-  var description = document.createElement("div");
-  description.className = "spectrum-description";
-  description.textContent = item.description || "No description provided.";
-
-  var meta = document.createElement("div");
-  meta.className = "spectrum-meta";
-
-  if (item.category) {
-    var category = document.createElement("span");
-    category.className = "pill";
-    category.textContent = item.category;
-    meta.appendChild(category);
+function setExplorerStatus(message) {
+  var output = document.getElementById("data-explorer-output");
+  if (output) {
+    output.textContent = message;
   }
-
-  if (item.format) {
-    var format = document.createElement("span");
-    format.className = "pill";
-    format.textContent = item.format;
-    meta.appendChild(format);
-  }
-
-  if (item.path) {
-    var link = document.createElement("a");
-    link.className = "pill";
-    link.textContent = linkLabel;
-    link.href = item.path;
-    link.target = "_blank";
-    link.rel = "noopener";
-    meta.appendChild(link);
-  }
-
-  card.appendChild(title);
-  card.appendChild(description);
-  card.appendChild(meta);
-  return card;
 }
 
-function renderDataCollection(items, containerId, emptyLabel, linkLabel) {
-  var container = document.getElementById(containerId);
-  if (!container) {
+function renderExplorerMeta(item) {
+  var meta = document.getElementById("data-explorer-meta");
+  var link = document.getElementById("data-explorer-link");
+  var humanLink = document.getElementById("data-explorer-human");
+  if (!meta) {
     return;
   }
 
-  container.innerHTML = "";
-
-  if (!items || !items.length) {
-    var empty = document.createElement("p");
-    empty.className = "list-item";
-    empty.textContent = emptyLabel;
-    container.appendChild(empty);
+  if (!item) {
+    meta.textContent = "No dataset selected.";
+    if (link) {
+      link.removeAttribute("href");
+      link.setAttribute("aria-disabled", "true");
+    }
+    if (humanLink) {
+      humanLink.removeAttribute("href");
+      humanLink.setAttribute("aria-disabled", "true");
+    }
     return;
   }
 
-  var expanded = container.getAttribute("data-expanded") === "true";
-  var limit = 1;
-  var visibleItems = expanded ? items : items.slice(0, limit);
+  var title = item.title || item.name || "Spectrum Entry";
+  var description = item.description || "No description provided.";
+  meta.textContent = title + " — " + description;
 
-  visibleItems.forEach(function (item) {
-    container.appendChild(buildDataCard(item, linkLabel));
+  if (link && item.path) {
+    link.href = item.path;
+    link.setAttribute("aria-disabled", "false");
+  }
+
+  if (humanLink && item.path) {
+    humanLink.href = "data-viewer.html?src=" + encodeURIComponent(item.path);
+    humanLink.setAttribute("aria-disabled", "false");
+  }
+}
+
+function loadExplorerPayload(item) {
+  if (!item || !item.path) {
+    setExplorerStatus("Select a dataset to preview.");
+    renderExplorerMeta(null);
+    return;
+  }
+
+  setExplorerStatus("Loading data...");
+  renderExplorerMeta(item);
+
+  fetch(item.path, { cache: "no-store" })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Failed to load dataset");
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      setExplorerStatus(JSON.stringify(data, null, 2));
+    })
+    .catch(function () {
+      setExplorerStatus("Unable to load dataset.");
+    });
+}
+
+function initDataExplorer(items) {
+  var select = document.getElementById("data-explorer-select");
+  var copyButton = document.getElementById("data-explorer-copy");
+  if (!select) {
+    return;
+  }
+
+  explorerCache = Array.isArray(items) ? items : [];
+  select.innerHTML = "";
+
+  if (!explorerCache.length) {
+    var emptyOption = document.createElement("option");
+    emptyOption.value = "";
+    emptyOption.textContent = "No datasets available";
+    select.appendChild(emptyOption);
+    loadExplorerPayload(null);
+    return;
+  }
+
+  var hasAll = explorerCache.some(function (item) {
+    return item && item.path === "spectrum/all.json";
   });
 
-  if (items.length > limit) {
-    var toggle = document.createElement("button");
-    toggle.className = "button button-compact button-ghost expand-button";
-    toggle.type = "button";
-    toggle.textContent = expanded ? "Less" : "More";
-    toggle.addEventListener("click", function () {
-      container.setAttribute("data-expanded", expanded ? "false" : "true");
-      renderDataCollection(items, containerId, emptyLabel, linkLabel);
-    });
-    container.appendChild(toggle);
+  if (!hasAll) {
+    explorerCache = [
+      {
+        name: "All Datasets",
+        title: "All Datasets",
+        description: "Combined payload for every available JSON dataset.",
+        path: "spectrum/all.json",
+      },
+    ].concat(explorerCache);
   }
-}
 
-function renderSpectrum(items) {
-  renderDataCollection(
-    items,
-    "spectrum-grid",
-    "• No spectrum entries available.",
-    "JSON"
-  );
+  explorerCache.forEach(function (item, index) {
+    var option = document.createElement("option");
+    option.value = item.path || String(index);
+    option.textContent = item.title || item.name || item.path || "Spectrum entry";
+    select.appendChild(option);
+  });
+
+  if (!select.dataset.bound) {
+    select.addEventListener("change", function () {
+      var match = explorerCache.find(function (entry) {
+        return entry.path === select.value;
+      });
+      loadExplorerPayload(match || explorerCache[0]);
+    });
+    select.dataset.bound = "true";
+  }
+
+  if (copyButton && !copyButton.dataset.bound) {
+    copyButton.addEventListener("click", function () {
+      var output = document.getElementById("data-explorer-output");
+      if (!output || !output.textContent) {
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(output.textContent);
+      }
+    });
+    copyButton.dataset.bound = "true";
+  }
+
+  select.value = explorerCache[0].path || "";
+  loadExplorerPayload(explorerCache[0]);
 }
 
 function loadSpectrumIndex() {
-  fetch("spectrum/index.json", { cache: "no-store" })
+  return fetch("spectrum/index.json", { cache: "no-store" })
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Failed to load spectrum index");
@@ -248,88 +230,45 @@ function loadSpectrumIndex() {
     })
     .then(function (data) {
       var items = Array.isArray(data) ? data : data.items;
-      renderSpectrum(items || []);
+      initDataExplorer(items || []);
     })
     .catch(function () {
-      renderSpectrum([]);
-    });
-}
-
-function renderPrompts(items) {
-  renderDataCollection(
-    items,
-    "prompts-grid",
-    "• No prompts available.",
-    "Prompt"
-  );
-}
-
-function loadPromptsIndex() {
-  fetch("src/prompts/index.json", { cache: "no-store" })
-    .then(function (response) {
-      if (!response.ok) {
-        throw new Error("Failed to load prompts index");
-      }
-      return response.json();
-    })
-    .then(function (data) {
-      var items = Array.isArray(data) ? data : data.items;
-      renderPrompts(items || []);
-    })
-    .catch(function () {
-      renderPrompts([]);
+      initDataExplorer([]);
     });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadResearchLinks();
-  loadTips();
-  loadSpectrumIndex();
-  loadPromptsIndex();
+  Promise.allSettled([loadTips(), loadSpectrumIndex()]);
 
   var themeToggle = document.getElementById("theme-toggle");
-  var themeJoke = document.getElementById("theme-joke");
-  var savedTheme = window.localStorage.getItem("rw-theme");
+  var themeJoke = document.getElementById("theme-tooltip");
+  var tooltipTimer;
 
-  function getPreferredTheme() {
-    if (savedTheme) {
-      return savedTheme;
-    }
-    if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-      return "light";
-    }
-    return "dark";
+  var themeJokes = [
+    "Starlight says: keep the orbit steady.",
+    "Starlight hums best in the dark.",
+    "Starlight approves: hold the line.",
+  ];
+
+  function pickThemeJoke() {
+    return themeJokes[Math.floor(Math.random() * themeJokes.length)];
   }
 
-  document.body.setAttribute("data-theme", getPreferredTheme());
-
-  function updateThemeNotice() {
+  function showThemeTooltip(message) {
     if (!themeJoke) {
       return;
     }
-    var isLight = document.body.getAttribute("data-theme") === "light";
-    if (isLight) {
-      themeJoke.textContent = "Light mode? Bold choice. Sunglasses engaged.";
-      themeJoke.classList.add("is-visible");
-    } else {
-      themeJoke.textContent = "";
+    themeJoke.textContent = message;
+    themeJoke.classList.add("is-visible");
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(function () {
       themeJoke.classList.remove("is-visible");
-    }
-    if (themeToggle) {
-      themeToggle.setAttribute("aria-pressed", String(isLight));
-      themeToggle.textContent = isLight ? "🌙 Dark" : "🌞 Light";
-    }
+    }, 1800);
   }
-
-  updateThemeNotice();
 
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
-      var nextTheme =
-        document.body.getAttribute("data-theme") === "light" ? "dark" : "light";
-      document.body.setAttribute("data-theme", nextTheme);
-      window.localStorage.setItem("rw-theme", nextTheme);
-      updateThemeNotice();
+      showThemeTooltip(pickThemeJoke());
     });
   }
 
@@ -341,28 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
       pickRandomTip();
-    });
-  }
-
-  var tabs = document.querySelectorAll(".data-tab");
-  if (tabs.length) {
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        var panelId = tab.getAttribute("data-panel");
-        tabs.forEach(function (item) {
-          item.classList.remove("is-active");
-          item.setAttribute("aria-selected", "false");
-        });
-        tab.classList.add("is-active");
-        tab.setAttribute("aria-selected", "true");
-        document.querySelectorAll(".data-panel").forEach(function (panel) {
-          if (panel.id === panelId) {
-            panel.classList.remove("is-hidden");
-          } else {
-            panel.classList.add("is-hidden");
-          }
-        });
-      });
     });
   }
 });

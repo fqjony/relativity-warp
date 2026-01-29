@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,28 +12,29 @@
     <link rel="stylesheet" href="assets/index.css" />
     <script src="assets/index.js" defer></script>
   </head>
-  <body>
+  <body data-theme="dark">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <div class="control-bar" aria-label="Quick controls">
-        <div class="control-label">Quick actions</div>
-        <div class="control-item">
+        <div class="control-widget" aria-live="polite">
           <button
             id="theme-toggle"
             class="button button-compact"
             type="button"
             aria-pressed="false"
+            aria-describedby="theme-tooltip"
           >
             🌗 Theme
           </button>
-          <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
+          <span
+            id="theme-tooltip"
+            class="theme-joke"
+            role="tooltip"
+            aria-live="polite"
+          ></span>
         </div>
       </div>
       <header class="hero">
-        <div class="hero-meta">
-          <span class="badge">Control Plane</span>
-          <span class="badge badge-muted">Orbit Achieved</span>
-        </div>
         <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
         <p class="hero-subtitle">
           Software Engineering, DevSecOps, Automation, Cybersecurity
@@ -66,173 +67,50 @@
         </div>
       </header>
 
-      <main class="grid" id="content">
+      <main id="content">
         <section class="section card">
           <div class="section-header">
-            <h2>Projects</h2>
-            <span class="badge badge-accent">Core</span>
+            <h2>Spectrum Data Explorer</h2>
+            <span class="badge badge-accent">Live JSON</span>
           </div>
-          <p>Tools and deployment engines powering the stack.</p>
-          <div class="stack-list">
-            <div class="stack-item">
-              <div class="stack-header">
-                <strong>Dev Kit</strong>
-                <span class="pill">CLI</span>
+          <div class="section-body">
+            <div class="data-explorer">
+              <div class="data-explorer-controls">
+                <label for="data-explorer-select">Dataset</label>
+                <select id="data-explorer-select"></select>
+                <a
+                  id="data-explorer-link"
+                  class="button button-compact button-ghost"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  aria-disabled="true"
+                  >Open JSON</a
+                >
+                <a
+                  id="data-explorer-human"
+                  class="button button-compact button-ghost"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  aria-disabled="true"
+                  >Human View</a
+                >
+                <button
+                  id="data-explorer-copy"
+                  class="button button-compact button-ghost"
+                  type="button"
+                >
+                  Copy
+                </button>
               </div>
-              <div class="stack-links">
-                <a
-                  href="https://github.com/udx/dev-kit"
-                  target="_blank"
-                  rel="noopener"
-                  >GitHub</a
-                >
+              <div id="data-explorer-meta" class="data-explorer-meta">
+                Select a dataset to preview.
               </div>
-            </div>
-            <div class="stack-item">
-              <div class="stack-header">
-                <strong>Worker Deployment</strong>
-                <span class="pill">Runtime</span>
-              </div>
-              <div class="stack-links">
-                <a
-                  href="https://npmjs.com/package/@udx/worker-deployment"
-                  target="_blank"
-                  rel="noopener"
-                  >CLI</a
-                >
-                <a
-                  href="https://github.com/udx/worker"
-                  target="_blank"
-                  rel="noopener"
-                  >Source</a
-                >
-                <a
-                  href="https://hub.docker.com/r/usabilitydynamics/udx-worker"
-                  target="_blank"
-                  rel="noopener"
-                  >Docker</a
-                >
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Research & Learnings</h2>
-            <span class="badge badge-muted">Library</span>
-          </div>
-          <p>Ongoing notes, experiments, and curated publications.</p>
-          <div class="subsection">
-            <div class="subsection-title">Notes</div>
-            <div id="research-links" class="link-list">
-              <p class="list-item">• Loading research index...</p>
-            </div>
-          </div>
-          <div class="subsection">
-            <div class="subsection-title">Reading shelf</div>
-            <div id="refs-list" class="link-list">
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.io/devops-manual/12-factor-environment-automation"
-                  target="_blank"
-                  rel="noopener"
-                  >12-Factor Environment Automation</a
-                >
-              </p>
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.io/cloud-automation-book/foreword"
-                  target="_blank"
-                  rel="noopener"
-                  >Cloud Automation Book</a
-                >
-              </p>
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.io/devops-manual"
-                  target="_blank"
-                  rel="noopener"
-                  >DevOps Manual</a
-                >
-              </p>
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.io/guidance/why-software-logistics-matter"
-                  target="_blank"
-                  rel="noopener"
-                  >Why Software Logistics Matter</a
-                >
-              </p>
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.dev/delivery-platform"
-                  target="_blank"
-                  rel="noopener"
-                  >Delivery Platform Strategy</a
-                >
-              </p>
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.io/guidance/embracing-digital-transformation"
-                  target="_blank"
-                  rel="noopener"
-                  >Embracing Digital Transformation</a
-                >
-              </p>
-              <p class="list-item">
-                •
-                <a
-                  href="https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
-                  target="_blank"
-                  rel="noopener"
-                  >Ukrainian Cloud Engineering vs Russian Invasion</a
-                >
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Spectrum & Prompts</h2>
-            <span class="badge badge-accent">Indexes</span>
-          </div>
-          <p>Data endpoints and AI-agnostic prompt templates.</p>
-          <div class="data-switcher" role="tablist" aria-label="Spectrum and prompts">
-            <button
-              class="data-tab is-active"
-              type="button"
-              data-panel="spectrum-panel"
-              role="tab"
-              aria-selected="true"
-            >
-              Spectrum
-            </button>
-            <button
-              class="data-tab"
-              type="button"
-              data-panel="prompts-panel"
-              role="tab"
-              aria-selected="false"
-            >
-              Prompts
-            </button>
-          </div>
-          <div id="spectrum-panel" class="data-panel">
-            <div id="spectrum-grid" class="spectrum-grid">
-              <p class="list-item">• Loading spectrum index...</p>
-            </div>
-          </div>
-          <div id="prompts-panel" class="data-panel is-hidden">
-            <div id="prompts-grid" class="spectrum-grid">
-              <p class="list-item">• Loading prompt index...</p>
+              <pre
+                id="data-explorer-output"
+                class="data-explorer-output"
+              >Select a dataset to preview.</pre>
             </div>
           </div>
         </section>
