@@ -319,20 +319,31 @@ document.addEventListener("DOMContentLoaded", function () {
   var themeJoke = document.getElementById("theme-joke");
   var savedTheme = window.localStorage.getItem("rw-theme");
 
-  if (savedTheme) {
-    document.body.setAttribute("data-theme", savedTheme);
-  } else {
-    document.body.setAttribute("data-theme", "dark");
+  function getPreferredTheme() {
+    if (savedTheme) {
+      return savedTheme;
+    }
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+      return "light";
+    }
+    return "dark";
   }
+
+  document.body.setAttribute("data-theme", getPreferredTheme());
 
   function updateThemeNotice() {
     if (!themeJoke) {
       return;
     }
-    if (document.body.getAttribute("data-theme") === "light") {
+    var isLight = document.body.getAttribute("data-theme") === "light";
+    if (isLight) {
       themeJoke.textContent = "Light mode? Bold choice. Sunglasses engaged.";
     } else {
       themeJoke.textContent = "";
+    }
+    if (themeToggle) {
+      themeToggle.setAttribute("aria-pressed", String(isLight));
+      themeToggle.textContent = isLight ? "Switch to dark" : "Switch to light";
     }
   }
 

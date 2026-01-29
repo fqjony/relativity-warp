@@ -8,67 +8,80 @@
       name="description"
       content="Don't move objects. Warp the environment."
     />
+    <meta name="color-scheme" content="dark light" />
     <link rel="stylesheet" href="assets/index.css" />
     <script src="assets/index.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
+      <div class="control-bar" aria-label="Quick controls">
+        <button id="tip-refresh" class="button" type="button">
+          New tip
+        </button>
+        <button
+          id="theme-toggle"
+          class="button"
+          type="button"
+          aria-pressed="false"
+        >
+          Toggle theme
+        </button>
+        <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
+      </div>
       <header class="hero">
         <div class="hero-meta">
           <span class="badge">Control Plane</span>
           <span class="badge badge-muted">Orbit Achieved</span>
-        </div>
-        <div class="theme-switcher">
-          <button id="theme-toggle" class="button" type="button">
-            Toggle theme
-          </button>
-          <span id="theme-joke" class="theme-joke" aria-live="polite"></span>
         </div>
         <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
         <p class="hero-subtitle">
           Software Engineering, DevSecOps, Automation, Cybersecurity
         </p>
         <div class="hero-links">
-          <a href="https://github.com/fqjony" target="_blank"
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener"
             >💻 github.com/fqjony</a
           >
-          <a href="https://linkedin.com/in/fqjony" target="_blank"
+          <a
+            href="https://linkedin.com/in/fqjony"
+            target="_blank"
+            rel="noopener"
             >💼 linkedin.com/in/fqjony</a
           >
-          <a href="https://udx.io" target="_blank">🌐 udx.io</a>
+          <a href="https://udx.io" target="_blank" rel="noopener"
+            >🌐 udx.io</a
+          >
         </div>
       </header>
 
-      <main class="grid">
+      <main class="grid" id="content">
         <section class="section card">
           <div class="section-header">
-            <h2>Dev Kit</h2>
-            <span class="badge badge-accent">Tools</span>
+            <h2>Projects</h2>
+            <span class="badge badge-accent">Core</span>
           </div>
-          <p>Empower your engineering workflow.</p>
-          <div id="dev-kit-links" class="link-row">
-            <a href="https://github.com/udx/dev-kit" target="_blank">Github</a>
+          <p>Tools and deployment engines powering the stack.</p>
+          <div class="link-row">
+            <strong>Dev Kit</strong>
+            <a href="https://github.com/udx/dev-kit" target="_blank" rel="noopener"
+              >Github</a
+            >
           </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Worker Deployment</h2>
-            <span class="badge badge-accent">Delivery</span>
-          </div>
-          <p>Deploy any software with worker containers using worker CLI.</p>
-          <div id="worker-code" class="link-row">
+          <div class="link-row">
+            <strong>Worker Deployment</strong>
             <a
               href="https://npmjs.com/package/@udx/worker-deployment"
               target="_blank"
+              rel="noopener"
               >Worker CLI</a
             >
-            <a href="https://github.com/udx/worker" target="_blank"
+            <a href="https://github.com/udx/worker" target="_blank" rel="noopener"
               >Github Source</a
             >
             <a
               href="https://hub.docker.com/r/usabilitydynamics/udx-worker"
               target="_blank"
+              rel="noopener"
               >Docker Hub Build</a
             >
           </div>
@@ -76,75 +89,12 @@
 
         <section class="section card">
           <div class="section-header">
-            <h2>Research</h2>
-            <span class="badge badge-muted">Notes</span>
+            <h2>Research & Learnings</h2>
+            <span class="badge badge-muted">Library</span>
           </div>
-          <p>Ongoing notes and experiments.</p>
+          <p>Ongoing notes, experiments, and curated publications.</p>
           <div id="research-links">
             <p class="list-item">• Loading research index...</p>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Engineering Tip</h2>
-            <span class="badge badge-muted">Daily</span>
-          </div>
-          <p>One random tip per page load. Refresh for another.</p>
-          <div id="tip-widget" class="tip-card">
-            <p class="list-item">• Loading tip...</p>
-          </div>
-          <div class="tip-actions">
-            <button id="tip-refresh" class="button" type="button">
-              Refresh tip
-            </button>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Spectrum</h2>
-            <span class="badge badge-accent">Index</span>
-          </div>
-          <p>Available JSON endpoints and references.</p>
-          <div id="spectrum-grid" class="spectrum-grid">
-            <p class="list-item">• Loading spectrum index...</p>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Prompts</h2>
-            <span class="badge badge-accent">AI-agnostic</span>
-          </div>
-          <p>Repo-scoped prompt templates for consistent work.</p>
-          <div id="prompts-grid" class="spectrum-grid">
-            <p class="list-item">• Loading prompt index...</p>
-          </div>
-        </section>
-
-        <section class="section card">
-          <div class="section-header">
-            <h2>Recent commits</h2>
-            <span class="badge badge-muted">GitHub</span>
-          </div>
-          <p>Latest updates on GitHub.</p>
-          <div id="commit-links">
-            <p class="list-item">
-              •
-              <a
-                href="https://github.com/fqjony/relativity-warp/commits/main"
-                target="_blank"
-                >View commit history</a
-              >
-            </p>
-          </div>
-        </section>
-
-        <section class="section card section-wide">
-          <div class="section-header">
-            <h2>Learnings</h2>
-            <span class="badge badge-muted">Library</span>
           </div>
           <div id="refs-list" class="link-list">
             <p class="list-item">
@@ -152,6 +102,7 @@
               <a
                 href="https://udx.io/devops-manual/12-factor-environment-automation"
                 target="_blank"
+                rel="noopener"
                 >12-Factor Environment Automation</a
               >
             </p>
@@ -160,12 +111,13 @@
               <a
                 href="https://udx.io/cloud-automation-book/foreword"
                 target="_blank"
+                rel="noopener"
                 >Cloud Automation Book</a
               >
             </p>
             <p class="list-item">
               •
-              <a href="https://udx.io/devops-manual" target="_blank"
+              <a href="https://udx.io/devops-manual" target="_blank" rel="noopener"
                 >DevOps Manual</a
               >
             </p>
@@ -174,12 +126,13 @@
               <a
                 href="https://udx.io/guidance/why-software-logistics-matter"
                 target="_blank"
+                rel="noopener"
                 >Why Software Logistics Matter</a
               >
             </p>
             <p class="list-item">
               •
-              <a href="https://udx.dev/delivery-platform" target="_blank"
+              <a href="https://udx.dev/delivery-platform" target="_blank" rel="noopener"
                 >Delivery Platform Strategy</a
               >
             </p>
@@ -188,6 +141,7 @@
               <a
                 href="https://udx.io/guidance/embracing-digital-transformation"
                 target="_blank"
+                rel="noopener"
                 >Embracing Digital Transformation</a
               >
             </p>
@@ -196,7 +150,44 @@
               <a
                 href="https://udx.io/guidance/ukrainian-cloud-engineering-vs-russian-invasion"
                 target="_blank"
+                rel="noopener"
                 >Ukrainian Cloud Engineering vs Russian Invasion</a
+              >
+            </p>
+          </div>
+        </section>
+
+        <section class="section card">
+          <div class="section-header">
+            <h2>Spectrum & Prompts</h2>
+            <span class="badge badge-accent">Indexes</span>
+          </div>
+          <p>Data endpoints and AI-agnostic prompt templates.</p>
+          <div id="spectrum-grid" class="spectrum-grid">
+            <p class="list-item">• Loading spectrum index...</p>
+          </div>
+          <div id="prompts-grid" class="spectrum-grid">
+            <p class="list-item">• Loading prompt index...</p>
+          </div>
+        </section>
+
+        <section class="section card">
+          <div class="section-header">
+            <h2>Updates</h2>
+            <span class="badge badge-muted">Live</span>
+          </div>
+          <p>One random tip per load and latest GitHub activity.</p>
+          <div id="tip-widget" class="tip-card">
+            <p class="list-item">• Loading tip...</p>
+          </div>
+          <div id="commit-links">
+            <p class="list-item">
+              •
+              <a
+                href="https://github.com/fqjony/relativity-warp/commits/main"
+                target="_blank"
+                rel="noopener"
+                >View commit history</a
               >
             </p>
           </div>
@@ -205,7 +196,10 @@
 
       <footer class="footer">
         <p class="motto">
-          <a href="https://github.com/fqjony/relativity-warp" target="_blank"
+          <a
+            href="https://github.com/fqjony/relativity-warp"
+            target="_blank"
+            rel="noopener"
             >Discover More</a
           >
         </p>
