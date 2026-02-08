@@ -81,6 +81,22 @@
       {
         "Tip": "Keep documentation close to the code",
         "Why": "Proximity increases the chance that docs stay current and actionable."
+      },
+      {
+        "Tip": "Keep the execution surface small and explicit",
+        "Why": "Narrow boundaries reduce risk and make automation behavior predictable."
+      },
+      {
+        "Tip": "Declare inputs and outputs for every automated step",
+        "Why": "Explicit I/O makes workflows testable and repeatable."
+      },
+      {
+        "Tip": "Add validation gates before shipping changes",
+        "Why": "Verification prevents confident-but-wrong output from reaching production."
+      },
+      {
+        "Tip": "Capture context in lightweight markdown notes",
+        "Why": "Short, scoped notes preserve intent without slowing down iteration."
       }
     ]
   },
@@ -118,6 +134,22 @@
       {
         "Tip": "Separate execution from artifact generation",
         "Why": "Keeping agents in artifact-only mode preserves safety boundaries."
+      },
+      {
+        "Tip": "Store prompts as versioned artifacts",
+        "Why": "Versioned prompts preserve intent and make automation reproducible."
+      },
+      {
+        "Tip": "Use context resolvers before asking for solutions",
+        "Why": "Deterministic context reduces guessing and improves reliability."
+      },
+      {
+        "Tip": "Require verification steps in AI workflows",
+        "Why": "Built-in checks prevent regressions and make results auditable."
+      },
+      {
+        "Tip": "Gate high-risk changes with human approval checkpoints",
+        "Why": "Human-in-the-loop control catches ambiguity before execution."
       }
     ]
   }

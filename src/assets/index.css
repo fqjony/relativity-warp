@@ -49,6 +49,7 @@ body {
     letter-spacing: -0.01em;
     position: relative;
     min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
 }
@@ -74,6 +75,7 @@ body::before {
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 .control-bar {
@@ -343,6 +345,19 @@ main {
     white-space: nowrap;
 }
 
+.section-link {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+}
+
+.section-link:hover {
+    color: var(--text-primary);
+}
+
 .section p {
     font-size: 0.875rem;
     color: var(--text-secondary);
@@ -468,6 +483,14 @@ a:hover {
 .link-list {
     display: grid;
     gap: 0.7rem;
+}
+
+.research-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem 1.4rem;
+    max-height: calc(100vh - 380px);
+    overflow-y: auto;
+    padding-right: 0.35rem;
 }
 
 .link-list .list-item a {
@@ -1005,6 +1028,14 @@ a:hover {
         max-width: 100%;
         right: auto;
         left: 0;
+    }
+
+    .section-link {
+        margin-left: 0;
+    }
+
+    .research-list {
+        max-height: none;
     }
 }
 

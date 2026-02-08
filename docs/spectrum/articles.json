@@ -1,11 +1,56 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-08T20:40:45.860Z",
+  "generatedAt": "2026-02-08T20:50:46.782Z",
   "items": [
+    {
+      "title": "Automation Runtime Boundaries",
+      "path": "spectrum/automation-runtime-boundaries/index.html",
+      "url": "/spectrum/automation-runtime-boundaries/"
+    },
+    {
+      "title": "Context Resolvers",
+      "path": "spectrum/context-resolvers/index.html",
+      "url": "/spectrum/context-resolvers/"
+    },
     {
       "title": "Context-Driven Engineering",
       "path": "spectrum/ai-complex/index.html",
       "url": "/spectrum/ai-complex/"
+    },
+    {
+      "title": "Context-Driven Engineering",
+      "path": "spectrum/context-driven-engineering/index.html",
+      "url": "/spectrum/context-driven-engineering/"
+    },
+    {
+      "title": "Deterministic Execution",
+      "path": "spectrum/deterministic-execution/index.html",
+      "url": "/spectrum/deterministic-execution/"
+    },
+    {
+      "title": "Human-in-the-Loop Control",
+      "path": "spectrum/human-in-the-loop/index.html",
+      "url": "/spectrum/human-in-the-loop/"
+    },
+    {
+      "title": "Prompt as Artifact",
+      "path": "spectrum/prompt-as-artifact/index.html",
+      "url": "/spectrum/prompt-as-artifact/"
+    },
+    {
+      "title": "Repository Contracts",
+      "path": "spectrum/repo-contracts/index.html",
+      "url": "/spectrum/repo-contracts/"
+    },
+    {
+      "title": "Verification-First Automation",
+      "path": "spectrum/verification-first/index.html",
+      "url": "/spectrum/verification-first/"
+    },
+    {
+      "title": "Workflow-First Automation",
+      "path": "spectrum/workflow-first-automation/index.html",
+      "url": "/spectrum/workflow-first-automation/"
     }
   ]
 }

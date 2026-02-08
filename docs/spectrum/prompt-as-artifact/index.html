@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt as Artifact - Relativity Warp</title>
+    <meta name="description" content="Treat prompts as versioned inputs, not transient chat messages." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+    <link rel="canonical" href="/spectrum/prompt-as-artifact/" />
+  </head>
+  <body data-theme="dark">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="hero">
+        <h1 class="hero-title">Prompt as Artifact</h1>
+        <p class="hero-subtitle">Research note</p>
+        <div class="hero-links">
+          <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
+        </div>
+      </header>
+      <main id="content">
+        <section class="section card">
+          <div class="section-body">
+            <div class="article-content">
+              <h2>Why prompts must be stored</h2>
+<p>Prompts encode intent. If they are not stored, intent disappears. That creates a gap between what was asked and what was shipped.</p>
+<h2>Artifact rules</h2>
+<ul>
+<li>Every prompt becomes a file.</li>
+<li>The file has a declared output type.</li>
+<li>The file is reviewed like code.</li>
+<li>The file maps to a deterministic result.</li>
+</ul>
+<h2>What changes when prompts are artifacts</h2>
+<ul>
+<li>You can diff intent over time.</li>
+<li>You can reproduce decisions.</li>
+<li>You can audit why automation made a choice.</li>
+</ul>
+<h2>Practical start</h2>
+<p>Create a <code>prompts/</code> or <code>manifests/</code> directory. Name prompts by purpose, not by author. Wire them into build or workflow steps.</p>
+
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

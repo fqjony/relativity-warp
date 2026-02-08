@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Context Resolvers - Relativity Warp</title>
+    <meta name="description" content="Turning messy repositories into deterministic, queryable context for automation." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+    <link rel="canonical" href="/spectrum/context-resolvers/" />
+  </head>
+  <body data-theme="dark">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="hero">
+        <h1 class="hero-title">Context Resolvers</h1>
+        <p class="hero-subtitle">Research note</p>
+        <div class="hero-links">
+          <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
+        </div>
+      </header>
+      <main id="content">
+        <section class="section card">
+          <div class="section-body">
+            <div class="article-content">
+              <h2>The problem</h2>
+<p>Real repositories are full of implicit rules. A human can infer them, but automation cannot. Context resolvers convert those hidden rules into explicit, machine-derivable artifacts.</p>
+<h2>What a resolver does</h2>
+<ul>
+<li>Maps raw files into structured context.</li>
+<li>Declares constraints and ownership.</li>
+<li>Normalizes naming, paths, and scope.</li>
+<li>Outputs deterministic summaries for tooling.</li>
+</ul>
+<h2>Minimal resolver shape</h2>
+<ul>
+<li><strong>Input:</strong> repo paths + manifests.</li>
+<li><strong>Logic:</strong> extract, normalize, validate.</li>
+<li><strong>Output:</strong> JSON or Markdown artifact.</li>
+</ul>
+<h2>Where to start</h2>
+<ul>
+<li>Declare the repo root contract.</li>
+<li>Define a minimal inventory of packages, services, and entry points.</li>
+<li>Add validation rules for each artifact.</li>
+</ul>
+<h2>Why it matters</h2>
+<p>Resolvers make automation reliable. They reduce guesswork and make AI outputs verifiable against known constraints.</p>
+
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
