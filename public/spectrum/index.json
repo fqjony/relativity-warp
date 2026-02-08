@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Engineering Tips",
+    "title": "Engineering Tips",
+    "description": "Curated engineering guidance grouped by domain.",
+    "category": "Common",
+    "format": "json",
+    "path": "spectrum/engineering-tips.json",
+    "source": "spectrum/src/engineering-tips.yml",
+    "schema": "spectrum/schema/engineering-tips.schema.json"
+  }
+]

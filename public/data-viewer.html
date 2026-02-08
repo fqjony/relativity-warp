@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relativity Warp - Data Viewer</title>
+    <meta name="description" content="Human-friendly view of Spectrum JSON." />
+    <link rel="stylesheet" href="assets/index.css" />
+    <script src="assets/data-viewer.js" defer></script>
+  </head>
+  <body data-theme="dark">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="hero">
+        <h1 class="hero-title">Spectrum Data Viewer</h1>
+        <p class="hero-subtitle">Human-friendly JSON, rendered live.</p>
+        <div class="hero-links">
+          <a href="index.html" class="button button-compact button-ghost"
+            >Back to Control Plane</a
+          >
+        </div>
+      </header>
+
+      <main id="content">
+        <section class="section card">
+          <div class="section-header">
+            <h2>Dataset</h2>
+            <span class="badge badge-muted">Live JSON</span>
+          </div>
+          <div class="section-body">
+            <div class="data-viewer-controls">
+              <label for="data-viewer-select">Dataset</label>
+              <select id="data-viewer-select"></select>
+              <a
+                id="data-viewer-json"
+                class="button button-compact button-ghost"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                aria-disabled="true"
+                >Open JSON</a
+              >
+            </div>
+            <div id="data-viewer-meta" class="data-explorer-meta">
+              Select a dataset to preview.
+            </div>
+            <div id="data-viewer-content" class="data-viewer-content"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
