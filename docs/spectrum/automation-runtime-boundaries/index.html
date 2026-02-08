@@ -17,7 +17,7 @@
         <div class="hero-meta">
           <span class="type-badge type-note">note</span>
           <div class="label-list">
-            <span class="label-chip">automation</span><span class="label-chip">security</span><span class="label-chip">devops</span>
+            <span class="label-chip">automation</span><span class="label-chip">security</span><span class="label-chip">devops</span><span class="label-chip">engineering</span>
           </div>
         </div>
         <div class="hero-links">
@@ -29,15 +29,22 @@
           <div class="section-body">
             <div class="article-content">
               <ul>
-<li>Boundaries separate reasoning from execution.</li>
-<li>Every command must be explicit and reviewable.</li>
+<li>Separate reasoning from execution.</li>
+<li>Every command should be explicit and reviewable.</li>
 <li>Side effects must be logged and attributable.</li>
 <li>Do it manually once before automating it.</li>
 <li>Prefer keyless access with scoped identities.</li>
 </ul>
+<h2>Boundary checklist</h2>
+<ul>
+<li>Who can trigger execution?</li>
+<li>What is the approved command surface?</li>
+<li>Where do outputs go?</li>
+<li>What is the rollback path?</li>
+</ul>
 <h2>Flow (placeholder)</h2>
 <ul>
-<li>Inputs → Validate → Execute → Capture output → Review</li>
+<li>Inputs → Validate → Execute → Capture → Review</li>
 </ul>
 
             </div>

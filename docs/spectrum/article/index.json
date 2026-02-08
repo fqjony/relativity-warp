@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-08T21:38:48.268Z",
+  "generatedAt": "2026-02-08T21:45:28.755Z",
   "items": [
     {
       "title": "AI and Complex Problems",
@@ -16,6 +16,20 @@
       ]
     },
     {
+      "title": "Context-Driven Engineering",
+      "path": "spectrum/context-driven-engineering/index.html",
+      "url": "/spectrum/context-driven-engineering/",
+      "type": "article",
+      "date": "",
+      "labels": [
+        "engineering",
+        "development",
+        "software",
+        "automation",
+        "physics"
+      ]
+    },
+    {
       "title": "Prompt as Artifact",
       "path": "spectrum/prompt-as-artifact/index.html",
       "url": "/spectrum/prompt-as-artifact/",
@@ -24,7 +38,8 @@
       "labels": [
         "ai",
         "workflows",
-        "automation"
+        "automation",
+        "development"
       ]
     },
     {
@@ -37,7 +52,7 @@
         "repo-centric",
         "engineering",
         "development",
-        "standards"
+        "software"
       ]
     }
   ]

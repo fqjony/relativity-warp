@@ -17,7 +17,7 @@
         <div class="hero-meta">
           <span class="type-badge type-research">research</span>
           <div class="label-list">
-            <span class="label-chip">automation</span><span class="label-chip">reliability</span><span class="label-chip">devops</span>
+            <span class="label-chip">automation</span><span class="label-chip">reliability</span><span class="label-chip">devops</span><span class="label-chip">engineering</span><span class="label-chip">physics</span>
           </div>
         </div>
         <div class="hero-links">
@@ -33,22 +33,29 @@
 <h2>Observations</h2>
 <ul>
 <li>Inputs change silently without versioning.</li>
-<li>Tools drift across environments.</li>
+<li>Tooling drifts across environments.</li>
 <li>Outputs are written to ad-hoc paths.</li>
-<li>Config that leaks into code causes non-determinism.</li>
+<li>Config leaks into code and breaks repeatability.</li>
 <li>Bootstrap steps are undocumented or skipped.</li>
 </ul>
 <h2>Working hypothesis</h2>
 <p>If steps are bounded and outputs are fixed, automation becomes repeatable across machines.</p>
+<h2>Experimental design</h2>
+<ul>
+<li>Pin tool versions and environments.</li>
+<li>Force outputs into fixed directories.</li>
+<li>Compare run-to-run diffs and failure rates.</li>
+</ul>
+<h2>Physics note</h2>
+<p>Deterministic systems require fixed initial conditions. In engineering, that means pinned tools, explicit inputs, and stable outputs.</p>
+<h2>Expected outcomes</h2>
+<ul>
+<li>Lower variance and fewer surprises.</li>
+</ul>
 <h2>Flow (placeholder)</h2>
-<ol>
-<li>Declare inputs.</li>
-<li>Pin tool versions.</li>
-<li>Bootstrap the environment.</li>
-<li>Execute steps.</li>
-<li>Verify outputs.</li>
-<li>Persist artifacts.</li>
-</ol>
+<ul>
+<li>Declare inputs → Pin tools → Execute → Verify → Persist</li>
+</ul>
 
             </div>
           </div>

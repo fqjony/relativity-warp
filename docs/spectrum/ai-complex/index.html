@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI and Complex Problems - Relativity Warp</title>
-    <meta name="description" content="A practical view on why complexity breaks AI, and how to de-risk multi-step engineering." />
+    <meta name="description" content="Why complexity breaks AI output and how to engineer reliable multi-step work." />
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/ai-complex/" />
   </head>
@@ -28,36 +28,39 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>Why complexity breaks AI</h2>
-<p>Complex problems are incomplete by definition. They contain hidden constraints, competing goals, and unknown dependencies. A single prompt cannot carry this load without distortion. AI output becomes fluent but fragile.</p>
-<h2>The failure modes</h2>
+              <p>Complex engineering work is a chain of hidden constraints. AI does well with visible context, but it collapses when constraints are implicit. The answer looks fluent while the system underneath is wrong.</p>
+<h2>What actually breaks</h2>
 <ol>
-<li><strong>Hidden constraints.</strong> The model guesses what it cannot see.</li>
-<li><strong>Ambiguous priorities.</strong> The output optimizes the wrong dimension.</li>
-<li><strong>Unbounded scope.</strong> A single answer tries to solve multiple systems at once.</li>
-<li><strong>Non-verifiable output.</strong> The result looks complete but cannot be tested.</li>
+<li><strong>Hidden constraints</strong>: ownership rules, security boundaries, environments, or tooling are missing.</li>
+<li><strong>Ambiguous priorities</strong>: speed vs safety, correctness vs scope, are not declared.</li>
+<li><strong>Unbounded scope</strong>: the model tries to solve the entire system in one response.</li>
+<li><strong>Non-verifiable output</strong>: the result is not tied to checks, so drift is invisible.</li>
 </ol>
-<h2>What actually works</h2>
+<h2>Engineering fixes</h2>
 <ul>
-<li>Break problems into bounded steps.</li>
-<li>Declare inputs, outputs, and tools per step.</li>
-<li>Verify after each step.</li>
-<li>Persist artifacts and diffs.</li>
+<li>Break work into bounded steps with explicit inputs and outputs.</li>
+<li>Require a verifiable artifact per step (diff, file, report, build output).</li>
+<li>Insert verification gates between steps.</li>
+<li>Persist artifacts so outputs are replayable and inspectable.</li>
 </ul>
-<h2>Engineering mindset</h2>
-<p>Treat AI like a junior collaborator: it can draft, but it cannot own architecture without constraints. The real win is not speed — it is controlled reliability.</p>
-<h2>Flow (placeholder)</h2>
+<h2>Concrete pattern</h2>
 <ol>
-<li>Define constraints.</li>
-<li>Split into steps.</li>
-<li>Generate artifacts.</li>
-<li>Verify outputs.</li>
-<li>Integrate safely.</li>
+<li><strong>Define constraints</strong>: list source roots, outputs, and forbidden paths.</li>
+<li><strong>Split</strong>: create 3–7 steps that each produce one artifact.</li>
+<li><strong>Generate</strong>: run the step with explicit context only.</li>
+<li><strong>Verify</strong>: check output with tests, lint, or deterministic validation.</li>
+<li><strong>Integrate</strong>: merge only after verification passes.</li>
 </ol>
+<h2>Why this works</h2>
+<p>AI can draft. It cannot infer missing structure. When you make structure explicit, the model becomes predictable and safer. The key is not “better prompts” but <strong>better boundaries</strong>.</p>
+<h2>Flow (placeholder)</h2>
+<ul>
+<li>Constraints → Step plan → Artifact → Verify → Merge</li>
+</ul>
 <h2>References</h2>
 <ul>
 <li>12 Factor App</li>
-<li>TDD</li>
+<li>TDD (test-first verification)</li>
 <li>Repo-centric workflows</li>
 </ul>
 

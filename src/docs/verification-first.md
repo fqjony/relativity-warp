@@ -1,29 +1,37 @@
 ---
 title: Verification-First Automation
-description: Build verification into every step so correctness is provable, not assumed.
+description: Define checks first so automation is correct by construction.
 type: research
-labels: verification, automation, quality
+labels: verification, automation, quality, development
 ---
 
 # Verification-First Automation
 
 ## Research signal
 
-Automation without verification scales risk faster than it scales output.
+Automation without verification scales risk faster than output.
 
 ## Observations
 
-- Confidence replaces evidence when checks are missing.
-- Failures show up later, when rollback is expensive.
-- TDD works because it forces verification before implementation.
+- Teams ship faster when checks are cheap and automatic.
+- Failures become expensive when verification is delayed.
+- TDD works because it forces a check before implementation.
 
 ## Working hypothesis
 
-If verification is defined first, automation becomes safer and repeatable.
+If verification is defined before execution, automation becomes safer and more repeatable.
+
+## Experimental design
+
+- Define acceptance checks for a workflow.
+- Implement automation steps afterward.
+- Measure regression rate vs workflows without pre-defined checks.
+
+## Expected outcomes
+
+- Lower drift and fewer silent failures.
+- Easier rollback and auditability.
 
 ## Flow (placeholder)
 
-1. Define acceptance checks.
-2. Build implementation.
-3. Run verification.
-4. Capture results.
+- Define checks → Execute steps → Verify → Capture evidence

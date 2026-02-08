@@ -1,32 +1,50 @@
 ---
 title: Prompt as Artifact
-description: Treat prompts as versioned inputs, not transient chat messages.
+description: Prompts are inputs. Version them, review them, and bind them to outputs.
 type: article
-labels: ai, workflows, automation
+labels: ai, workflows, automation, development
 ---
 
 # Prompt as Artifact
 
-## The shift
-
-Prompts are not chats; they are inputs. When you treat them as artifacts, you can reproduce decisions and audit intent.
+Treat prompts like code. If you cannot review or replay the prompt, you cannot trust the output.
 
 ## Why it matters
 
-- You can diff intent over time.
-- You can replay workflows deterministically.
-- You can explain why the system made a choice.
+- **Traceability**: you can explain why a change happened.
+- **Repeatability**: you can re-run the same prompt with fixed context.
+- **Quality**: prompts can be refined with diffs and reviews.
 
-## Implementation notes
+## What to store
 
-- Store prompts in `manifests/`.
-- Attach an explicit output type.
-- Review prompts like code.
+- Prompt text (as a file).
+- Expected output type (diff, report, file).
+- Inputs used (files, manifests, context files).
+- Verification command.
+
+## Minimal structure
+
+```
+/manifest/prompts/
+  build-spectrum.md
+  refactor-homepage.md
+```
+
+Each prompt file should include:
+
+- purpose
+- inputs
+- outputs
+- verification
+
+## Physics mindset
+
+Prompts are the initial conditions. If you change them without recording, you cannot reproduce the result.
 
 ## Flow (placeholder)
 
-1. Write prompt.
-2. Declare output type.
-3. Generate artifact.
-4. Verify result.
-5. Store in repo.
+- Write prompt → Declare output → Run step → Verify → Commit
+
+## Key rule
+
+If the prompt is part of the system, it belongs in the repo.

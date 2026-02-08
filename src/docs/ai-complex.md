@@ -1,44 +1,46 @@
 ---
 title: AI and Complex Problems
-description: A practical view on why complexity breaks AI, and how to de-risk multi-step engineering.
+description: Why complexity breaks AI output and how to engineer reliable multi-step work.
 type: article
 labels: ai, engineering, software, automation
 ---
 
 # AI and Complex Problems
 
-## Why complexity breaks AI
+Complex engineering work is a chain of hidden constraints. AI does well with visible context, but it collapses when constraints are implicit. The answer looks fluent while the system underneath is wrong.
 
-Complex problems are incomplete by definition. They contain hidden constraints, competing goals, and unknown dependencies. A single prompt cannot carry this load without distortion. AI output becomes fluent but fragile.
+## What actually breaks
 
-## The failure modes
+1. **Hidden constraints**: ownership rules, security boundaries, environments, or tooling are missing.
+2. **Ambiguous priorities**: speed vs safety, correctness vs scope, are not declared.
+3. **Unbounded scope**: the model tries to solve the entire system in one response.
+4. **Non-verifiable output**: the result is not tied to checks, so drift is invisible.
 
-1. **Hidden constraints.** The model guesses what it cannot see.
-2. **Ambiguous priorities.** The output optimizes the wrong dimension.
-3. **Unbounded scope.** A single answer tries to solve multiple systems at once.
-4. **Non-verifiable output.** The result looks complete but cannot be tested.
+## Engineering fixes
 
-## What actually works
+- Break work into bounded steps with explicit inputs and outputs.
+- Require a verifiable artifact per step (diff, file, report, build output).
+- Insert verification gates between steps.
+- Persist artifacts so outputs are replayable and inspectable.
 
-- Break problems into bounded steps.
-- Declare inputs, outputs, and tools per step.
-- Verify after each step.
-- Persist artifacts and diffs.
+## Concrete pattern
 
-## Engineering mindset
+1. **Define constraints**: list source roots, outputs, and forbidden paths.
+2. **Split**: create 3–7 steps that each produce one artifact.
+3. **Generate**: run the step with explicit context only.
+4. **Verify**: check output with tests, lint, or deterministic validation.
+5. **Integrate**: merge only after verification passes.
 
-Treat AI like a junior collaborator: it can draft, but it cannot own architecture without constraints. The real win is not speed — it is controlled reliability.
+## Why this works
+
+AI can draft. It cannot infer missing structure. When you make structure explicit, the model becomes predictable and safer. The key is not “better prompts” but **better boundaries**.
 
 ## Flow (placeholder)
 
-1. Define constraints.
-2. Split into steps.
-3. Generate artifacts.
-4. Verify outputs.
-5. Integrate safely.
+- Constraints → Step plan → Artifact → Verify → Merge
 
 ## References
 
 - 12 Factor App
-- TDD
+- TDD (test-first verification)
 - Repo-centric workflows

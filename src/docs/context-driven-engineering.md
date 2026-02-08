@@ -1,42 +1,40 @@
 ---
 title: Context-Driven Engineering
-description: Why AI breaks on real engineering work, and how to make it reliable using workflows, context, and verification.
-type: research
-labels: ai, engineering, software, repo-centric
+description: Make context explicit so automation becomes stable, verifiable, and repeatable.
+type: article
+labels: engineering, development, software, automation, physics
 ---
 
 # Context-Driven Engineering
 
-## Research signal
+Context-driven engineering treats repository structure, manifests, and execution rules as first-class inputs. When context is explicit, output becomes stable.
 
-AI output degrades as constraints become implicit. The fix is not “better prompts,” but a deterministic context surface that the system can verify.
+## Problem statement
 
-## Observations
+- Real repos contain hidden rules: owners, deploy targets, environment constraints.
+- Systems drift when rules are implicit.
+- Repeatability collapses when inputs are not explicit.
 
-- Real engineering work has hidden rules (ownership, environments, safety gates).
-- Models improvise when context is absent, creating drift.
-- Repeatability requires explicit inputs and outputs per step.
+## The context surface
 
-## Working hypothesis
+A minimal context surface should expose:
 
-If the repo exposes deterministic context (structure, manifests, execution rules), the same prompt yields consistent results.
+- Source boundaries and output roots.
+- Allowed commands and tool versions.
+- Manifests for data inputs.
+- Verification steps and gates.
 
-## Constraints that matter
+## How to implement it
 
-- Source and build boundaries.
-- Execution permissions.
-- Output paths.
-- Verification steps.
+1. Publish repo structure and build outputs.
+2. Store manifests for inputs (`src/manifests/`).
+3. Define execution rules (`scripts/`, `README`).
+4. Make verification a requirement, not an option.
+
+## Physics note
+
+Treat context like the coordinate system. If you change the frame, your results drift. Fix the frame and the system becomes predictable.
 
 ## Flow (placeholder)
 
-1. Detect repo contract.
-2. Resolve context artifacts.
-3. Generate bounded steps.
-4. Verify outputs.
-5. Persist results.
-
-## Next probes
-
-- Compare output consistency with and without explicit context manifests.
-- Measure regression rate when verification gates are missing.
+- Context surface → Step plan → Artifact → Verify → Publish

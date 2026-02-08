@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Context-Driven Engineering - Relativity Warp</title>
-    <meta name="description" content="Why AI breaks on real engineering work, and how to make it reliable using workflows, context, and verification." />
+    <meta name="description" content="Make context explicit so automation becomes stable, verifiable, and repeatable." />
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/context-driven-engineering/" />
   </head>
@@ -15,9 +15,9 @@
         <h1 class="hero-title">Context-Driven Engineering</h1>
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
-          <span class="type-badge type-research">research</span>
+          <span class="type-badge type-article">article</span>
           <div class="label-list">
-            <span class="label-chip">ai</span><span class="label-chip">engineering</span><span class="label-chip">software</span><span class="label-chip">repo-centric</span>
+            <span class="label-chip">engineering</span><span class="label-chip">development</span><span class="label-chip">software</span><span class="label-chip">automation</span><span class="label-chip">physics</span>
           </div>
         </div>
         <div class="hero-links">
@@ -28,35 +28,33 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>Research signal</h2>
-<p>AI output degrades as constraints become implicit. The fix is not “better prompts,” but a deterministic context surface that the system can verify.</p>
-<h2>Observations</h2>
+              <p>Context-driven engineering treats repository structure, manifests, and execution rules as first-class inputs. When context is explicit, output becomes stable.</p>
+<h2>Problem statement</h2>
 <ul>
-<li>Real engineering work has hidden rules (ownership, environments, safety gates).</li>
-<li>Models improvise when context is absent, creating drift.</li>
-<li>Repeatability requires explicit inputs and outputs per step.</li>
+<li>Real repos contain hidden rules: owners, deploy targets, environment constraints.</li>
+<li>Systems drift when rules are implicit.</li>
+<li>Repeatability collapses when inputs are not explicit.</li>
 </ul>
-<h2>Working hypothesis</h2>
-<p>If the repo exposes deterministic context (structure, manifests, execution rules), the same prompt yields consistent results.</p>
-<h2>Constraints that matter</h2>
+<h2>The context surface</h2>
+<p>A minimal context surface should expose:</p>
 <ul>
-<li>Source and build boundaries.</li>
-<li>Execution permissions.</li>
-<li>Output paths.</li>
-<li>Verification steps.</li>
+<li>Source boundaries and output roots.</li>
+<li>Allowed commands and tool versions.</li>
+<li>Manifests for data inputs.</li>
+<li>Verification steps and gates.</li>
 </ul>
-<h2>Flow (placeholder)</h2>
+<h2>How to implement it</h2>
 <ol>
-<li>Detect repo contract.</li>
-<li>Resolve context artifacts.</li>
-<li>Generate bounded steps.</li>
-<li>Verify outputs.</li>
-<li>Persist results.</li>
+<li>Publish repo structure and build outputs.</li>
+<li>Store manifests for inputs (<code>src/manifests/</code>).</li>
+<li>Define execution rules (<code>scripts/</code>, <code>README</code>).</li>
+<li>Make verification a requirement, not an option.</li>
 </ol>
-<h2>Next probes</h2>
+<h2>Physics note</h2>
+<p>Treat context like the coordinate system. If you change the frame, your results drift. Fix the frame and the system becomes predictable.</p>
+<h2>Flow (placeholder)</h2>
 <ul>
-<li>Compare output consistency with and without explicit context manifests.</li>
-<li>Measure regression rate when verification gates are missing.</li>
+<li>Context surface → Step plan → Artifact → Verify → Publish</li>
 </ul>
 
             </div>

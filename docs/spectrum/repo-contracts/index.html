@@ -17,7 +17,7 @@
         <div class="hero-meta">
           <span class="type-badge type-article">article</span>
           <div class="label-list">
-            <span class="label-chip">repo-centric</span><span class="label-chip">engineering</span><span class="label-chip">development</span><span class="label-chip">standards</span>
+            <span class="label-chip">repo-centric</span><span class="label-chip">engineering</span><span class="label-chip">development</span><span class="label-chip">software</span>
           </div>
         </div>
         <div class="hero-links">
@@ -28,30 +28,36 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>The principle</h2>
-<p>The repo itself is the contract. If intent, structure, and execution are not encoded there, automation will guess.</p>
-<h2>What belongs in the contract</h2>
+              <p>Automation fails when the repo is vague. A repository contract is the minimum set of rules that makes work deterministic for humans and machines.</p>
+<h2>What a repo contract contains</h2>
 <ul>
-<li>Structure: source roots, build outputs, entry points.</li>
-<li>Artifacts: manifests, schemas, docs.</li>
-<li>Execution: approved scripts and commands.</li>
-<li>Validation: tests and gates.</li>
+<li><strong>Structure</strong>: source roots, build outputs, entry points.</li>
+<li><strong>Artifacts</strong>: manifests, schemas, docs, and their locations.</li>
+<li><strong>Execution</strong>: allowed scripts and commands.</li>
+<li><strong>Verification</strong>: tests and validation gates.</li>
+<li><strong>Ownership</strong>: who approves changes and where.</li>
+</ul>
+<h2>Practical contract checklist</h2>
+<ol>
+<li><code>src/</code> vs <code>docs/</code> boundaries are explicit.</li>
+<li>All generated outputs are in a single publish root.</li>
+<li>Manifests define data inputs (<code>tips.yml</code>, <code>spectrum/*.md</code>).</li>
+<li>Builds are deterministic and documented (<code>npm run build</code>).</li>
+<li>Verification is visible (<code>npm test</code>, <code>npm run lint</code>, etc.).</li>
+</ol>
+<h2>Why this feels like physics</h2>
+<p>A system with hidden rules is like a lab with unknown variables: you cannot reproduce the experiment. Make variables explicit, and results become repeatable.</p>
+<h2>Flow (placeholder)</h2>
+<ul>
+<li>Declare layout → Publish contract → Enforce build → Verify output</li>
 </ul>
 <h2>Related foundations</h2>
 <ul>
-<li>12 Factor App</li>
 <li>Config separated from code</li>
 <li>Interface drives development</li>
-<li>Repo-centric as a default</li>
+<li>Repo-centric by default</li>
 <li>Keyless access where possible</li>
 </ul>
-<h2>Flow (placeholder)</h2>
-<ol>
-<li>Declare repo layout.</li>
-<li>Define artifacts.</li>
-<li>Define execution surface.</li>
-<li>Enforce validation.</li>
-</ol>
 
             </div>
           </div>

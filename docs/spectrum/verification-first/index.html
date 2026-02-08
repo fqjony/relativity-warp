@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verification-First Automation - Relativity Warp</title>
-    <meta name="description" content="Build verification into every step so correctness is provable, not assumed." />
+    <meta name="description" content="Define checks first so automation is correct by construction." />
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/verification-first/" />
   </head>
@@ -17,7 +17,7 @@
         <div class="hero-meta">
           <span class="type-badge type-research">research</span>
           <div class="label-list">
-            <span class="label-chip">verification</span><span class="label-chip">automation</span><span class="label-chip">quality</span>
+            <span class="label-chip">verification</span><span class="label-chip">automation</span><span class="label-chip">quality</span><span class="label-chip">development</span>
           </div>
         </div>
         <div class="hero-links">
@@ -29,22 +29,30 @@
           <div class="section-body">
             <div class="article-content">
               <h2>Research signal</h2>
-<p>Automation without verification scales risk faster than it scales output.</p>
+<p>Automation without verification scales risk faster than output.</p>
 <h2>Observations</h2>
 <ul>
-<li>Confidence replaces evidence when checks are missing.</li>
-<li>Failures show up later, when rollback is expensive.</li>
-<li>TDD works because it forces verification before implementation.</li>
+<li>Teams ship faster when checks are cheap and automatic.</li>
+<li>Failures become expensive when verification is delayed.</li>
+<li>TDD works because it forces a check before implementation.</li>
 </ul>
 <h2>Working hypothesis</h2>
-<p>If verification is defined first, automation becomes safer and repeatable.</p>
+<p>If verification is defined before execution, automation becomes safer and more repeatable.</p>
+<h2>Experimental design</h2>
+<ul>
+<li>Define acceptance checks for a workflow.</li>
+<li>Implement automation steps afterward.</li>
+<li>Measure regression rate vs workflows without pre-defined checks.</li>
+</ul>
+<h2>Expected outcomes</h2>
+<ul>
+<li>Lower drift and fewer silent failures.</li>
+<li>Easier rollback and auditability.</li>
+</ul>
 <h2>Flow (placeholder)</h2>
-<ol>
-<li>Define acceptance checks.</li>
-<li>Build implementation.</li>
-<li>Run verification.</li>
-<li>Capture results.</li>
-</ol>
+<ul>
+<li>Define checks → Execute steps → Verify → Capture evidence</li>
+</ul>
 
             </div>
           </div>

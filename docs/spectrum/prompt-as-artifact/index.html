@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prompt as Artifact - Relativity Warp</title>
-    <meta name="description" content="Treat prompts as versioned inputs, not transient chat messages." />
+    <meta name="description" content="Prompts are inputs. Version them, review them, and bind them to outputs." />
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/prompt-as-artifact/" />
   </head>
@@ -17,7 +17,7 @@
         <div class="hero-meta">
           <span class="type-badge type-article">article</span>
           <div class="label-list">
-            <span class="label-chip">ai</span><span class="label-chip">workflows</span><span class="label-chip">automation</span>
+            <span class="label-chip">ai</span><span class="label-chip">workflows</span><span class="label-chip">automation</span><span class="label-chip">development</span>
           </div>
         </div>
         <div class="hero-links">
@@ -28,28 +28,40 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>The shift</h2>
-<p>Prompts are not chats; they are inputs. When you treat them as artifacts, you can reproduce decisions and audit intent.</p>
+              <p>Treat prompts like code. If you cannot review or replay the prompt, you cannot trust the output.</p>
 <h2>Why it matters</h2>
 <ul>
-<li>You can diff intent over time.</li>
-<li>You can replay workflows deterministically.</li>
-<li>You can explain why the system made a choice.</li>
+<li><strong>Traceability</strong>: you can explain why a change happened.</li>
+<li><strong>Repeatability</strong>: you can re-run the same prompt with fixed context.</li>
+<li><strong>Quality</strong>: prompts can be refined with diffs and reviews.</li>
 </ul>
-<h2>Implementation notes</h2>
+<h2>What to store</h2>
 <ul>
-<li>Store prompts in <code>manifests/</code>.</li>
-<li>Attach an explicit output type.</li>
-<li>Review prompts like code.</li>
+<li>Prompt text (as a file).</li>
+<li>Expected output type (diff, report, file).</li>
+<li>Inputs used (files, manifests, context files).</li>
+<li>Verification command.</li>
 </ul>
+<h2>Minimal structure</h2>
+<pre><code>/manifest/prompts/
+  build-spectrum.md
+  refactor-homepage.md
+</code></pre>
+<p>Each prompt file should include:</p>
+<ul>
+<li>purpose</li>
+<li>inputs</li>
+<li>outputs</li>
+<li>verification</li>
+</ul>
+<h2>Physics mindset</h2>
+<p>Prompts are the initial conditions. If you change them without recording, you cannot reproduce the result.</p>
 <h2>Flow (placeholder)</h2>
-<ol>
-<li>Write prompt.</li>
-<li>Declare output type.</li>
-<li>Generate artifact.</li>
-<li>Verify result.</li>
-<li>Store in repo.</li>
-</ol>
+<ul>
+<li>Write prompt → Declare output → Run step → Verify → Commit</li>
+</ul>
+<h2>Key rule</h2>
+<p>If the prompt is part of the system, it belongs in the repo.</p>
 
             </div>
           </div>

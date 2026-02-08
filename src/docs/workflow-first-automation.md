@@ -1,30 +1,36 @@
 ---
 title: Workflow-First Automation
-description: Replace ad hoc prompts with deterministic, step-based workflows.
+description: Replace ad hoc work with deterministic, step-based workflows.
 type: research
-labels: workflows, automation, engineering
+labels: workflows, automation, engineering, development
 ---
 
 # Workflow-First Automation
 
 ## Research signal
 
-Workflow structure outperforms prompt improvisation when reliability matters.
+Workflow structure outperforms improvisation when reliability matters.
 
 ## Observations
 
-- Large prompts create hidden dependencies.
-- Small steps produce reviewable outputs.
-- Splitting big chunks into smaller iterations reduces risk.
+- Big steps hide risk and make review harder.
+- Smaller steps produce reviewable outputs and safer iteration.
+- Splitting work into iterations builds experience incrementally.
 
 ## Working hypothesis
 
-A workflow-first system reduces drift and increases reproducibility across teams.
+A workflow-first approach reduces drift and increases reproducibility across teams.
+
+## Experimental design
+
+- Compare single-step vs multi-step workflows.
+- Track error rates, rework, and review time.
+- Compare deterministic outputs across machines.
+
+## Expected outcomes
+
+- Higher consistency and easier verification.
 
 ## Flow (placeholder)
 
-1. Define step boundaries.
-2. Capture inputs.
-3. Execute step.
-4. Verify outputs.
-5. Move to next step.
+- Define steps → Execute → Verify → Continue
