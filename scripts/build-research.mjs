@@ -8,8 +8,8 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "src", "docs");
 const homepagePath = path.join(rootDir, "src", "templates", "index.html");
-const publicDir = path.join(rootDir, "public");
-const publicSpectrumDir = path.join(publicDir, "spectrum");
+const publishDir = path.join(rootDir, "docs");
+const publicSpectrumDir = path.join(publishDir, "spectrum");
 const indexOutputPath = path.join(publicSpectrumDir, "articles.json");
 
 const markerStart = "<!-- RESEARCH:START -->";
@@ -149,7 +149,7 @@ const buildResearch = () => {
         .replace(/^src\/docs\//, "")
         .replace(/\.md$/, "");
       const htmlPath = path.join("spectrum", relativeSlug, "index.html").replace(/\\/g, "/");
-      const outputPath = path.join(publicDir, htmlPath);
+      const outputPath = path.join(publishDir, htmlPath);
       const url = `/spectrum/${relativeSlug}/`;
       return {
         title,
@@ -172,10 +172,10 @@ const buildResearch = () => {
     const content = marked.parse(body);
     const outputPath = item.outputPath;
     const cssHref = path
-      .relative(path.dirname(outputPath), path.join(publicDir, "assets", "index.css"))
+      .relative(path.dirname(outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
     const homeHref = path
-      .relative(path.dirname(outputPath), path.join(publicDir, "index.html"))
+      .relative(path.dirname(outputPath), path.join(publishDir, "index.html"))
       .replace(/\\/g, "/");
     const canonical = item.url;
     const html = renderArticleTemplate({
@@ -218,7 +218,7 @@ const renderResearchList = (items) => {
 };
 
 const updateHomepage = (items) => {
-  const homepageOutputPath = path.join(publicDir, "index.html");
+  const homepageOutputPath = path.join(publishDir, "index.html");
   if (!fs.existsSync(homepagePath)) {
     console.warn("index.html not found; skipping homepage update.");
     return;
@@ -294,12 +294,12 @@ fs.writeFileSync(
   renderSpectrumIndex(items),
   "utf8"
 );
-copyDir(path.join(rootDir, "src", "assets"), path.join(publicDir, "assets"));
+copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
 const dataViewerSource = path.join(rootDir, "src", "templates", "data-viewer.html");
 if (fs.existsSync(dataViewerSource)) {
-  fs.copyFileSync(dataViewerSource, path.join(publicDir, "data-viewer.html"));
+  fs.copyFileSync(dataViewerSource, path.join(publishDir, "data-viewer.html"));
 }
 if (fs.existsSync(path.join(rootDir, "CNAME"))) {
-  fs.copyFileSync(path.join(rootDir, "CNAME"), path.join(publicDir, "CNAME"));
+  fs.copyFileSync(path.join(rootDir, "CNAME"), path.join(publishDir, "CNAME"));
 }
 console.log(`Built ${items.length} research item(s).`);

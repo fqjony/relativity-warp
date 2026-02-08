@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-tips.mjs && node scripts/build-research.mjs",
-    "preview": "serve public"
+    "preview": "serve docs"
   },
   "devDependencies": {
     "js-yaml": "^4.1.0",

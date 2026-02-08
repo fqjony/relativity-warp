@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const sourcePath = path.join(rootDir, "src", "manifests", "tips.yml");
-const outputPath = path.join(rootDir, "public", "tips.json");
+const outputPath = path.join(rootDir, "docs", "tips.json");
 
 if (!fs.existsSync(sourcePath)) {
   console.error(`Missing tips manifest: ${sourcePath}`);

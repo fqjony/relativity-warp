@@ -29,6 +29,7 @@ node scripts/generate-research-index.mjs
 - `src/templates/` — HTML templates (homepage + optional data viewer)
 - `src/docs/` — markdown sources for spectrum articles (rendered to `/spectrum/<slug>/`)
 - `src/manifests/` — yaml manifests (tips → `/tips.json`)
+- `docs/` — build output (GitHub Pages publish root)
 - `docs/research/` — markdown sources for articles
 - `public/` — build output (deploy this)
 
