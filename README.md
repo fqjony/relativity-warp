@@ -1,6 +1,6 @@
 # Relativity Warp
 
-Repo-centric automation playground and docs site. The build step compiles Spectrum schemas.
+Repo-centric automation playground and docs site. The build step compiles Spectrum schemas and renders research articles into `public/`.
 
 ## Quick start
 
@@ -12,17 +12,25 @@ npm run preview
 
 ## Scripts
 
-- `npm run build` — compile Spectrum schemas
-- `npm run build:spectrum` — compile Spectrum schemas
-- `npm run preview` — serve the repo root
+- `npm run build` — compile Spectrum schemas + build research HTML into `public/`
+- `npm run preview` — serve `public/` (publish root for GitHub Pages)
 
 ## Research index
 
-Refresh the research links used on the homepage:
+Refresh the research links and render HTML for the homepage:
 
 ```bash
 node scripts/generate-research-index.mjs
 ```
+
+## Structure
+
+- `src/assets/` — source CSS/JS/images
+- `src/templates/` — HTML templates (homepage + optional data viewer)
+- `src/docs/` — markdown sources for spectrum articles (rendered to `/spectrum/<slug>/`)
+- `src/manifests/` — yaml manifests (tips → `/tips.json`)
+- `docs/research/` — markdown sources for articles
+- `public/` — build output (deploy this)
 
 ## References
 

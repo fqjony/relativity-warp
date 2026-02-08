@@ -39,6 +39,18 @@
         <p class="hero-subtitle">
           Software Engineering, DevSecOps, Automation, Cybersecurity
         </p>
+        <div id="tip-widget" class="hero-tip" aria-live="polite">
+          <div class="hero-tip-title">Tip</div>
+          <div class="hero-tip-body">Loading tip...</div>
+          <button
+            id="tip-refresh"
+            class="button button-compact button-ghost"
+            type="button"
+            aria-label="New tip"
+          >
+            ↻
+          </button>
+        </div>
         <div class="hero-links">
           <a href="https://github.com/fqjony" target="_blank" rel="noopener"
             ><span class="link-icon">💻</span> GitHub</a
@@ -52,66 +64,24 @@
           <a href="https://udx.io" target="_blank" rel="noopener"
             ><span class="link-icon">🌐</span> UDX</a
           >
-          <div id="tip-widget" class="tip-inline">
-            <div class="tip-inline-title">Tip</div>
-            <div class="tip-inline-body">Loading tip...</div>
-            <button
-              id="tip-refresh"
-              class="button button-compact button-ghost"
-              type="button"
-              aria-label="New tip"
-            >
-              ↻
-            </button>
-          </div>
         </div>
       </header>
 
       <main id="content">
         <section class="section card">
           <div class="section-header">
-            <h2>Spectrum Data Explorer</h2>
-            <span class="badge badge-accent">Live JSON</span>
+            <h2>Research</h2>
+            <span class="badge badge-muted">Notes</span>
           </div>
           <div class="section-body">
-            <div class="data-explorer">
-              <div class="data-explorer-controls">
-                <label for="data-explorer-select">Dataset</label>
-                <select id="data-explorer-select"></select>
-                <a
-                  id="data-explorer-link"
-                  class="button button-compact button-ghost"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  aria-disabled="true"
-                  >Open JSON</a
-                >
-                <a
-                  id="data-explorer-human"
-                  class="button button-compact button-ghost"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  aria-disabled="true"
-                  >Human View</a
-                >
-                <button
-                  id="data-explorer-copy"
-                  class="button button-compact button-ghost"
-                  type="button"
-                >
-                  Copy
-                </button>
-              </div>
-              <div id="data-explorer-meta" class="data-explorer-meta">
-                Select a dataset to preview.
-              </div>
-              <pre
-                id="data-explorer-output"
-                class="data-explorer-output"
-              >Select a dataset to preview.</pre>
-            </div>
+            <p class="section-note">
+              Research notes, experiments, and discovery updates.
+            </p>
+            <ul class="link-list" role="list">
+              <!-- RESEARCH:START -->
+  <li class="list-item"><a href="/research/ai-complex/">AI and Complex Problems: A Practical View</a></li>
+<!-- RESEARCH:END -->
+            </ul>
           </div>
         </section>
       </main>
