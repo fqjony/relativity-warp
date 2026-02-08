@@ -1,6 +1,7 @@
 ---
 title: Context Resolvers
 description: Turning messy repositories into deterministic, queryable context for automation.
+type: discovery
 ---
 
 # Context Resolvers

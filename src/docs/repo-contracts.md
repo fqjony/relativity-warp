@@ -1,6 +1,7 @@
 ---
 title: Repository Contracts
 description: The repo is the contract. Make it explicit, stable, and consumable.
+type: article
 ---
 
 # Repository Contracts

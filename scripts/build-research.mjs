@@ -37,6 +37,12 @@ const parseFrontmatter = (contents) => {
   return { body, meta };
 };
 
+const normalizeSlug = (value) =>
+  value
+    .split("/")
+    .map((segment) => segment.replace(/^\d+_/, ""))
+    .join("/");
+
 const extractTitle = (contents, fallback) => {
   const { body, meta } = parseFrontmatter(contents);
   if (meta.title) return meta.title;
@@ -50,6 +56,16 @@ const extractDescription = (contents) => {
   if (meta.description) return meta.description;
   const paragraph = body.split("\n").find((line) => line.trim().length > 0);
   return paragraph ? cleanText(paragraph) : "";
+};
+
+const extractType = (contents) => {
+  const { meta } = parseFrontmatter(contents);
+  return meta.type ? meta.type.toLowerCase() : "note";
+};
+
+const extractDate = (contents) => {
+  const { meta } = parseFrontmatter(contents);
+  return meta.date || "";
 };
 
 const listMarkdownFiles = (dir) => {
@@ -91,8 +107,9 @@ const copyDir = (source, target) => {
   }
 };
 
-const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref }) => {
+const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref, type }) => {
   const canonical = canonicalHref || "";
+  const typeBadge = type ? `<span class="type-badge type-${type}">${type}</span>` : "";
 
   return `<!doctype html>
 <html lang="en">
@@ -110,6 +127,9 @@ const renderArticleTemplate = ({ title, description, content, cssHref, homeHref,
       <header class="hero">
         <h1 class="hero-title">${title}</h1>
         <p class="hero-subtitle">Research note</p>
+        <div class="hero-meta">
+          ${typeBadge}
+        </div>
         <div class="hero-links">
           <a href="${homeHref}" class="button button-compact button-ghost">Back to Home</a>
         </div>
@@ -145,12 +165,14 @@ const buildResearch = () => {
         .replace(/\b\w/g, (match) => match.toUpperCase());
       const title = extractTitle(raw, fallback);
       const description = extractDescription(raw);
-      const relativeSlug = relPath
-        .replace(/^src\/docs\//, "")
-        .replace(/\.md$/, "");
+      const relativeSlug = normalizeSlug(
+        relPath.replace(/^src\/docs\//, "").replace(/\.md$/, "")
+      );
       const htmlPath = path.join("spectrum", relativeSlug, "index.html").replace(/\\/g, "/");
       const outputPath = path.join(publishDir, htmlPath);
       const url = `/spectrum/${relativeSlug}/`;
+      const type = extractType(raw);
+      const date = extractDate(raw);
       return {
         title,
         description,
@@ -159,10 +181,19 @@ const buildResearch = () => {
         sourcePath: filePath,
         outputPath,
         raw,
+        type,
+        date,
         kind: "markdown",
       };
     })
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort((a, b) => {
+      const dateA = a.date ? Date.parse(a.date) : 0;
+      const dateB = b.date ? Date.parse(b.date) : 0;
+      if (!Number.isNaN(dateA) || !Number.isNaN(dateB)) {
+        if (dateA !== dateB) return dateB - dateA;
+      }
+      return a.title.localeCompare(b.title);
+    });
 
   const items = markdownItems;
 
@@ -186,6 +217,7 @@ const buildResearch = () => {
       cssHref: cssHref || "assets/index.css",
       homeHref: homeHref || "index.html",
       canonicalHref: canonical,
+      type: item.type,
     });
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, html, "utf8");
@@ -194,15 +226,37 @@ const buildResearch = () => {
   const payload = {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
-    items: items.map(({ title, path: entryPath, url }) => ({
+    items: items.map(({ title, path: entryPath, url, type, date }) => ({
       title,
       path: entryPath,
       url,
+      type,
+      date,
     })),
   };
 
   fs.mkdirSync(path.dirname(indexOutputPath), { recursive: true });
   fs.writeFileSync(indexOutputPath, JSON.stringify(payload, null, 2) + "\n", "utf8");
+  const types = payload.items.reduce((acc, item) => {
+    const key = item.type || "note";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(item);
+    return acc;
+  }, {});
+  fs.writeFileSync(
+    path.join(publicSpectrumDir, "types.json"),
+    JSON.stringify({ schemaVersion: 1, generatedAt: payload.generatedAt, types }, null, 2) + "\n",
+    "utf8"
+  );
+  Object.entries(types).forEach(([type, typeItems]) => {
+    const typeDir = path.join(publicSpectrumDir, type);
+    fs.mkdirSync(typeDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(typeDir, "index.json"),
+      JSON.stringify({ schemaVersion: 1, generatedAt: payload.generatedAt, items: typeItems }, null, 2) + "\n",
+      "utf8"
+    );
+  });
   return payload.items;
 };
 
@@ -213,7 +267,8 @@ const renderResearchList = (items) => {
   return items
     .map((item) => {
       const href = item.url || item.path || "#";
-      return `  <li class="list-item"><a href="${href}">${item.title}</a></li>`;
+      const badge = item.type ? `<span class="type-badge type-${item.type}">${item.type}</span>` : "";
+      return `  <li class="list-item"><a href="${href}">${item.title}</a>${badge}</li>`;
     })
     .join("\n");
 };
@@ -242,6 +297,20 @@ const updateHomepage = (items) => {
 
 const renderSpectrumIndex = (items) => {
   const list = renderResearchList(items);
+  const types = items.reduce((acc, item) => {
+    const key = item.type || "note";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(item);
+    return acc;
+  }, {});
+  const typeSections = Object.entries(types)
+    .map(([type, entries]) => {
+      return `            <div class="subsection">\n` +
+        `              <div class="subsection-title">${type}</div>\n` +
+        `              <ul class="link-list" role="list">\n${renderResearchList(entries)}\n              </ul>\n` +
+        `            </div>`;
+    })
+    .join("\n");
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -267,6 +336,7 @@ const renderSpectrumIndex = (items) => {
             <ul class="link-list" role="list">
 ${list}
             </ul>
+${typeSections}
             <div class="subsection">
               <div class="subsection-title">Data</div>
               <ul class="link-list" role="list">
@@ -274,7 +344,10 @@ ${list}
                   <a href="/tips.json">Engineering Tips (JSON)</a>
                 </li>
                 <li class="list-item">
-                  <a href="/spectrum/index.json">Spectrum Index (JSON)</a>
+                  <a href="/spectrum/articles.json">Spectrum Index (JSON)</a>
+                </li>
+                <li class="list-item">
+                  <a href="/spectrum/types.json">Spectrum Types (JSON)</a>
                 </li>
               </ul>
             </div>

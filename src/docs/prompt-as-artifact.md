@@ -1,6 +1,7 @@
 ---
 title: Prompt as Artifact
 description: Treat prompts as versioned inputs, not transient chat messages.
+type: article
 ---
 
 # Prompt as Artifact

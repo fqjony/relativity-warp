@@ -1,6 +1,7 @@
 ---
 title: Verification-First Automation
 description: Build verification into every step so correctness is provable, not assumed.
+type: research
 ---
 
 # Verification-First Automation

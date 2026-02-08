@@ -1,6 +1,7 @@
 ---
 title: Human-in-the-Loop Control
 description: Keep humans in control without slowing down automation.
+type: note
 ---
 
 # Human-in-the-Loop Control

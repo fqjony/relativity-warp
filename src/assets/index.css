@@ -535,6 +535,45 @@ a:hover {
     background: rgba(9, 10, 15, 0.25);
 }
 
+.type-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid rgba(126, 185, 255, 0.4);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-strong);
+    background: rgba(10, 16, 26, 0.55);
+    margin-left: auto;
+}
+
+.list-item .type-badge {
+    margin-left: 0.6rem;
+    font-size: 0.55rem;
+}
+
+.type-note {
+    border-color: rgba(120, 138, 182, 0.4);
+    color: var(--text-muted);
+}
+
+.type-research {
+    border-color: rgba(126, 185, 255, 0.55);
+    color: #b8d7ff;
+}
+
+.type-discovery {
+    border-color: rgba(255, 205, 122, 0.55);
+    color: #ffd28a;
+}
+
+.type-article {
+    border-color: rgba(164, 255, 201, 0.5);
+    color: #b6f0d4;
+}
+
 .badge-accent {
     color: var(--accent-strong);
     border-color: rgba(123, 178, 255, 0.4);

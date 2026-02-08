@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-02-08T20:56:58.930Z",
+  "items": [
+    {
+      "title": "Prompt as Artifact",
+      "path": "spectrum/prompt-as-artifact/index.html",
+      "url": "/spectrum/prompt-as-artifact/",
+      "type": "article",
+      "date": ""
+    },
+    {
+      "title": "Repository Contracts",
+      "path": "spectrum/repo-contracts/index.html",
+      "url": "/spectrum/repo-contracts/",
+      "type": "article",
+      "date": ""
+    }
+  ]
+}

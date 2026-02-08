@@ -10,20 +10,6 @@
       "date": ""
     },
     {
-      "title": "Automation Runtime Boundaries",
-      "path": "spectrum/automation-runtime-boundaries/index.html",
-      "url": "/spectrum/automation-runtime-boundaries/",
-      "type": "note",
-      "date": ""
-    },
-    {
-      "title": "Context Resolvers",
-      "path": "spectrum/context-resolvers/index.html",
-      "url": "/spectrum/context-resolvers/",
-      "type": "discovery",
-      "date": ""
-    },
-    {
       "title": "Context-Driven Engineering",
       "path": "spectrum/context-driven-engineering/index.html",
       "url": "/spectrum/context-driven-engineering/",
@@ -35,27 +21,6 @@
       "path": "spectrum/deterministic-execution/index.html",
       "url": "/spectrum/deterministic-execution/",
       "type": "research",
-      "date": ""
-    },
-    {
-      "title": "Human-in-the-Loop Control",
-      "path": "spectrum/human-in-the-loop/index.html",
-      "url": "/spectrum/human-in-the-loop/",
-      "type": "note",
-      "date": ""
-    },
-    {
-      "title": "Prompt as Artifact",
-      "path": "spectrum/prompt-as-artifact/index.html",
-      "url": "/spectrum/prompt-as-artifact/",
-      "type": "article",
-      "date": ""
-    },
-    {
-      "title": "Repository Contracts",
-      "path": "spectrum/repo-contracts/index.html",
-      "url": "/spectrum/repo-contracts/",
-      "type": "article",
       "date": ""
     },
     {

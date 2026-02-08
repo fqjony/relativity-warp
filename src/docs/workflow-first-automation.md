@@ -1,6 +1,7 @@
 ---
 title: Workflow-First Automation
 description: Replace ad hoc prompts with deterministic, step-based workflows.
+type: research
 ---
 
 # Workflow-First Automation

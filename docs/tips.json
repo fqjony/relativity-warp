@@ -97,6 +97,14 @@
       {
         "Tip": "Capture context in lightweight markdown notes",
         "Why": "Short, scoped notes preserve intent without slowing down iteration."
+      },
+      {
+        "Tip": "Keep homepages scannable with clear hierarchy",
+        "Why": "Visitors find the right entry points faster when layout is predictable."
+      },
+      {
+        "Tip": "Group docs by type and surface labels in the UI",
+        "Why": "Clear labels reduce cognitive load and help readers pick the right depth."
       }
     ]
   },
@@ -150,6 +158,14 @@
       {
         "Tip": "Gate high-risk changes with human approval checkpoints",
         "Why": "Human-in-the-loop control catches ambiguity before execution."
+      },
+      {
+        "Tip": "Add metadata to every artifact (title, type, description)",
+        "Why": "Metadata makes discovery and automation indexing reliable."
+      },
+      {
+        "Tip": "Prefer type-aware indexes over monolithic lists",
+        "Why": "Segmented indexes scale better as content grows."
       }
     ]
   }

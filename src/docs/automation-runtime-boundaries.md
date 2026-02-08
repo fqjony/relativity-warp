@@ -1,6 +1,7 @@
 ---
 title: Automation Runtime Boundaries
 description: Where automation should stop, how to gate execution, and why boundaries keep systems safe.
+type: note
 ---
 
 # Automation Runtime Boundaries

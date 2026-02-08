@@ -1,6 +1,7 @@
 ---
 title: Deterministic Execution
 description: How to design workflows that behave predictably across people, machines, and time.
+type: research
 ---
 
 # Deterministic Execution

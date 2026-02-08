@@ -1,6 +1,7 @@
 ---
 title: Context-Driven Engineering
 description: Why AI breaks on real engineering work, and how to make it reliable using workflows, context, and verification.
+type: research
 ---
 
 # Context-Driven Engineering
