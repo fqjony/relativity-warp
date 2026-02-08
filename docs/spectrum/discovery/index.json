@@ -1,13 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-08T20:56:58.930Z",
+  "generatedAt": "2026-02-08T21:38:48.268Z",
   "items": [
     {
       "title": "Context Resolvers",
       "path": "spectrum/context-resolvers/index.html",
       "url": "/spectrum/context-resolvers/",
       "type": "discovery",
-      "date": ""
+      "date": "",
+      "labels": [
+        "context",
+        "repo-centric",
+        "automation"
+      ]
     }
   ]
 }

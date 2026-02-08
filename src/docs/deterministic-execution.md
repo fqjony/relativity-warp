@@ -2,26 +2,32 @@
 title: Deterministic Execution
 description: How to design workflows that behave predictably across people, machines, and time.
 type: research
+labels: automation, reliability, devops
 ---
 
 # Deterministic Execution
 
-## The reliability gap
+## Research signal
 
-Most automation fails not because it is wrong, but because it is inconsistent. Deterministic execution closes that gap by removing ambiguity from inputs, tooling, and outputs.
+Inconsistent automation is worse than manual work. Determinism is the baseline for trust.
 
-## Determinism checklist
+## Observations
 
-- Inputs are explicit and versioned.
-- Steps are bounded and ordered.
-- Tools are declared and available.
-- Outputs are written to fixed paths.
-- Verification is built into the flow.
+- Inputs change silently without versioning.
+- Tools drift across environments.
+- Outputs are written to ad-hoc paths.
+- Config that leaks into code causes non-determinism.
+- Bootstrap steps are undocumented or skipped.
 
-## Bounded steps beat big prompts
+## Working hypothesis
 
-A single giant prompt produces a large, fragile plan. A sequence of small, validated steps produces a system you can trust.
+If steps are bounded and outputs are fixed, automation becomes repeatable across machines.
 
-## Repeatability as a feature
+## Flow (placeholder)
 
-If you cannot run the same workflow twice and get the same result, you do not have automation — you have improvisation.
+1. Declare inputs.
+2. Pin tool versions.
+3. Bootstrap the environment.
+3. Execute steps.
+4. Verify outputs.
+5. Persist artifacts.

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
 * {
     margin: 0;
     padding: 0;
@@ -45,7 +47,7 @@ body {
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.8;
-    font-size: 18px;
+    font-size: clamp(17px, 0.45vw + 15px, 20px);
     letter-spacing: -0.01em;
     position: relative;
     min-height: 100vh;
@@ -114,13 +116,13 @@ body::before {
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.4rem 0.6rem;
-    max-width: 220px;
+    font-size: 0.72rem;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(16, 22, 34, 0.92), rgba(10, 14, 22, 0.92));
+    border: 1px solid rgba(126, 185, 255, 0.25);
+    border-radius: 12px;
+    padding: 0.5rem 0.7rem;
+    max-width: 240px;
     white-space: normal;
     opacity: 0;
     pointer-events: none;
@@ -128,6 +130,25 @@ body::before {
     transition: opacity 0.2s ease, transform 0.2s ease;
     transform: translateY(-6px);
     z-index: 2;
+}
+
+.control-widget:hover .theme-joke,
+.control-widget:focus-within .theme-joke {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.theme-joke::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, rgba(16, 22, 34, 0.92), rgba(10, 14, 22, 0.92));
+    border-left: 1px solid rgba(126, 185, 255, 0.2);
+    border-top: 1px solid rgba(126, 185, 255, 0.2);
 }
 
 .theme-joke.is-visible {
@@ -175,9 +196,10 @@ body::before {
 .hero-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.5rem 0.75rem;
     margin-bottom: 0.75rem;
     grid-column: 1;
+    align-items: center;
 }
 
 .hero-title {
@@ -233,18 +255,21 @@ body::before {
 .hero-tip-inline {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.74rem;
-    font-style: italic;
+    gap: 0.75rem;
+    font-size: 0.98rem;
+    font-style: normal;
     color: var(--text-secondary);
-    opacity: 0.8;
     flex-wrap: wrap;
+    padding: 0.35rem 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
 }
 
 .hero-tip-inline .button {
     padding: 0.2rem 0.55rem;
-    font-size: 0.65rem;
-    opacity: 0.7;
+    font-size: 0.7rem;
+    opacity: 0.8;
 }
 
 .hero-tip-inline:hover .button,
@@ -255,14 +280,25 @@ body::before {
 .hero-tip-title {
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--text-muted);
-    font-size: 0.58rem;
+    color: var(--accent-strong);
+    font-size: 0.7rem;
     font-style: normal;
+    font-weight: 600;
+    padding: 0.15rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(12, 18, 28, 0.65);
 }
 
 .hero-tip-body {
-    color: var(--text-secondary);
-    line-height: 1.4;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.hero-tip-title::after {
+    content: "";
+    margin: 0;
 }
 
 .motto {
@@ -291,7 +327,7 @@ main {
 }
 
 .section + .section {
-    margin-top: 2rem;
+    margin-top: 2.6rem;
 }
 
 .card {
@@ -482,15 +518,54 @@ a:hover {
 
 .link-list {
     display: grid;
-    gap: 0.7rem;
+    gap: 0.9rem;
+}
+
+.spectrum-page .spectrum-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+}
+
+.spectrum-page .spectrum-list .list-item {
+    align-items: flex-start;
+}
+
+.spectrum-page .spectrum-list .label-list {
+    display: inline-flex;
 }
 
 .research-list {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.5rem 1.4rem;
-    max-height: calc(100vh - 380px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-height: calc(100vh - 340px);
     overflow-y: auto;
     padding-right: 0.35rem;
+}
+
+.research-list .label-list {
+    display: none;
+}
+
+.research-list .list-item {
+    margin-bottom: 0;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.research-list .type-badge {
+    font-size: 0.52rem;
+    padding: 0.14rem 0.45rem;
+}
+
+.research-list .list-item::before {
+    display: inline-flex;
+}
+
+.research-list .list-item a {
+    font-size: 1rem;
 }
 
 .link-list .list-item a {
@@ -546,12 +621,25 @@ a:hover {
     letter-spacing: 0.14em;
     color: var(--accent-strong);
     background: rgba(10, 16, 26, 0.55);
-    margin-left: auto;
+    margin-left: 0;
 }
 
 .list-item .type-badge {
     margin-left: 0.6rem;
     font-size: 0.55rem;
+}
+
+.hero-meta .type-badge {
+    margin-left: 0;
+}
+
+.list-item .label-list {
+    margin-left: 0.6rem;
+}
+
+.list-item .label-chip {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.4rem;
 }
 
 .type-note {
@@ -572,6 +660,24 @@ a:hover {
 .type-article {
     border-color: rgba(164, 255, 201, 0.5);
     color: #b6f0d4;
+}
+
+.label-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+}
+
+.label-chip {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    border: 1px solid rgba(120, 138, 182, 0.4);
+    border-radius: 999px;
+    padding: 0.12rem 0.5rem;
+    background: rgba(9, 12, 18, 0.45);
 }
 
 .badge-accent {
@@ -1076,6 +1182,11 @@ a:hover {
     .research-list {
         max-height: none;
     }
+
+    .hero-tip-inline {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1118,5 +1229,14 @@ a:hover {
         width: 100%;
         align-items: flex-start;
         margin-left: 0;
+    }
+
+    .hero-tip-inline {
+        font-size: 0.78rem;
+        padding: 0.2rem 0;
+    }
+
+    .hero-tip-inline .button {
+        padding: 0.2rem 0.5rem;
     }
 }

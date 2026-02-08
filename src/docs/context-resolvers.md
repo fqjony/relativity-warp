@@ -2,33 +2,32 @@
 title: Context Resolvers
 description: Turning messy repositories into deterministic, queryable context for automation.
 type: discovery
+labels: context, repo-centric, automation
 ---
 
 # Context Resolvers
 
-## The problem
+## Discovery
 
-Real repositories are full of implicit rules. A human can infer them, but automation cannot. Context resolvers convert those hidden rules into explicit, machine-derivable artifacts.
+Implicit repo rules are a leading cause of automation drift.
 
-## What a resolver does
+## Evidence
 
-- Maps raw files into structured context.
-- Declares constraints and ownership.
-- Normalizes naming, paths, and scope.
-- Outputs deterministic summaries for tooling.
+- Same prompt yields different output across repos.
+- Errors often traced to missing conventions or hidden paths.
 
-## Minimal resolver shape
+## Conclusion
 
-- **Input:** repo paths + manifests.
-- **Logic:** extract, normalize, validate.
-- **Output:** JSON or Markdown artifact.
+Context resolvers should be first-class artifacts. They turn invisible rules into machine-derivable inputs.
 
-## Where to start
+## Output artifacts
 
-- Declare the repo root contract.
-- Define a minimal inventory of packages, services, and entry points.
-- Add validation rules for each artifact.
+- `context/index.json` (repo inventory)
+- `context/contracts.md` (human-readable rules)
 
-## Why it matters
+## Flow (placeholder)
 
-Resolvers make automation reliable. They reduce guesswork and make AI outputs verifiable against known constraints.
+1. Scan repo structure.
+2. Extract constraints.
+3. Emit context artifacts.
+4. Validate against schema.

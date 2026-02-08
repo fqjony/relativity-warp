@@ -52,6 +52,18 @@
       Why: Visitors find the right entry points faster when layout is predictable.
     - Tip: Group docs by type and surface labels in the UI
       Why: Clear labels reduce cognitive load and help readers pick the right depth.
+    - Tip: Always do a task manually before automating it
+      Why: Manual execution reveals hidden steps and edge cases automation must capture.
+    - Tip: Keep configuration separated from code
+      Why: Decoupling config enables safer deployments and easier environment changes.
+    - Tip: Let interfaces drive development
+      Why: Stable interfaces reduce churn and keep systems composable.
+    - Tip: Split big changes into smaller reviewable iterations
+      Why: Smaller diffs reduce risk and speed up feedback cycles.
+    - Tip: Bootstrap environments explicitly
+      Why: Reliable onboarding depends on predictable setup steps.
+    - Tip: Treat failures as attempts and extract the lesson
+      Why: Each failure yields information that improves the system.
 - Group: AI
   Tips:
     - Tip: Prefer prompt-as-workflow for multi-step AI tasks

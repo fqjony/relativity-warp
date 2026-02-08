@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/context-resolvers/" />
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" class="spectrum-page">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
@@ -16,6 +16,9 @@
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
           <span class="type-badge type-discovery">discovery</span>
+          <div class="label-list">
+            <span class="label-chip">context</span><span class="label-chip">repo-centric</span><span class="label-chip">automation</span>
+          </div>
         </div>
         <div class="hero-links">
           <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
@@ -25,29 +28,27 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>The problem</h2>
-<p>Real repositories are full of implicit rules. A human can infer them, but automation cannot. Context resolvers convert those hidden rules into explicit, machine-derivable artifacts.</p>
-<h2>What a resolver does</h2>
+              <h2>Discovery</h2>
+<p>Implicit repo rules are a leading cause of automation drift.</p>
+<h2>Evidence</h2>
 <ul>
-<li>Maps raw files into structured context.</li>
-<li>Declares constraints and ownership.</li>
-<li>Normalizes naming, paths, and scope.</li>
-<li>Outputs deterministic summaries for tooling.</li>
+<li>Same prompt yields different output across repos.</li>
+<li>Errors often traced to missing conventions or hidden paths.</li>
 </ul>
-<h2>Minimal resolver shape</h2>
+<h2>Conclusion</h2>
+<p>Context resolvers should be first-class artifacts. They turn invisible rules into machine-derivable inputs.</p>
+<h2>Output artifacts</h2>
 <ul>
-<li><strong>Input:</strong> repo paths + manifests.</li>
-<li><strong>Logic:</strong> extract, normalize, validate.</li>
-<li><strong>Output:</strong> JSON or Markdown artifact.</li>
+<li><code>context/index.json</code> (repo inventory)</li>
+<li><code>context/contracts.md</code> (human-readable rules)</li>
 </ul>
-<h2>Where to start</h2>
-<ul>
-<li>Declare the repo root contract.</li>
-<li>Define a minimal inventory of packages, services, and entry points.</li>
-<li>Add validation rules for each artifact.</li>
-</ul>
-<h2>Why it matters</h2>
-<p>Resolvers make automation reliable. They reduce guesswork and make AI outputs verifiable against known constraints.</p>
+<h2>Flow (placeholder)</h2>
+<ol>
+<li>Scan repo structure.</li>
+<li>Extract constraints.</li>
+<li>Emit context artifacts.</li>
+<li>Validate against schema.</li>
+</ol>
 
             </div>
           </div>

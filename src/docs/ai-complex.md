@@ -1,34 +1,44 @@
 ---
 title: AI and Complex Problems
 description: A practical view on why complexity breaks AI, and how to de-risk multi-step engineering.
-type: research
+type: article
+labels: ai, engineering, software, automation
 ---
 
 # AI and Complex Problems
 
-## A Practical View
+## Why complexity breaks AI
 
-AI is strongest when a task is narrow, clean, and bounded. Complex problems are the opposite. They are uncertain, incomplete, and full of hidden constraints. The mismatch creates output that looks confident but drifts from reality.
+Complex problems are incomplete by definition. They contain hidden constraints, competing goals, and unknown dependencies. A single prompt cannot carry this load without distortion. AI output becomes fluent but fragile.
 
-## Why complexity breaks the model
+## The failure modes
 
-Complexity introduces three failure modes:
+1. **Hidden constraints.** The model guesses what it cannot see.
+2. **Ambiguous priorities.** The output optimizes the wrong dimension.
+3. **Unbounded scope.** A single answer tries to solve multiple systems at once.
+4. **Non-verifiable output.** The result looks complete but cannot be tested.
 
-- **Hidden constraints.** The model has to guess what it cannot see.
-- **Ambiguous priorities.** It cannot decide which trade-offs matter most.
-- **Unbounded scope.** A single request becomes a chain of assumptions.
+## What actually works
 
-## The illusion of completeness
+- Break problems into bounded steps.
+- Declare inputs, outputs, and tools per step.
+- Verify after each step.
+- Persist artifacts and diffs.
 
-Large outputs feel complete because they are fluent. But without explicit inputs, outputs, and verification steps, the result is fragile. It compiles or reads well, yet fails when connected to real systems.
+## Engineering mindset
 
-## Practical countermeasures
+Treat AI like a junior collaborator: it can draft, but it cannot own architecture without constraints. The real win is not speed — it is controlled reliability.
 
-1. **Make the problem smaller.** Turn it into steps with single responsibilities.
-2. **Declare context.** Provide constraints, paths, dependencies, and tools.
-3. **Add verification.** Define what “correct” means before execution.
-4. **Capture outputs.** Every step must write to a known artifact.
+## Flow (placeholder)
 
-## The rule of thumb
+1. Define constraints.
+2. Split into steps.
+3. Generate artifacts.
+4. Verify outputs.
+5. Integrate safely.
 
-If the task cannot be explained as a sequence of verifiable steps, it is not ready for automation. Complexity demands structure, not more prompting.
+## References
+
+- 12 Factor App
+- TDD
+- Repo-centric workflows

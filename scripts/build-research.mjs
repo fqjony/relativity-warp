@@ -63,6 +63,15 @@ const extractType = (contents) => {
   return meta.type ? meta.type.toLowerCase() : "note";
 };
 
+const extractLabels = (contents) => {
+  const { meta } = parseFrontmatter(contents);
+  if (!meta.labels) return [];
+  return meta.labels
+    .split(",")
+    .map((label) => label.trim())
+    .filter(Boolean);
+};
+
 const extractDate = (contents) => {
   const { meta } = parseFrontmatter(contents);
   return meta.date || "";
@@ -107,9 +116,15 @@ const copyDir = (source, target) => {
   }
 };
 
-const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref, type }) => {
+const renderLabelChips = (labels = []) => {
+  if (!labels.length) return "";
+  return labels.map((label) => `<span class="label-chip">${label}</span>`).join("");
+};
+
+const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref, type, labels }) => {
   const canonical = canonicalHref || "";
   const typeBadge = type ? `<span class="type-badge type-${type}">${type}</span>` : "";
+  const labelChips = renderLabelChips(labels);
 
   return `<!doctype html>
 <html lang="en">
@@ -121,7 +136,7 @@ const renderArticleTemplate = ({ title, description, content, cssHref, homeHref,
     <link rel="stylesheet" href="${cssHref}" />
     ${canonical ? `<link rel="canonical" href="${canonical}" />` : ""}
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" class="spectrum-page">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
@@ -129,6 +144,9 @@ const renderArticleTemplate = ({ title, description, content, cssHref, homeHref,
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
           ${typeBadge}
+          <div class="label-list">
+            ${labelChips}
+          </div>
         </div>
         <div class="hero-links">
           <a href="${homeHref}" class="button button-compact button-ghost">Back to Home</a>
@@ -173,6 +191,7 @@ const buildResearch = () => {
       const url = `/spectrum/${relativeSlug}/`;
       const type = extractType(raw);
       const date = extractDate(raw);
+      const labels = extractLabels(raw);
       return {
         title,
         description,
@@ -183,6 +202,7 @@ const buildResearch = () => {
         raw,
         type,
         date,
+        labels,
         kind: "markdown",
       };
     })
@@ -218,6 +238,7 @@ const buildResearch = () => {
       homeHref: homeHref || "index.html",
       canonicalHref: canonical,
       type: item.type,
+      labels: item.labels,
     });
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, html, "utf8");
@@ -226,12 +247,13 @@ const buildResearch = () => {
   const payload = {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
-    items: items.map(({ title, path: entryPath, url, type, date }) => ({
+    items: items.map(({ title, path: entryPath, url, type, date, labels }) => ({
       title,
       path: entryPath,
       url,
       type,
       date,
+      labels,
     })),
   };
 
@@ -268,7 +290,12 @@ const renderResearchList = (items) => {
     .map((item) => {
       const href = item.url || item.path || "#";
       const badge = item.type ? `<span class="type-badge type-${item.type}">${item.type}</span>` : "";
-      return `  <li class="list-item"><a href="${href}">${item.title}</a>${badge}</li>`;
+      const labels = item.labels?.length
+        ? `<div class="label-list">${item.labels
+            .map((label) => `<span class="label-chip">${label}</span>`)
+            .join("")}</div>`
+        : "";
+      return `  <li class="list-item"><a href="${href}">${item.title}</a>${badge}${labels}</li>`;
     })
     .join("\n");
 };
@@ -333,7 +360,7 @@ const renderSpectrumIndex = (items) => {
       <main id="content">
         <section class="section card">
           <div class="section-body">
-            <ul class="link-list" role="list">
+            <ul class="link-list spectrum-list" role="list">
 ${list}
             </ul>
 ${typeSections}

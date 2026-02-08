@@ -8,14 +8,17 @@
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/ai-complex/" />
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" class="spectrum-page">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
         <h1 class="hero-title">AI and Complex Problems</h1>
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
-          <span class="type-badge type-research">research</span>
+          <span class="type-badge type-article">article</span>
+          <div class="label-list">
+            <span class="label-chip">ai</span><span class="label-chip">engineering</span><span class="label-chip">software</span><span class="label-chip">automation</span>
+          </div>
         </div>
         <div class="hero-links">
           <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
@@ -25,26 +28,38 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>A Practical View</h2>
-<p>AI is strongest when a task is narrow, clean, and bounded. Complex problems are the opposite. They are uncertain, incomplete, and full of hidden constraints. The mismatch creates output that looks confident but drifts from reality.</p>
-<h2>Why complexity breaks the model</h2>
-<p>Complexity introduces three failure modes:</p>
-<ul>
-<li><strong>Hidden constraints.</strong> The model has to guess what it cannot see.</li>
-<li><strong>Ambiguous priorities.</strong> It cannot decide which trade-offs matter most.</li>
-<li><strong>Unbounded scope.</strong> A single request becomes a chain of assumptions.</li>
-</ul>
-<h2>The illusion of completeness</h2>
-<p>Large outputs feel complete because they are fluent. But without explicit inputs, outputs, and verification steps, the result is fragile. It compiles or reads well, yet fails when connected to real systems.</p>
-<h2>Practical countermeasures</h2>
+              <h2>Why complexity breaks AI</h2>
+<p>Complex problems are incomplete by definition. They contain hidden constraints, competing goals, and unknown dependencies. A single prompt cannot carry this load without distortion. AI output becomes fluent but fragile.</p>
+<h2>The failure modes</h2>
 <ol>
-<li><strong>Make the problem smaller.</strong> Turn it into steps with single responsibilities.</li>
-<li><strong>Declare context.</strong> Provide constraints, paths, dependencies, and tools.</li>
-<li><strong>Add verification.</strong> Define what “correct” means before execution.</li>
-<li><strong>Capture outputs.</strong> Every step must write to a known artifact.</li>
+<li><strong>Hidden constraints.</strong> The model guesses what it cannot see.</li>
+<li><strong>Ambiguous priorities.</strong> The output optimizes the wrong dimension.</li>
+<li><strong>Unbounded scope.</strong> A single answer tries to solve multiple systems at once.</li>
+<li><strong>Non-verifiable output.</strong> The result looks complete but cannot be tested.</li>
 </ol>
-<h2>The rule of thumb</h2>
-<p>If the task cannot be explained as a sequence of verifiable steps, it is not ready for automation. Complexity demands structure, not more prompting.</p>
+<h2>What actually works</h2>
+<ul>
+<li>Break problems into bounded steps.</li>
+<li>Declare inputs, outputs, and tools per step.</li>
+<li>Verify after each step.</li>
+<li>Persist artifacts and diffs.</li>
+</ul>
+<h2>Engineering mindset</h2>
+<p>Treat AI like a junior collaborator: it can draft, but it cannot own architecture without constraints. The real win is not speed — it is controlled reliability.</p>
+<h2>Flow (placeholder)</h2>
+<ol>
+<li>Define constraints.</li>
+<li>Split into steps.</li>
+<li>Generate artifacts.</li>
+<li>Verify outputs.</li>
+<li>Integrate safely.</li>
+</ol>
+<h2>References</h2>
+<ul>
+<li>12 Factor App</li>
+<li>TDD</li>
+<li>Repo-centric workflows</li>
+</ul>
 
             </div>
           </div>

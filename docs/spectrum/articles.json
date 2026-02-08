@@ -1,76 +1,128 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-08T20:56:58.930Z",
+  "generatedAt": "2026-02-08T21:38:48.268Z",
   "items": [
     {
       "title": "AI and Complex Problems",
       "path": "spectrum/ai-complex/index.html",
       "url": "/spectrum/ai-complex/",
-      "type": "research",
-      "date": ""
+      "type": "article",
+      "date": "",
+      "labels": [
+        "ai",
+        "engineering",
+        "software",
+        "automation"
+      ]
     },
     {
       "title": "Automation Runtime Boundaries",
       "path": "spectrum/automation-runtime-boundaries/index.html",
       "url": "/spectrum/automation-runtime-boundaries/",
       "type": "note",
-      "date": ""
+      "date": "",
+      "labels": [
+        "automation",
+        "security",
+        "devops"
+      ]
     },
     {
       "title": "Context Resolvers",
       "path": "spectrum/context-resolvers/index.html",
       "url": "/spectrum/context-resolvers/",
       "type": "discovery",
-      "date": ""
+      "date": "",
+      "labels": [
+        "context",
+        "repo-centric",
+        "automation"
+      ]
     },
     {
       "title": "Context-Driven Engineering",
       "path": "spectrum/context-driven-engineering/index.html",
       "url": "/spectrum/context-driven-engineering/",
       "type": "research",
-      "date": ""
+      "date": "",
+      "labels": [
+        "ai",
+        "engineering",
+        "software",
+        "repo-centric"
+      ]
     },
     {
       "title": "Deterministic Execution",
       "path": "spectrum/deterministic-execution/index.html",
       "url": "/spectrum/deterministic-execution/",
       "type": "research",
-      "date": ""
+      "date": "",
+      "labels": [
+        "automation",
+        "reliability",
+        "devops"
+      ]
     },
     {
       "title": "Human-in-the-Loop Control",
       "path": "spectrum/human-in-the-loop/index.html",
       "url": "/spectrum/human-in-the-loop/",
       "type": "note",
-      "date": ""
+      "date": "",
+      "labels": [
+        "governance",
+        "automation"
+      ]
     },
     {
       "title": "Prompt as Artifact",
       "path": "spectrum/prompt-as-artifact/index.html",
       "url": "/spectrum/prompt-as-artifact/",
       "type": "article",
-      "date": ""
+      "date": "",
+      "labels": [
+        "ai",
+        "workflows",
+        "automation"
+      ]
     },
     {
       "title": "Repository Contracts",
       "path": "spectrum/repo-contracts/index.html",
       "url": "/spectrum/repo-contracts/",
       "type": "article",
-      "date": ""
+      "date": "",
+      "labels": [
+        "repo-centric",
+        "engineering",
+        "development",
+        "standards"
+      ]
     },
     {
       "title": "Verification-First Automation",
       "path": "spectrum/verification-first/index.html",
       "url": "/spectrum/verification-first/",
       "type": "research",
-      "date": ""
+      "date": "",
+      "labels": [
+        "verification",
+        "automation",
+        "quality"
+      ]
     },
     {
       "title": "Workflow-First Automation",
       "path": "spectrum/workflow-first-automation/index.html",
       "url": "/spectrum/workflow-first-automation/",
       "type": "research",
-      "date": ""
+      "date": "",
+      "labels": [
+        "workflows",
+        "automation",
+        "engineering"
+      ]
     }
   ]
 }

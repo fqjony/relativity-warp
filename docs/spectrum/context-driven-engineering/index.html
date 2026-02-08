@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/context-driven-engineering/" />
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" class="spectrum-page">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
@@ -16,6 +16,9 @@
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
           <span class="type-badge type-research">research</span>
+          <div class="label-list">
+            <span class="label-chip">ai</span><span class="label-chip">engineering</span><span class="label-chip">software</span><span class="label-chip">repo-centric</span>
+          </div>
         </div>
         <div class="hero-links">
           <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
@@ -25,256 +28,36 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>Why AI Breaks on Real Engineering Work — and How to Stay in Control</h2>
-<h3>Abstract</h3>
-<p>LLMs can generate impressive code, documentation, and architecture ideas. But when you apply them to real engineering work — where constraints are hidden, systems are messy, and teams require standardization — the same AI suddenly becomes unreliable.</p>
-<p>This article is a practical discovery: why AI output often feels inconsistent, why &quot;vibe coding&quot; creates long-term entropy, and why the real solution is not abandoning prompts, but turning them into a structured workflow interface backed by deterministic context.</p>
-<hr>
-<h2>The First Discovery: Same Prompt, Different Output</h2>
-<p>The first time you seriously work with LLMs, it feels like a breakthrough.</p>
-<p>You describe what you want, and the model produces code, scripts, configurations, even full design proposals. Sometimes it looks better than what many engineers would write on a first attempt.</p>
-<p>Then you notice something strange.</p>
-<p>You ask the same question twice.</p>
-<p>And you get two different answers.</p>
-<p>Sometimes the differences are harmless: naming, formatting, code style.</p>
-<p>But sometimes the model generates an entirely different approach:</p>
+              <h2>Research signal</h2>
+<p>AI output degrades as constraints become implicit. The fix is not “better prompts,” but a deterministic context surface that the system can verify.</p>
+<h2>Observations</h2>
 <ul>
-<li>different architecture</li>
-<li>different dependencies</li>
-<li>different assumptions</li>
-<li>different operational risks</li>
+<li>Real engineering work has hidden rules (ownership, environments, safety gates).</li>
+<li>Models improvise when context is absent, creating drift.</li>
+<li>Repeatability requires explicit inputs and outputs per step.</li>
 </ul>
-<p>At that point, the question becomes unavoidable:</p>
-<p><strong>If the same input does not reliably produce the same output, can this system be trusted for engineering automation?</strong></p>
-<hr>
-<h2>Why This Becomes a Real Problem for Teams</h2>
-<p>For casual usage, variability is not a problem. It can even be useful.</p>
-<p>But in real engineering environments, repeatability is not optional. Mature teams rely on:</p>
+<h2>Working hypothesis</h2>
+<p>If the repo exposes deterministic context (structure, manifests, execution rules), the same prompt yields consistent results.</p>
+<h2>Constraints that matter</h2>
 <ul>
-<li>predictable CI/CD behavior</li>
-<li>standardized repo structure</li>
-<li>consistent deployment patterns</li>
-<li>stable dependency chains</li>
-<li>security controls that must not drift</li>
-<li>maintainability across developers and teams</li>
+<li>Source and build boundaries.</li>
+<li>Execution permissions.</li>
+<li>Output paths.</li>
+<li>Verification steps.</li>
 </ul>
-<p>In other words:</p>
-<p><strong>engineering is not only about correctness — it is about consistency.</strong></p>
-<p>This is where AI-assisted development starts to create friction.</p>
-<hr>
-<h2>Why Complex Problems Break AI</h2>
-<p>Complex problems are not just bigger tasks.</p>
-<p>They are fuzzy, incomplete, changing, and full of hidden constraints.</p>
-<p>AI needs clarity, but complexity often starts with uncertainty. When we ask for a one-shot solution, the model fills missing pieces with guesses. The output may look confident and well-written, but it becomes fragile.</p>
-<p>The failure is rarely obvious immediately.</p>
-<p>It shows up later, when the solution hits real systems, real stakeholders, and real constraints.</p>
-<hr>
-<h2>What Breaks in Practice</h2>
-<p>When AI is used on real projects, the same failure patterns repeat.</p>
-<h3>1. Prompt Overload</h3>
-<p>We try to cram everything into one request.</p>
-<p>That forces the model to blur priorities, mix constraints with implementation details, and guess what matters most. The result is often a plan that looks complete, but is internally inconsistent.</p>
-<h3>2. Missing Context</h3>
-<p>Critical constraints usually live in places AI cannot infer:</p>
-<ul>
-<li>internal conventions</li>
-<li>policy requirements</li>
-<li>legacy behavior</li>
-<li>security constraints</li>
-<li>deployment rules</li>
-<li>team workflows</li>
-</ul>
-<p>If those constraints are not explicit, the output quietly violates them.</p>
-<h3>3. Weak Decomposition</h3>
-<p>If the first breakdown is wrong, every later step is wrong.</p>
-<p>Complexity makes errors compound. A small incorrect assumption early becomes a major architectural problem later.</p>
-<h3>4. Fluent but Shallow Output</h3>
-<p>AI is good at producing convincing explanations.</p>
-<p>But real engineering requires explicit artifacts:</p>
-<ul>
-<li>inputs</li>
-<li>outputs</li>
-<li>interfaces</li>
-<li>verification steps</li>
-</ul>
-<p>Without these, the output is hard to validate and easy to accept too early.</p>
-<h3>5. Vague Evaluation</h3>
-<p>If you do not define acceptance criteria, you cannot properly verify correctness.</p>
-<p>And when verification is expensive, the team tends to accept output based on confidence and speed instead of evidence.</p>
-<h3>6. Tooling Mismatch</h3>
-<p>Plans often assume tools, permissions, or access that do not exist.</p>
-<p>This failure mode appears late and wastes the most time.</p>
-<hr>
-<h2>The Vibe Coding Trap</h2>
-<p>AI-assisted development has popularized a workflow that feels productive:</p>
+<h2>Flow (placeholder)</h2>
 <ol>
-<li>ask the model to build something</li>
-<li>copy the result</li>
-<li>adjust until it works</li>
-<li>ship it</li>
+<li>Detect repo contract.</li>
+<li>Resolve context artifacts.</li>
+<li>Generate bounded steps.</li>
+<li>Verify outputs.</li>
+<li>Persist results.</li>
 </ol>
-<p>This produces short-term velocity.</p>
-<p>But it also produces long-term entropy.</p>
-<p>The output may compile and pass tests, yet still:</p>
+<h2>Next probes</h2>
 <ul>
-<li>violate standards</li>
-<li>introduce unapproved dependencies</li>
-<li>ignore security requirements</li>
-<li>create inconsistent architecture across repos</li>
+<li>Compare output consistency with and without explicit context manifests.</li>
+<li>Measure regression rate when verification gates are missing.</li>
 </ul>
-<p>This creates a dangerous paradox:</p>
-<p><strong>AI increases velocity, but decreases standardization.</strong></p>
-<p>And without standardization, teams cannot scale.</p>
-<hr>
-<h2>A Better Mental Model: Prompt as Workflow</h2>
-<p>The core issue is not intelligence.</p>
-<p>The core issue is structure.</p>
-<p>Complex work needs boundaries, explicit inputs, and verification.</p>
-<p>A safer model is:</p>
-<h3><strong>Prompt as workflow</strong></h3>
-<p>Instead of asking AI to &quot;generate the full solution&quot;, treat prompting as a controlled step-based process.</p>
-<p>Each step should be:</p>
-<ul>
-<li>bounded</li>
-<li>testable</li>
-<li>explicit about inputs and outputs</li>
-<li>verifiable before continuing</li>
-</ul>
-<p>This shifts the task from:</p>
-<blockquote>
-<p>&quot;generate the answer&quot;</p>
-</blockquote>
-<p>to:</p>
-<blockquote>
-<p>&quot;generate the next bounded step&quot;</p>
-</blockquote>
-<p>And that is dramatically more reliable.</p>
-<hr>
-<h2>Prompts Are Not the Problem</h2>
-<p>A common reaction is:</p>
-<blockquote>
-<p>&quot;prompt engineering doesn&#39;t work&quot;</p>
-</blockquote>
-<p>That is not true.</p>
-<p>Prompts are the interface.</p>
-<p>The real issue is treating prompts as improvisation instead of engineering.</p>
-<p>A prompt should not be a one-time message.</p>
-<p>A prompt should be treated like an engineering asset:</p>
-<ul>
-<li>reusable</li>
-<li>versioned</li>
-<li>standardized</li>
-<li>validated</li>
-<li>enforced by workflow rules</li>
-</ul>
-<p>Prompts are not magic spells.</p>
-<p><strong>Prompts are contracts.</strong></p>
-<hr>
-<h2>Context-Driven Engineering (CDE)</h2>
-<p>This leads to a simple but powerful shift:</p>
-<p>The goal is not to make AI deterministic.</p>
-<p>The goal is to make the <em>system around AI deterministic</em>.</p>
-<p>That is the foundation of:</p>
-<h2><strong>Context-Driven Engineering</strong></h2>
-<p>CDE is the approach of embedding AI into workflows where context is explicit, structured, and enforced.</p>
-<p>Instead of relying on what the developer remembers to type, the system provides the model with stable engineering context every time.</p>
-<p>This makes AI output consistent across:</p>
-<ul>
-<li>developers</li>
-<li>teams</li>
-<li>repositories</li>
-<li>environments</li>
-</ul>
-<hr>
-<h2>What “Context” Actually Means</h2>
-<p>Context is not “extra instructions”.</p>
-<p>Context is the organization’s executable knowledge.</p>
-<p>It includes:</p>
-<ul>
-<li>repository layout rules</li>
-<li>internal templates and scaffolding</li>
-<li>allowed dependency lists</li>
-<li>security and compliance policies</li>
-<li>CI/CD expectations</li>
-<li>workflow schemas</li>
-<li>output formats</li>
-<li>validation rules and gates</li>
-<li>iteration boundaries</li>
-</ul>
-<p>This is what transforms AI from a generic assistant into a reliable engineering participant.</p>
-<hr>
-<h2>How to Use AI Safely (Practical Rules)</h2>
-<p>You don’t need a complex framework to start. You need discipline.</p>
-<h3>1. Define inputs explicitly</h3>
-<p>List the exact:</p>
-<ul>
-<li>files</li>
-<li>systems</li>
-<li>constraints</li>
-<li>requirements</li>
-<li>acceptance criteria</li>
-</ul>
-<p>Do not let the model infer them.</p>
-<h3>2. Decompose into bounded steps</h3>
-<p>Each step must have:</p>
-<ul>
-<li>clear inputs</li>
-<li>clear actions</li>
-<li>clear outputs</li>
-<li>a verification method</li>
-</ul>
-<p>If a step grows too large, split it.</p>
-<h3>3. Treat your knowledgebase as dynamic</h3>
-<p>The model’s memory is not the source of truth.</p>
-<p>Your source of truth is:</p>
-<ul>
-<li>the repository</li>
-<li>the docs</li>
-<li>the config</li>
-<li>workflow definitions</li>
-<li>the toolchain you can actually run</li>
-</ul>
-<p>Refresh context continuously as you iterate.</p>
-<h3>4. Mix prompts with verification</h3>
-<p>Use AI for reasoning and generation.</p>
-<p>Then bind outcomes to checks you can run:</p>
-<ul>
-<li>tests</li>
-<li>linting</li>
-<li>diffs</li>
-<li>validation scripts</li>
-<li>CI gates</li>
-<li>policy enforcement</li>
-</ul>
-<p>If verification is missing, output is not trustworthy.</p>
-<h3>5. Keep ownership human</h3>
-<p>AI should accelerate work.</p>
-<p>It should not silently redefine standards.</p>
-<p>A good workflow makes assumptions visible early and makes failure cheap.</p>
-<hr>
-<h2>The Real Outcome: AI That Can Scale With Teams</h2>
-<p>The purpose of Context-Driven Engineering is not to generate more code.</p>
-<p>The purpose is to make AI-generated output reliable enough to become part of real engineering workflows.</p>
-<p>When AI is embedded into deterministic boundaries, it becomes useful for serious automation:</p>
-<ul>
-<li>standardized scaffolding</li>
-<li>controlled refactoring</li>
-<li>repeatable infrastructure generation</li>
-<li>secure-by-default patterns</li>
-<li>workflow acceleration without architectural drift</li>
-</ul>
-<p>The goal is not replacing developers.</p>
-<p>The goal is compressing engineering effort <strong>without increasing chaos</strong>.</p>
-<hr>
-<h2>Conclusion</h2>
-<p>LLMs are probabilistic by nature.</p>
-<p>Engineering teams are deterministic by necessity.</p>
-<p>The future is not abandoning prompt engineering.</p>
-<p>The future is upgrading it.</p>
-<p>Prompts must evolve from casual chat inputs into structured workflow interfaces — backed by context, contracts, validation gates, and bounded iteration.</p>
-<p>That is what makes AI usable beyond experimentation.</p>
-<p>That is what makes AI scalable for real teams.</p>
-<p>That is why <strong>Context-Driven Engineering</strong> deserves to exist.</p>
 
             </div>
           </div>

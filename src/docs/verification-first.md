@@ -2,27 +2,28 @@
 title: Verification-First Automation
 description: Build verification into every step so correctness is provable, not assumed.
 type: research
+labels: verification, automation, quality
 ---
 
 # Verification-First Automation
 
-## The core rule
+## Research signal
 
-If you cannot verify it, you cannot ship it. Automation should never rely on confidence alone.
+Automation without verification scales risk faster than it scales output.
 
-## Verification in practice
+## Observations
 
-- Define acceptance checks before writing code.
-- Make validation steps explicit in workflows.
-- Capture outputs so they can be reviewed.
+- Confidence replaces evidence when checks are missing.
+- Failures show up later, when rollback is expensive.
+- TDD works because it forces verification before implementation.
 
-## Typical verification layers
+## Working hypothesis
 
-- Lint and format checks.
-- Unit and integration tests.
-- Contract and schema validation.
-- Environment sanity checks.
+If verification is defined first, automation becomes safer and repeatable.
 
-## The outcome
+## Flow (placeholder)
 
-Verification-first systems move slower at the start, but they scale safely and avoid costly regressions later.
+1. Define acceptance checks.
+2. Build implementation.
+3. Run verification.
+4. Capture results.

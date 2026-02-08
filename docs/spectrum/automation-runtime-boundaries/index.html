@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/automation-runtime-boundaries/" />
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" class="spectrum-page">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
@@ -16,6 +16,9 @@
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
           <span class="type-badge type-note">note</span>
+          <div class="label-list">
+            <span class="label-chip">automation</span><span class="label-chip">security</span><span class="label-chip">devops</span>
+          </div>
         </div>
         <div class="hero-links">
           <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
@@ -25,30 +28,17 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>Why boundaries are non-negotiable</h2>
-<p>Automation multiplies impact. Without a boundary between “reasoning” and “execution,” that impact turns into drift, risk, and invisible side effects. A reliable system makes the execution surface explicit and narrow, and forces every change through it.</p>
-<h2>The boundary pattern</h2>
-<ol>
-<li><strong>Reasoning layer</strong> produces artifacts only.</li>
-<li><strong>Execution layer</strong> runs validated commands only.</li>
-<li><strong>State layer</strong> captures outputs and changes.</li>
-</ol>
-<p>This pattern keeps intent and impact separable. It also makes reviews meaningful, because outputs are deterministic and traceable.</p>
-<h2>What the boundary enforces</h2>
-<ul>
-<li>Inputs are declared, not implied.</li>
-<li>Outputs are written to known paths.</li>
-<li>Execution happens only through approved commands.</li>
-<li>Side effects are visible and reviewable.</li>
+              <ul>
+<li>Boundaries separate reasoning from execution.</li>
+<li>Every command must be explicit and reviewable.</li>
+<li>Side effects must be logged and attributable.</li>
+<li>Do it manually once before automating it.</li>
+<li>Prefer keyless access with scoped identities.</li>
 </ul>
-<h2>Practical gates</h2>
+<h2>Flow (placeholder)</h2>
 <ul>
-<li>Require explicit command lists in automation.</li>
-<li>Log every executed step with inputs and outputs.</li>
-<li>Reject changes without a declared scope.</li>
+<li>Inputs → Validate → Execute → Capture output → Review</li>
 </ul>
-<h2>The payoff</h2>
-<p>Boundaries make automation safe enough for production. They also make it scalable, because every new tool or workflow plugs into the same guardrails.</p>
 
             </div>
           </div>

@@ -2,28 +2,33 @@
 title: Repository Contracts
 description: The repo is the contract. Make it explicit, stable, and consumable.
 type: article
+labels: repo-centric, engineering, development, standards
 ---
 
 # Repository Contracts
 
-## What is a repo contract
+## The principle
 
-A repo contract is the explicit agreement between humans, tools, and automation. It describes structure, responsibilities, and the artifacts that define how work happens.
+The repo itself is the contract. If intent, structure, and execution are not encoded there, automation will guess.
 
-## Contract layers
+## What belongs in the contract
 
-- **Structure:** directory layout, source roots, build outputs.
-- **Artifacts:** manifests, schemas, templates, docs.
-- **Execution:** scripts and commands that are allowed.
-- **Validation:** tests, checks, and gates.
+- Structure: source roots, build outputs, entry points.
+- Artifacts: manifests, schemas, docs.
+- Execution: approved scripts and commands.
+- Validation: tests and gates.
 
-## The contract test
+## Related foundations
 
-If a new engineer cannot infer how to work from the repo itself, the contract is missing. If automation cannot find the same answer, the contract is broken.
+- 12 Factor App
+- Config separated from code
+- Interface drives development
+- Repo-centric as a default
+- Keyless access where possible
 
-## Minimal contract artifacts
+## Flow (placeholder)
 
-- `README` with purpose and entry points.
-- `docs/` describing behavior and constraints.
-- `scripts/` for build and validation.
-- `manifests/` for machine-readable data.
+1. Declare repo layout.
+2. Define artifacts.
+3. Define execution surface.
+4. Enforce validation.

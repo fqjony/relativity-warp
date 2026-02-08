@@ -35,23 +35,18 @@ function renderTip(tip) {
   var body = container.querySelector(".hero-tip-body");
 
   if (!title || !body) {
-    container.innerHTML = "";
-    title = document.createElement("div");
-    title.className = "hero-tip-title";
-    body = document.createElement("div");
-    body.className = "hero-tip-body";
-    container.appendChild(title);
-    container.appendChild(body);
+    return;
   }
 
+  title.textContent = "Tip";
+
   if (!tip) {
-    title.textContent = "Tip";
     body.textContent = "No tips available.";
     return;
   }
 
-  title.textContent = tip.Group || "Tip";
-  body.textContent = tip.Tip || "";
+  var prefix = tip.Group ? tip.Group + " · " : "";
+  body.textContent = prefix + (tip.Tip || "");
 }
 
 function pickRandomTip() {
@@ -82,49 +77,4 @@ function loadTips() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  Promise.allSettled([loadTips()]);
-
-  var themeToggle = document.getElementById("theme-toggle");
-  var themeJoke = document.getElementById("theme-tooltip");
-  var tooltipTimer;
-
-  var themeJokes = [
-    "Starlight says: keep the orbit steady.",
-    "Starlight hums best in the dark.",
-    "Starlight approves: hold the line.",
-  ];
-
-  function pickThemeJoke() {
-    return themeJokes[Math.floor(Math.random() * themeJokes.length)];
-  }
-
-  function showThemeTooltip(message) {
-    if (!themeJoke) {
-      return;
-    }
-    themeJoke.textContent = message;
-    themeJoke.classList.add("is-visible");
-    clearTimeout(tooltipTimer);
-    tooltipTimer = setTimeout(function () {
-      themeJoke.classList.remove("is-visible");
-    }, 1800);
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener("click", function () {
-      showThemeTooltip(pickThemeJoke());
-    });
-  }
-
-  var refreshButton = document.getElementById("tip-refresh");
-  if (refreshButton) {
-    refreshButton.addEventListener("click", function () {
-      if (!tipsCache.length) {
-        loadTips();
-        return;
-      }
-      pickRandomTip();
-    });
-  }
-});
+loadTips();

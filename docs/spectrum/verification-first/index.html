@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../assets/index.css" />
     <link rel="canonical" href="/spectrum/verification-first/" />
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" class="spectrum-page">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
@@ -16,6 +16,9 @@
         <p class="hero-subtitle">Research note</p>
         <div class="hero-meta">
           <span class="type-badge type-research">research</span>
+          <div class="label-list">
+            <span class="label-chip">verification</span><span class="label-chip">automation</span><span class="label-chip">quality</span>
+          </div>
         </div>
         <div class="hero-links">
           <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
@@ -25,23 +28,23 @@
         <section class="section card">
           <div class="section-body">
             <div class="article-content">
-              <h2>The core rule</h2>
-<p>If you cannot verify it, you cannot ship it. Automation should never rely on confidence alone.</p>
-<h2>Verification in practice</h2>
+              <h2>Research signal</h2>
+<p>Automation without verification scales risk faster than it scales output.</p>
+<h2>Observations</h2>
 <ul>
-<li>Define acceptance checks before writing code.</li>
-<li>Make validation steps explicit in workflows.</li>
-<li>Capture outputs so they can be reviewed.</li>
+<li>Confidence replaces evidence when checks are missing.</li>
+<li>Failures show up later, when rollback is expensive.</li>
+<li>TDD works because it forces verification before implementation.</li>
 </ul>
-<h2>Typical verification layers</h2>
-<ul>
-<li>Lint and format checks.</li>
-<li>Unit and integration tests.</li>
-<li>Contract and schema validation.</li>
-<li>Environment sanity checks.</li>
-</ul>
-<h2>The outcome</h2>
-<p>Verification-first systems move slower at the start, but they scale safely and avoid costly regressions later.</p>
+<h2>Working hypothesis</h2>
+<p>If verification is defined first, automation becomes safer and repeatable.</p>
+<h2>Flow (placeholder)</h2>
+<ol>
+<li>Define acceptance checks.</li>
+<li>Build implementation.</li>
+<li>Run verification.</li>
+<li>Capture results.</li>
+</ol>
 
             </div>
           </div>

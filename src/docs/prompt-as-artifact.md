@@ -2,27 +2,31 @@
 title: Prompt as Artifact
 description: Treat prompts as versioned inputs, not transient chat messages.
 type: article
+labels: ai, workflows, automation
 ---
 
 # Prompt as Artifact
 
-## Why prompts must be stored
+## The shift
 
-Prompts encode intent. If they are not stored, intent disappears. That creates a gap between what was asked and what was shipped.
+Prompts are not chats; they are inputs. When you treat them as artifacts, you can reproduce decisions and audit intent.
 
-## Artifact rules
-
-- Every prompt becomes a file.
-- The file has a declared output type.
-- The file is reviewed like code.
-- The file maps to a deterministic result.
-
-## What changes when prompts are artifacts
+## Why it matters
 
 - You can diff intent over time.
-- You can reproduce decisions.
-- You can audit why automation made a choice.
+- You can replay workflows deterministically.
+- You can explain why the system made a choice.
 
-## Practical start
+## Implementation notes
 
-Create a `prompts/` or `manifests/` directory. Name prompts by purpose, not by author. Wire them into build or workflow steps.
+- Store prompts in `manifests/`.
+- Attach an explicit output type.
+- Review prompts like code.
+
+## Flow (placeholder)
+
+1. Write prompt.
+2. Declare output type.
+3. Generate artifact.
+4. Verify result.
+5. Store in repo.

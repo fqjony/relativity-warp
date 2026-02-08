@@ -1,20 +1,29 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-08T20:56:58.930Z",
+  "generatedAt": "2026-02-08T21:38:48.268Z",
   "items": [
     {
       "title": "Automation Runtime Boundaries",
       "path": "spectrum/automation-runtime-boundaries/index.html",
       "url": "/spectrum/automation-runtime-boundaries/",
       "type": "note",
-      "date": ""
+      "date": "",
+      "labels": [
+        "automation",
+        "security",
+        "devops"
+      ]
     },
     {
       "title": "Human-in-the-Loop Control",
       "path": "spectrum/human-in-the-loop/index.html",
       "url": "/spectrum/human-in-the-loop/",
       "type": "note",
-      "date": ""
+      "date": "",
+      "labels": [
+        "governance",
+        "automation"
+      ]
     }
   ]
 }
