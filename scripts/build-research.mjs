@@ -169,7 +169,8 @@ const buildResearch = () => {
   items.forEach((item) => {
     if (item.kind !== "markdown") return;
     const { body } = parseFrontmatter(item.raw);
-    const content = marked.parse(body);
+    const strippedBody = body.replace(/^# .+?\n+/, "");
+    const content = marked.parse(strippedBody);
     const outputPath = item.outputPath;
     const cssHref = path
       .relative(path.dirname(outputPath), path.join(publishDir, "assets", "index.css"))
