@@ -16,24 +16,27 @@
   <body data-theme="dark">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
-      <div class="control-bar" aria-label="Quick controls">
-        <div class="control-widget" aria-live="polite">
-          <button
-            id="theme-toggle"
-            class="button button-compact"
-            type="button"
-            aria-pressed="false"
-            aria-describedby="theme-tooltip"
-          >
-            🌗 Theme
-          </button>
-          <span id="theme-tooltip" class="theme-joke" role="tooltip">
-            Theme check: keep the signal crisp.
-          </span>
-        </div>
-      </div>
       <header class="hero">
-        <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
+        <div class="hero-top">
+          <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
+          <div class="control-bar" aria-label="Quick controls">
+            <div class="control-widget" aria-live="polite">
+              <button
+                id="theme-toggle"
+                class="button button-compact"
+                type="button"
+                aria-pressed="false"
+                aria-describedby="theme-tooltip"
+              >
+                <span class="theme-icon" aria-hidden="true">◐</span>
+                <span>Theme</span>
+              </button>
+              <span id="theme-tooltip" class="theme-joke" role="tooltip">
+                Theme check: keep the signal crisp.
+              </span>
+            </div>
+          </div>
+        </div>
         <p class="hero-subtitle">Software Engineering, DevSecOps, Automation</p>
         <p class="hero-description">
           Repo-centric systems, automation research, and engineering notes with a physics lens.
@@ -59,24 +62,21 @@
       </header>
 
       <main id="content">
-        <section class="section card">
+        <section class="section card section-docs">
           <div class="section-header">
-            <h2>Research</h2>
+            <h2>Docs</h2>
             <span class="section-divider"></span>
-            <span class="section-label">Notes</span>
-            <a class="section-link" href="https://fqjony.com/spectrum"
-              >View full spectrum →</a
-            >
+            <span class="section-label">Published + Draft</span>
           </div>
           <div class="section-body">
             <p class="section-note">
-              Research notes, experiments, and discovery updates.
+              All docs sorted by date, with draft notes clearly marked.
             </p>
             <ul class="link-list research-list" role="list">
               <!-- RESEARCH:START -->
               <li class="list-item">
-                <a href="/research/ai-complex/"
-                  >AI and Complex Problems: A Practical View</a
+                <a href="/spectrum/start-here/"
+                  >Start Here</a
                 >
               </li>
               <!-- RESEARCH:END -->

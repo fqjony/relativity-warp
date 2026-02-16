@@ -12,8 +12,12 @@ const publishDir = path.join(rootDir, "docs");
 const publicSpectrumDir = path.join(publishDir, "spectrum");
 const indexOutputPath = path.join(publicSpectrumDir, "articles.json");
 
+const DOC_KIND = "doc";
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
+const legacyTypeBuckets = ["article", "note", "research", "discovery"];
+const legacyTypeFiles = ["types.json"];
+const legacyDataFiles = ["engineering-tips.json"];
 
 const cleanText = (value) =>
   value
@@ -58,9 +62,23 @@ const extractDescription = (contents) => {
   return paragraph ? cleanText(paragraph) : "";
 };
 
-const extractType = (contents) => {
+const extractStatus = (contents) => {
   const { meta } = parseFrontmatter(contents);
-  return meta.type ? meta.type.toLowerCase() : "note";
+  const status = (meta.status || "").toLowerCase();
+
+  if (status === "draft") {
+    return "draft";
+  }
+
+  if (status === "published") {
+    return "published";
+  }
+
+  if (meta.type) {
+    return "published";
+  }
+
+  return "published";
 };
 
 const extractLabels = (contents) => {
@@ -74,7 +92,7 @@ const extractLabels = (contents) => {
 
 const extractDate = (contents) => {
   const { meta } = parseFrontmatter(contents);
-  return meta.date || "";
+  return meta.datetime || meta.date || "";
 };
 
 const listMarkdownFiles = (dir) => {
@@ -121,10 +139,12 @@ const renderLabelChips = (labels = []) => {
   return labels.map((label) => `<span class="label-chip">${label}</span>`).join("");
 };
 
-const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref, type, labels }) => {
+const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref, labels, status, date }) => {
   const canonical = canonicalHref || "";
-  const typeBadge = type ? `<span class="type-badge type-${type}">${type}</span>` : "";
   const labelChips = renderLabelChips(labels);
+  const statusLabel = status === "draft" ? "Draft" : "Published";
+  const statusBadge = `<span class="status-badge status-${status}">${statusLabel}</span>`;
+  const dateMeta = date ? `<span class="doc-date">${date}</span>` : "";
 
   return `<!doctype html>
 <html lang="en">
@@ -132,7 +152,7 @@ const renderArticleTemplate = ({ title, description, content, cssHref, homeHref,
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title} - Relativity Warp</title>
-    <meta name="description" content="${description || `Research note: ${title}`}" />
+    <meta name="description" content="${description || `Document: ${title}`}" />
     <link rel="stylesheet" href="${cssHref}" />
     ${canonical ? `<link rel="canonical" href="${canonical}" />` : ""}
   </head>
@@ -140,16 +160,19 @@ const renderArticleTemplate = ({ title, description, content, cssHref, homeHref,
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="hero">
-        <h1 class="hero-title">${title}</h1>
-        <p class="hero-subtitle">Research note</p>
+        <div class="hero-top">
+          <h1 class="hero-title">${title}</h1>
+          <div class="hero-links">
+            <a href="${homeHref}" class="button button-compact button-ghost">Back to Home</a>
+          </div>
+        </div>
+        <p class="hero-subtitle">${statusLabel} doc</p>
         <div class="hero-meta">
-          ${typeBadge}
+          ${statusBadge}
+          ${dateMeta}
           <div class="label-list">
             ${labelChips}
           </div>
-        </div>
-        <div class="hero-links">
-          <a href="${homeHref}" class="button button-compact button-ghost">Back to Home</a>
         </div>
       </header>
       <main id="content">
@@ -161,10 +184,214 @@ const renderArticleTemplate = ({ title, description, content, cssHref, homeHref,
           </div>
         </section>
       </main>
+      <footer class="footer">
+        <p class="motto">
+          <a
+            href="https://github.com/fqjony/relativity-warp"
+            target="_blank"
+            rel="noopener"
+            >GitHub repo</a
+          >
+        </p>
+        <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
+      </footer>
     </div>
   </body>
 </html>
 `;
+};
+
+const toItemPayload = ({
+  title,
+  slug,
+  sourcePath,
+  path: entryPath,
+  url,
+  status,
+  date,
+  labels,
+}) => ({
+  title,
+  kind: DOC_KIND,
+  slug,
+  sourcePath,
+  path: entryPath,
+  url,
+  status,
+  date,
+  labels,
+});
+
+const writeStatusIndexes = (generatedAt, items) => {
+  const statuses = items.reduce(
+    (acc, item) => {
+      const key = item.status || "draft";
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(item);
+      return acc;
+    },
+    { published: [], draft: [] }
+  );
+
+  fs.writeFileSync(
+    path.join(publicSpectrumDir, "statuses.json"),
+    JSON.stringify({ schemaVersion: 1, generatedAt, statuses }, null, 2) + "\n",
+    "utf8"
+  );
+
+  Object.entries(statuses).forEach(([status, statusItems]) => {
+    const statusDir = path.join(publicSpectrumDir, status);
+    fs.mkdirSync(statusDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(statusDir, "index.json"),
+      JSON.stringify({ schemaVersion: 1, generatedAt, status, items: statusItems }, null, 2) + "\n",
+      "utf8"
+    );
+  });
+};
+
+const writeTypeIndex = (generatedAt, items) => {
+  const types = { [DOC_KIND]: items };
+  fs.writeFileSync(
+    path.join(publicSpectrumDir, "types.json"),
+    JSON.stringify({ schemaVersion: 1, generatedAt, types }, null, 2) + "\n",
+    "utf8"
+  );
+
+  const docTypeDir = path.join(publicSpectrumDir, DOC_KIND);
+  fs.mkdirSync(docTypeDir, { recursive: true });
+  fs.writeFileSync(
+    path.join(docTypeDir, "index.json"),
+    JSON.stringify({ schemaVersion: 1, generatedAt, type: DOC_KIND, items }, null, 2) + "\n",
+    "utf8"
+  );
+};
+
+const buildDataCatalog = (generatedAt) => {
+  const datasets = [
+    {
+      name: "Spectrum Documents",
+      title: "Spectrum Documents",
+      description: "All spectrum docs with status metadata.",
+      category: "Spectrum",
+      format: "json",
+      path: "spectrum/articles.json",
+    },
+    {
+      name: "Spectrum Types",
+      title: "Spectrum Types",
+      description: "Single doc type index.",
+      category: "Spectrum",
+      format: "json",
+      path: "spectrum/types.json",
+    },
+    {
+      name: "Spectrum Statuses",
+      title: "Spectrum Statuses",
+      description: "Published and draft status indexes.",
+      category: "Spectrum",
+      format: "json",
+      path: "spectrum/statuses.json",
+    },
+    {
+      name: "Published Docs",
+      title: "Published Docs",
+      description: "Published documents only.",
+      category: "Spectrum",
+      format: "json",
+      path: "spectrum/published/index.json",
+    },
+    {
+      name: "Draft Docs",
+      title: "Draft Docs",
+      description: "Draft notes, visible in UI and JSON indexes.",
+      category: "Spectrum",
+      format: "json",
+      path: "spectrum/draft/index.json",
+    },
+  ];
+
+  const tipsPath = path.join(publishDir, "tips.json");
+  if (fs.existsSync(tipsPath)) {
+    datasets.push({
+      name: "Engineering Tips",
+      title: "Engineering Tips",
+      description: "Curated engineering guidance grouped by domain.",
+      category: "Common",
+      format: "json",
+      path: "tips.json",
+    });
+  }
+
+  fs.writeFileSync(path.join(publicSpectrumDir, "index.json"), JSON.stringify(datasets, null, 2) + "\n", "utf8");
+
+  const all = {
+    generatedAt,
+    items: datasets.map((entry) => {
+      const absolutePath = path.join(publishDir, entry.path);
+      let payload = null;
+      if (fs.existsSync(absolutePath)) {
+        try {
+          payload = JSON.parse(fs.readFileSync(absolutePath, "utf8"));
+        } catch {
+          payload = null;
+        }
+      }
+      return {
+        ...entry,
+        payload,
+      };
+    }),
+  };
+
+  fs.writeFileSync(path.join(publicSpectrumDir, "all.json"), JSON.stringify(all, null, 2) + "\n", "utf8");
+};
+
+const cleanupLegacyOutputs = () => {
+  legacyTypeBuckets.forEach((bucket) => {
+    fs.rmSync(path.join(publicSpectrumDir, bucket), { recursive: true, force: true });
+  });
+  legacyTypeFiles.forEach((fileName) => {
+    fs.rmSync(path.join(publicSpectrumDir, fileName), { force: true });
+  });
+  legacyDataFiles.forEach((fileName) => {
+    fs.rmSync(path.join(publicSpectrumDir, fileName), { force: true });
+  });
+};
+
+const cleanupStaleDocPages = (items) => {
+  const expectedPageDirs = new Set(
+    items
+      .map((item) => (item.path || "").replace(/^spectrum\//, "").replace(/\/index\.html$/, ""))
+      .filter(Boolean)
+  );
+
+  const previousIndexPath = path.join(publicSpectrumDir, "articles.json");
+  if (!fs.existsSync(previousIndexPath)) {
+    return;
+  }
+
+  let previousItems = [];
+  try {
+    const parsed = JSON.parse(fs.readFileSync(previousIndexPath, "utf8"));
+    previousItems = Array.isArray(parsed.items) ? parsed.items : [];
+  } catch {
+    previousItems = [];
+  }
+
+  const previousPageDirs = new Set(
+    previousItems
+      .map((item) => {
+        return (item?.path || "").replace(/^spectrum\//, "").replace(/\/index\.html$/, "");
+      })
+      .filter(Boolean)
+  );
+
+  previousPageDirs.forEach((pageDir) => {
+    if (!expectedPageDirs.has(pageDir)) {
+      fs.rmSync(path.join(publicSpectrumDir, pageDir), { recursive: true, force: true });
+    }
+  });
 };
 
 const buildResearch = () => {
@@ -189,36 +416,38 @@ const buildResearch = () => {
       const htmlPath = path.join("spectrum", relativeSlug, "index.html").replace(/\\/g, "/");
       const outputPath = path.join(publishDir, htmlPath);
       const url = `/spectrum/${relativeSlug}/`;
-      const type = extractType(raw);
+      const status = extractStatus(raw);
       const date = extractDate(raw);
       const labels = extractLabels(raw);
       return {
         title,
         description,
+        slug: relativeSlug,
+        sourcePath: relPath,
         path: htmlPath,
-        url,
-        sourcePath: filePath,
         outputPath,
+        url,
         raw,
-        type,
+        status,
         date,
         labels,
-        kind: "markdown",
+        kind: DOC_KIND,
       };
     })
     .sort((a, b) => {
-      const dateA = a.date ? Date.parse(a.date) : 0;
-      const dateB = b.date ? Date.parse(b.date) : 0;
-      if (!Number.isNaN(dateA) || !Number.isNaN(dateB)) {
-        if (dateA !== dateB) return dateB - dateA;
+      const parsedA = a.date ? Date.parse(a.date) : Number.NaN;
+      const parsedB = b.date ? Date.parse(b.date) : Number.NaN;
+      const dateA = Number.isNaN(parsedA) ? 0 : parsedA;
+      const dateB = Number.isNaN(parsedB) ? 0 : parsedB;
+      if (dateA !== dateB) {
+        return dateB - dateA;
       }
       return a.title.localeCompare(b.title);
     });
 
-  const items = markdownItems;
+  cleanupStaleDocPages(markdownItems);
 
-  items.forEach((item) => {
-    if (item.kind !== "markdown") return;
+  markdownItems.forEach((item) => {
     const { body } = parseFrontmatter(item.raw);
     const strippedBody = body.replace(/^# .+?\n+/, "");
     const content = marked.parse(strippedBody);
@@ -237,65 +466,53 @@ const buildResearch = () => {
       cssHref: cssHref || "assets/index.css",
       homeHref: homeHref || "index.html",
       canonicalHref: canonical,
-      type: item.type,
       labels: item.labels,
+      status: item.status,
+      date: item.date,
     });
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, html, "utf8");
   });
 
+  const generatedAt = new Date().toISOString();
+  const payloadItems = markdownItems.map(toItemPayload);
   const payload = {
     schemaVersion: 1,
-    generatedAt: new Date().toISOString(),
-    items: items.map(({ title, path: entryPath, url, type, date, labels }) => ({
-      title,
-      path: entryPath,
-      url,
-      type,
-      date,
-      labels,
-    })),
+    generatedAt,
+    docType: DOC_KIND,
+    items: payloadItems,
   };
 
   fs.mkdirSync(path.dirname(indexOutputPath), { recursive: true });
+  cleanupLegacyOutputs();
   fs.writeFileSync(indexOutputPath, JSON.stringify(payload, null, 2) + "\n", "utf8");
-  const types = payload.items.reduce((acc, item) => {
-    const key = item.type || "note";
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(item);
-    return acc;
-  }, {});
-  fs.writeFileSync(
-    path.join(publicSpectrumDir, "types.json"),
-    JSON.stringify({ schemaVersion: 1, generatedAt: payload.generatedAt, types }, null, 2) + "\n",
-    "utf8"
-  );
-  Object.entries(types).forEach(([type, typeItems]) => {
-    const typeDir = path.join(publicSpectrumDir, type);
-    fs.mkdirSync(typeDir, { recursive: true });
-    fs.writeFileSync(
-      path.join(typeDir, "index.json"),
-      JSON.stringify({ schemaVersion: 1, generatedAt: payload.generatedAt, items: typeItems }, null, 2) + "\n",
-      "utf8"
-    );
-  });
-  return payload.items;
+  writeTypeIndex(generatedAt, payloadItems);
+  writeStatusIndexes(generatedAt, payloadItems);
+  buildDataCatalog(generatedAt);
+
+  return {
+    allItems: payloadItems,
+    publishedItems: payloadItems.filter((item) => item.status === "published"),
+    draftItems: payloadItems.filter((item) => item.status === "draft"),
+  };
 };
 
 const renderResearchList = (items) => {
   if (!items.length) {
-    return `  <li class="list-item">No research published yet.</li>`;
+    return `  <li class="list-item">No docs yet.</li>`;
   }
   return items
     .map((item) => {
       const href = item.url || item.path || "#";
-      const badge = item.type ? `<span class="type-badge type-${item.type}">${item.type}</span>` : "";
+      const statusLabel = item.status === "draft" ? "Draft" : "Published";
+      const statusBadge = `<span class="status-badge status-${item.status}">${statusLabel}</span>`;
       const labels = item.labels?.length
         ? `<div class="label-list">${item.labels
             .map((label) => `<span class="label-chip">${label}</span>`)
             .join("")}</div>`
         : "";
-      return `  <li class="list-item"><a href="${href}">${item.title}</a>${badge}${labels}</li>`;
+      const dateMeta = item.date ? `<span class="doc-date">${item.date}</span>` : "";
+      return `  <li class="list-item"><a href="${href}">${item.title}</a>${statusBadge}${dateMeta}${labels}</li>`;
     })
     .join("\n");
 };
@@ -322,79 +539,13 @@ const updateHomepage = (items) => {
   fs.writeFileSync(homepageOutputPath, updated, "utf8");
 };
 
-const renderSpectrumIndex = (items) => {
-  const list = renderResearchList(items);
-  const types = items.reduce((acc, item) => {
-    const key = item.type || "note";
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(item);
-    return acc;
-  }, {});
-  const typeSections = Object.entries(types)
-    .map(([type, entries]) => {
-      return `            <div class="subsection">\n` +
-        `              <div class="subsection-title">${type}</div>\n` +
-        `              <ul class="link-list" role="list">\n${renderResearchList(entries)}\n              </ul>\n` +
-        `            </div>`;
-    })
-    .join("\n");
-  return `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spectrum - Relativity Warp</title>
-    <meta name="description" content="Spectrum articles and notes." />
-    <link rel="stylesheet" href="/assets/index.css" />
-  </head>
-  <body data-theme="dark">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <div class="container">
-      <header class="hero">
-        <h1 class="hero-title">Spectrum</h1>
-        <p class="hero-subtitle">Articles, research, and discovery notes.</p>
-        <div class="hero-links">
-          <a href="/index.html" class="button button-compact button-ghost">Back to Home</a>
-        </div>
-      </header>
-      <main id="content">
-        <section class="section card">
-          <div class="section-body">
-            <ul class="link-list spectrum-list" role="list">
-${list}
-            </ul>
-${typeSections}
-            <div class="subsection">
-              <div class="subsection-title">Data</div>
-              <ul class="link-list" role="list">
-                <li class="list-item">
-                  <a href="/tips.json">Engineering Tips (JSON)</a>
-                </li>
-                <li class="list-item">
-                  <a href="/spectrum/articles.json">Spectrum Index (JSON)</a>
-                </li>
-                <li class="list-item">
-                  <a href="/spectrum/types.json">Spectrum Types (JSON)</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  </body>
-</html>
-`;
-};
-
-const items = buildResearch();
-updateHomepage(items);
+const { allItems, publishedItems, draftItems } = buildResearch();
+updateHomepage(allItems);
 fs.mkdirSync(publicSpectrumDir, { recursive: true });
-fs.writeFileSync(
-  path.join(publicSpectrumDir, "index.html"),
-  renderSpectrumIndex(items),
-  "utf8"
-);
+const spectrumLandingPath = path.join(publicSpectrumDir, "index.html");
+if (fs.existsSync(spectrumLandingPath)) {
+  fs.rmSync(spectrumLandingPath);
+}
 copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
 const dataViewerSource = path.join(rootDir, "src", "templates", "data-viewer.html");
 if (fs.existsSync(dataViewerSource)) {
@@ -403,4 +554,4 @@ if (fs.existsSync(dataViewerSource)) {
 if (fs.existsSync(path.join(rootDir, "CNAME"))) {
   fs.copyFileSync(path.join(rootDir, "CNAME"), path.join(publishDir, "CNAME"));
 }
-console.log(`Built ${items.length} research item(s).`);
+console.log(`Built ${allItems.length} doc(s): ${publishedItems.length} published, ${draftItems.length} draft.`);

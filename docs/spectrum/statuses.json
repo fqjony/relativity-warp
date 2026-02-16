@@ -1,8 +1,26 @@
 {
   "schemaVersion": 1,
   "generatedAt": "2026-02-16T18:53:19.343Z",
-  "types": {
-    "doc": [
+  "statuses": {
+    "published": [
+      {
+        "title": "Start Here",
+        "kind": "doc",
+        "slug": "start-here",
+        "sourcePath": "src/docs/start-here.md",
+        "path": "spectrum/start-here/index.html",
+        "url": "/spectrum/start-here/",
+        "status": "published",
+        "date": "2026-02-16 09:00",
+        "labels": [
+          "entry-point",
+          "docs",
+          "workflow",
+          "dev-kit"
+        ]
+      }
+    ],
+    "draft": [
       {
         "title": "Local AI Stack and dev.kit Notes",
         "kind": "doc",
@@ -18,22 +36,6 @@
           "local-ai",
           "dev-kit",
           "workflow"
-        ]
-      },
-      {
-        "title": "Start Here",
-        "kind": "doc",
-        "slug": "start-here",
-        "sourcePath": "src/docs/start-here.md",
-        "path": "spectrum/start-here/index.html",
-        "url": "/spectrum/start-here/",
-        "status": "published",
-        "date": "2026-02-16 09:00",
-        "labels": [
-          "entry-point",
-          "docs",
-          "workflow",
-          "dev-kit"
         ]
       }
     ]

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Start Here - Relativity Warp</title>
+    <meta name="description" content="Minimal entry point for shaping Relativity Warp docs with a draft-first workflow." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+    <link rel="canonical" href="/spectrum/start-here/" />
+  </head>
+  <body data-theme="dark" class="spectrum-page">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="hero">
+        <div class="hero-top">
+          <h1 class="hero-title">Start Here</h1>
+          <div class="hero-links">
+            <a href="../../index.html" class="button button-compact button-ghost">Back to Home</a>
+          </div>
+        </div>
+        <p class="hero-subtitle">Published doc</p>
+        <div class="hero-meta">
+          <span class="status-badge status-published">Published</span>
+          <span class="doc-date">2026-02-16 09:00</span>
+          <div class="label-list">
+            <span class="label-chip">entry-point</span><span class="label-chip">docs</span><span class="label-chip">workflow</span><span class="label-chip">dev-kit</span>
+          </div>
+        </div>
+      </header>
+      <main id="content">
+        <section class="section card">
+          <div class="section-body">
+            <div class="article-content">
+              <p>This repo now uses a simple docs model:</p>
+<ul>
+<li>One content type: <code>doc</code>.</li>
+<li>One workflow state: <code>status: draft</code> or <code>status: published</code>.</li>
+</ul>
+<h2>What to edit first</h2>
+<ol>
+<li>Keep working notes in <code>src/docs/local-ai-stack-dev-kit-notes.md</code> (<code>status: draft</code>).</li>
+<li>Promote notes to published by changing <code>status: published</code>.</li>
+<li>Run <code>npm run build</code> after each meaningful update.</li>
+</ol>
+<h2>Writing contract</h2>
+<p>Use this frontmatter in every doc:</p>
+<ul>
+<li><code>title</code></li>
+<li><code>description</code></li>
+<li><code>status</code></li>
+<li><code>datetime</code> (preferred; falls back to <code>date</code>)</li>
+<li><code>date</code> (optional)</li>
+<li><code>labels</code> (optional)</li>
+</ul>
+<h2>Scope for now</h2>
+<ul>
+<li>Keep docs small.</li>
+<li>Prefer one concrete idea per doc.</li>
+<li>If a doc is not actively used, delete it.</li>
+</ul>
+
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="footer">
+        <p class="motto">
+          <a
+            href="https://github.com/fqjony/relativity-warp"
+            target="_blank"
+            rel="noopener"
+            >GitHub repo</a
+          >
+        </p>
+        <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>

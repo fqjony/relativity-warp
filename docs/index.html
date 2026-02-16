@@ -16,24 +16,27 @@
   <body data-theme="dark">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
-      <div class="control-bar" aria-label="Quick controls">
-        <div class="control-widget" aria-live="polite">
-          <button
-            id="theme-toggle"
-            class="button button-compact"
-            type="button"
-            aria-pressed="false"
-            aria-describedby="theme-tooltip"
-          >
-            🌗 Theme
-          </button>
-          <span id="theme-tooltip" class="theme-joke" role="tooltip">
-            Theme check: keep the signal crisp.
-          </span>
-        </div>
-      </div>
       <header class="hero">
-        <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
+        <div class="hero-top">
+          <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
+          <div class="control-bar" aria-label="Quick controls">
+            <div class="control-widget" aria-live="polite">
+              <button
+                id="theme-toggle"
+                class="button button-compact"
+                type="button"
+                aria-pressed="false"
+                aria-describedby="theme-tooltip"
+              >
+                <span class="theme-icon" aria-hidden="true">◐</span>
+                <span>Theme</span>
+              </button>
+              <span id="theme-tooltip" class="theme-joke" role="tooltip">
+                Theme check: keep the signal crisp.
+              </span>
+            </div>
+          </div>
+        </div>
         <p class="hero-subtitle">Software Engineering, DevSecOps, Automation</p>
         <p class="hero-description">
           Repo-centric systems, automation research, and engineering notes with a physics lens.
@@ -59,31 +62,20 @@
       </header>
 
       <main id="content">
-        <section class="section card">
+        <section class="section card section-docs">
           <div class="section-header">
-            <h2>Research</h2>
+            <h2>Docs</h2>
             <span class="section-divider"></span>
-            <span class="section-label">Notes</span>
-            <a class="section-link" href="https://fqjony.com/spectrum"
-              >View full spectrum →</a
-            >
+            <span class="section-label">Published + Draft</span>
           </div>
           <div class="section-body">
             <p class="section-note">
-              Research notes, experiments, and discovery updates.
+              All docs sorted by date, with draft notes clearly marked.
             </p>
             <ul class="link-list research-list" role="list">
               <!-- RESEARCH:START -->
-  <li class="list-item"><a href="/spectrum/ai-complex/">AI and Complex Problems</a><span class="type-badge type-article">article</span><div class="label-list"><span class="label-chip">ai</span><span class="label-chip">engineering</span><span class="label-chip">software</span><span class="label-chip">automation</span></div></li>
-  <li class="list-item"><a href="/spectrum/automation-runtime-boundaries/">Automation Runtime Boundaries</a><span class="type-badge type-note">note</span><div class="label-list"><span class="label-chip">automation</span><span class="label-chip">security</span><span class="label-chip">devops</span><span class="label-chip">engineering</span></div></li>
-  <li class="list-item"><a href="/spectrum/context-resolvers/">Context Resolvers</a><span class="type-badge type-note">note</span><div class="label-list"><span class="label-chip">context</span><span class="label-chip">repo-centric</span><span class="label-chip">automation</span><span class="label-chip">engineering</span></div></li>
-  <li class="list-item"><a href="/spectrum/context-driven-engineering/">Context-Driven Engineering</a><span class="type-badge type-article">article</span><div class="label-list"><span class="label-chip">engineering</span><span class="label-chip">development</span><span class="label-chip">software</span><span class="label-chip">automation</span><span class="label-chip">physics</span></div></li>
-  <li class="list-item"><a href="/spectrum/deterministic-execution/">Deterministic Execution</a><span class="type-badge type-research">research</span><div class="label-list"><span class="label-chip">automation</span><span class="label-chip">reliability</span><span class="label-chip">devops</span><span class="label-chip">engineering</span><span class="label-chip">physics</span></div></li>
-  <li class="list-item"><a href="/spectrum/human-in-the-loop/">Human-in-the-Loop Control</a><span class="type-badge type-note">note</span><div class="label-list"><span class="label-chip">governance</span><span class="label-chip">automation</span><span class="label-chip">development</span></div></li>
-  <li class="list-item"><a href="/spectrum/prompt-as-artifact/">Prompt as Artifact</a><span class="type-badge type-article">article</span><div class="label-list"><span class="label-chip">ai</span><span class="label-chip">workflows</span><span class="label-chip">automation</span><span class="label-chip">development</span></div></li>
-  <li class="list-item"><a href="/spectrum/repo-contracts/">Repository Contracts</a><span class="type-badge type-article">article</span><div class="label-list"><span class="label-chip">repo-centric</span><span class="label-chip">engineering</span><span class="label-chip">development</span><span class="label-chip">software</span></div></li>
-  <li class="list-item"><a href="/spectrum/verification-first/">Verification-First Automation</a><span class="type-badge type-research">research</span><div class="label-list"><span class="label-chip">verification</span><span class="label-chip">automation</span><span class="label-chip">quality</span><span class="label-chip">development</span></div></li>
-  <li class="list-item"><a href="/spectrum/workflow-first-automation/">Workflow-First Automation</a><span class="type-badge type-research">research</span><div class="label-list"><span class="label-chip">workflows</span><span class="label-chip">automation</span><span class="label-chip">engineering</span><span class="label-chip">development</span></div></li>
+  <li class="list-item"><a href="/spectrum/local-ai-stack-dev-kit-notes/">Local AI Stack and dev.kit Notes</a><span class="status-badge status-draft">Draft</span><span class="doc-date">2026-02-16 20:30</span><div class="label-list"><span class="label-chip">draft</span><span class="label-chip">notes</span><span class="label-chip">local-ai</span><span class="label-chip">dev-kit</span><span class="label-chip">workflow</span></div></li>
+  <li class="list-item"><a href="/spectrum/start-here/">Start Here</a><span class="status-badge status-published">Published</span><span class="doc-date">2026-02-16 09:00</span><div class="label-list"><span class="label-chip">entry-point</span><span class="label-chip">docs</span><span class="label-chip">workflow</span><span class="label-chip">dev-kit</span></div></li>
 <!-- RESEARCH:END -->
             </ul>
           </div>

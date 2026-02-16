@@ -1,13 +1,224 @@
 {
-  "generatedAt": "2026-02-08T19:35:50.358Z",
+  "generatedAt": "2026-02-16T18:53:19.343Z",
   "items": [
+    {
+      "name": "Spectrum Documents",
+      "title": "Spectrum Documents",
+      "description": "All spectrum docs with status metadata.",
+      "category": "Spectrum",
+      "format": "json",
+      "path": "spectrum/articles.json",
+      "payload": {
+        "schemaVersion": 1,
+        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "docType": "doc",
+        "items": [
+          {
+            "title": "Local AI Stack and dev.kit Notes",
+            "kind": "doc",
+            "slug": "local-ai-stack-dev-kit-notes",
+            "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
+            "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
+            "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+            "status": "draft",
+            "date": "2026-02-16 20:30",
+            "labels": [
+              "draft",
+              "notes",
+              "local-ai",
+              "dev-kit",
+              "workflow"
+            ]
+          },
+          {
+            "title": "Start Here",
+            "kind": "doc",
+            "slug": "start-here",
+            "sourcePath": "src/docs/start-here.md",
+            "path": "spectrum/start-here/index.html",
+            "url": "/spectrum/start-here/",
+            "status": "published",
+            "date": "2026-02-16 09:00",
+            "labels": [
+              "entry-point",
+              "docs",
+              "workflow",
+              "dev-kit"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Spectrum Types",
+      "title": "Spectrum Types",
+      "description": "Single doc type index.",
+      "category": "Spectrum",
+      "format": "json",
+      "path": "spectrum/types.json",
+      "payload": {
+        "schemaVersion": 1,
+        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "types": {
+          "doc": [
+            {
+              "title": "Local AI Stack and dev.kit Notes",
+              "kind": "doc",
+              "slug": "local-ai-stack-dev-kit-notes",
+              "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
+              "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
+              "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+              "status": "draft",
+              "date": "2026-02-16 20:30",
+              "labels": [
+                "draft",
+                "notes",
+                "local-ai",
+                "dev-kit",
+                "workflow"
+              ]
+            },
+            {
+              "title": "Start Here",
+              "kind": "doc",
+              "slug": "start-here",
+              "sourcePath": "src/docs/start-here.md",
+              "path": "spectrum/start-here/index.html",
+              "url": "/spectrum/start-here/",
+              "status": "published",
+              "date": "2026-02-16 09:00",
+              "labels": [
+                "entry-point",
+                "docs",
+                "workflow",
+                "dev-kit"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Spectrum Statuses",
+      "title": "Spectrum Statuses",
+      "description": "Published and draft status indexes.",
+      "category": "Spectrum",
+      "format": "json",
+      "path": "spectrum/statuses.json",
+      "payload": {
+        "schemaVersion": 1,
+        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "statuses": {
+          "published": [
+            {
+              "title": "Start Here",
+              "kind": "doc",
+              "slug": "start-here",
+              "sourcePath": "src/docs/start-here.md",
+              "path": "spectrum/start-here/index.html",
+              "url": "/spectrum/start-here/",
+              "status": "published",
+              "date": "2026-02-16 09:00",
+              "labels": [
+                "entry-point",
+                "docs",
+                "workflow",
+                "dev-kit"
+              ]
+            }
+          ],
+          "draft": [
+            {
+              "title": "Local AI Stack and dev.kit Notes",
+              "kind": "doc",
+              "slug": "local-ai-stack-dev-kit-notes",
+              "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
+              "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
+              "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+              "status": "draft",
+              "date": "2026-02-16 20:30",
+              "labels": [
+                "draft",
+                "notes",
+                "local-ai",
+                "dev-kit",
+                "workflow"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Published Docs",
+      "title": "Published Docs",
+      "description": "Published documents only.",
+      "category": "Spectrum",
+      "format": "json",
+      "path": "spectrum/published/index.json",
+      "payload": {
+        "schemaVersion": 1,
+        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "status": "published",
+        "items": [
+          {
+            "title": "Start Here",
+            "kind": "doc",
+            "slug": "start-here",
+            "sourcePath": "src/docs/start-here.md",
+            "path": "spectrum/start-here/index.html",
+            "url": "/spectrum/start-here/",
+            "status": "published",
+            "date": "2026-02-16 09:00",
+            "labels": [
+              "entry-point",
+              "docs",
+              "workflow",
+              "dev-kit"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Draft Docs",
+      "title": "Draft Docs",
+      "description": "Draft notes, visible in UI and JSON indexes.",
+      "category": "Spectrum",
+      "format": "json",
+      "path": "spectrum/draft/index.json",
+      "payload": {
+        "schemaVersion": 1,
+        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "status": "draft",
+        "items": [
+          {
+            "title": "Local AI Stack and dev.kit Notes",
+            "kind": "doc",
+            "slug": "local-ai-stack-dev-kit-notes",
+            "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
+            "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
+            "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+            "status": "draft",
+            "date": "2026-02-16 20:30",
+            "labels": [
+              "draft",
+              "notes",
+              "local-ai",
+              "dev-kit",
+              "workflow"
+            ]
+          }
+        ]
+      }
+    },
     {
       "name": "Engineering Tips",
       "title": "Engineering Tips",
       "description": "Curated engineering guidance grouped by domain.",
       "category": "Common",
       "format": "json",
-      "path": "spectrum/engineering-tips.json",
+      "path": "tips.json",
       "payload": [
         {
           "Group": "Common",
@@ -91,6 +302,54 @@
             {
               "Tip": "Keep documentation close to the code",
               "Why": "Proximity increases the chance that docs stay current and actionable."
+            },
+            {
+              "Tip": "Keep the execution surface small and explicit",
+              "Why": "Narrow boundaries reduce risk and make automation behavior predictable."
+            },
+            {
+              "Tip": "Declare inputs and outputs for every automated step",
+              "Why": "Explicit I/O makes workflows testable and repeatable."
+            },
+            {
+              "Tip": "Add validation gates before shipping changes",
+              "Why": "Verification prevents confident-but-wrong output from reaching production."
+            },
+            {
+              "Tip": "Capture context in lightweight markdown notes",
+              "Why": "Short, scoped notes preserve intent without slowing down iteration."
+            },
+            {
+              "Tip": "Keep homepages scannable with clear hierarchy",
+              "Why": "Visitors find the right entry points faster when layout is predictable."
+            },
+            {
+              "Tip": "Group docs by type and surface labels in the UI",
+              "Why": "Clear labels reduce cognitive load and help readers pick the right depth."
+            },
+            {
+              "Tip": "Always do a task manually before automating it",
+              "Why": "Manual execution reveals hidden steps and edge cases automation must capture."
+            },
+            {
+              "Tip": "Keep configuration separated from code",
+              "Why": "Decoupling config enables safer deployments and easier environment changes."
+            },
+            {
+              "Tip": "Let interfaces drive development",
+              "Why": "Stable interfaces reduce churn and keep systems composable."
+            },
+            {
+              "Tip": "Split big changes into smaller reviewable iterations",
+              "Why": "Smaller diffs reduce risk and speed up feedback cycles."
+            },
+            {
+              "Tip": "Bootstrap environments explicitly",
+              "Why": "Reliable onboarding depends on predictable setup steps."
+            },
+            {
+              "Tip": "Treat failures as attempts and extract the lesson",
+              "Why": "Each failure yields information that improves the system."
             }
           ]
         },
@@ -128,6 +387,30 @@
             {
               "Tip": "Separate execution from artifact generation",
               "Why": "Keeping agents in artifact-only mode preserves safety boundaries."
+            },
+            {
+              "Tip": "Store prompts as versioned artifacts",
+              "Why": "Versioned prompts preserve intent and make automation reproducible."
+            },
+            {
+              "Tip": "Use context resolvers before asking for solutions",
+              "Why": "Deterministic context reduces guessing and improves reliability."
+            },
+            {
+              "Tip": "Require verification steps in AI workflows",
+              "Why": "Built-in checks prevent regressions and make results auditable."
+            },
+            {
+              "Tip": "Gate high-risk changes with human approval checkpoints",
+              "Why": "Human-in-the-loop control catches ambiguity before execution."
+            },
+            {
+              "Tip": "Add metadata to every artifact (title, type, description)",
+              "Why": "Metadata makes discovery and automation indexing reliable."
+            },
+            {
+              "Tip": "Prefer type-aware indexes over monolithic lists",
+              "Why": "Segmented indexes scale better as content grows."
             }
           ]
         }

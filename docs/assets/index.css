@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap");
 
 * {
     margin: 0;
@@ -43,12 +43,12 @@ body[data-theme="light"] {
 }
 
 body {
-    font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.65;
     font-size: clamp(16px, 0.4vw + 14px, 18px);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     position: relative;
     min-height: 100vh;
     min-height: 100svh;
@@ -72,7 +72,7 @@ body::before {
 .container {
     max-width: min(72ch, 920px);
     margin: 0 auto;
-    padding: 3.5rem 1.25rem 3.25rem;
+    padding: 2.3rem 1.25rem 3.25rem;
     width: 100%;
     flex: 1;
     display: flex;
@@ -81,20 +81,19 @@ body::before {
 }
 
 .control-bar {
-    position: sticky;
-    top: 0.75rem;
+    position: static;
     z-index: 4;
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem 1rem;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 1.1rem;
-    padding: 0.45rem 0.7rem;
-    border: 1px solid var(--control-border);
-    border-radius: 999px;
-    background: var(--control-bg);
-    backdrop-filter: blur(12px);
+    margin-bottom: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
     width: fit-content;
     max-width: 100%;
     margin-left: auto;
@@ -104,12 +103,45 @@ body::before {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.25rem 0.45rem;
-    border-radius: 999px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    box-shadow: 0 14px 24px -24px rgba(0, 0, 0, 0.6);
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
     position: relative;
+}
+
+#theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.36rem 0.78rem;
+    border-radius: 999px;
+    border: 1px solid rgba(112, 153, 222, 0.38);
+    background: rgba(10, 15, 24, 0.72);
+    font-size: 0.73rem;
+    letter-spacing: 0.01em;
+    box-shadow: 0 10px 20px -18px rgba(72, 130, 218, 0.8);
+}
+
+#theme-toggle:hover {
+    border-color: rgba(147, 187, 247, 0.62);
+    background: rgba(15, 22, 35, 0.78);
+    transform: none;
+    box-shadow: 0 12px 22px -18px rgba(90, 150, 236, 0.75);
+}
+
+.theme-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.05rem;
+    height: 1.05rem;
+    border-radius: 999px;
+    background: rgba(106, 169, 255, 0.18);
+    color: var(--accent-strong);
+    font-size: 0.68rem;
+    line-height: 1;
 }
 
 .theme-joke {
@@ -183,14 +215,22 @@ body::before {
 .hero {
     display: grid;
     grid-template-columns: 1fr;
-    row-gap: 0.75rem;
-    padding: 0.6rem 0 1.6rem;
+    row-gap: 0.62rem;
+    padding: 0.4rem 0 1.45rem;
     border-bottom: 1px solid rgba(120, 138, 182, 0.22);
     border-radius: 0;
     background: transparent;
     text-align: left;
-    margin-bottom: 2rem;
+    margin-bottom: 1.7rem;
     box-shadow: none;
+}
+
+.hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .hero-meta {
@@ -205,7 +245,7 @@ body::before {
 .hero-title {
     font-size: clamp(2.6rem, 4.8vw, 3.6rem);
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
     letter-spacing: -0.02em;
     line-height: 1.1;
     grid-column: 1;
@@ -348,7 +388,7 @@ main {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 1.1rem 1.25rem;
+    padding: 1.25rem 1.35rem;
     box-shadow: 0 24px 60px -50px rgba(8, 12, 18, 0.9);
     min-height: 0;
 }
@@ -360,11 +400,9 @@ main {
 .section-header {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
     flex-wrap: wrap;
-    overflow: hidden;
+    gap: 0.55rem 0.85rem;
+    margin-bottom: 0.85rem;
 }
 
 .section h2 {
@@ -379,8 +417,9 @@ main {
 
 .section-divider {
     height: 1px;
-    flex: 1;
+    flex: 1 1 180px;
     background: linear-gradient(90deg, rgba(120, 138, 182, 0.35), transparent);
+    min-width: 9rem;
 }
 
 .section-label {
@@ -388,6 +427,8 @@ main {
     text-transform: uppercase;
     letter-spacing: 0.18em;
     color: var(--text-muted);
+    margin-left: auto;
+    white-space: nowrap;
 }
 
 .section-header .badge {
@@ -396,12 +437,13 @@ main {
 }
 
 .section-link {
-    margin-left: auto;
+    margin-left: 0;
     font-size: 0.75rem;
     color: var(--accent-strong);
     text-decoration: underline;
     text-underline-offset: 4px;
     text-decoration-thickness: 1px;
+    white-space: nowrap;
 }
 
 .section-link:hover {
@@ -418,8 +460,9 @@ main {
 .section-note {
     font-size: 0.88rem;
     color: var(--text-secondary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.45rem;
     font-style: italic;
+    line-height: 1.55;
 }
 
 .article-content h1,
@@ -532,7 +575,6 @@ a:focus-visible {
 .list-item {
     font-size: 0.9rem;
     margin-bottom: 0;
-    padding-left: 0;
 }
 
 .link-list {
@@ -557,10 +599,10 @@ a:focus-visible {
 .research-list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.5rem;
-    max-height: calc(100vh - 340px);
-    overflow-y: auto;
-    padding-right: 0.35rem;
+    gap: 0.52rem;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
 }
 
 .research-list .label-list {
@@ -569,9 +611,12 @@ a:focus-visible {
 
 .research-list .list-item {
     margin-bottom: 0;
-    padding-left: 0;
+    padding: 0.76rem 1rem;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    row-gap: 0.35rem;
 }
 
 .research-list .type-badge {
@@ -585,6 +630,9 @@ a:focus-visible {
 
 .research-list .list-item a {
     font-size: 1rem;
+    line-height: 1.35;
+    display: inline-flex;
+    align-items: center;
 }
 
 .link-list .list-item a {
@@ -602,9 +650,9 @@ a:focus-visible {
 .list-item {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.48rem;
     font-size: 0.9rem;
-    padding: 0.6rem 0.75rem;
+    padding: 0.75rem 0.95rem;
     border-radius: 12px;
     border: 1px solid var(--border);
     background: rgba(10, 14, 22, 0.45);
@@ -650,6 +698,55 @@ a:focus-visible {
 
 .hero-meta .type-badge {
     margin-left: 0;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid rgba(126, 185, 255, 0.4);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-strong);
+    background: rgba(10, 16, 26, 0.55);
+    margin-left: 0.35rem;
+}
+
+.hero-meta .status-badge {
+    margin-left: 0;
+}
+
+.hero-meta .doc-date {
+    margin-left: 0.35rem;
+    font-size: 0.68rem;
+}
+
+.status-published {
+    border-color: rgba(132, 226, 177, 0.52);
+    color: #b6f0d4;
+}
+
+.status-draft {
+    border-color: rgba(255, 196, 111, 0.55);
+    color: #ffd28a;
+    background: rgba(35, 25, 8, 0.42);
+}
+
+.doc-date {
+    margin-left: 0.2rem;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+}
+
+.research-list .doc-date {
+    margin-left: auto;
+    padding-left: 0.7rem;
+    white-space: nowrap;
+    text-align: right;
 }
 
 .list-item .label-list {
@@ -754,7 +851,9 @@ a:focus-visible {
 }
 
 .section-body {
-    margin-top: 0.5rem;
+    margin-top: 0;
+    display: grid;
+    gap: 0.35rem;
 }
 
 .section.is-collapsed .section-body {
@@ -767,6 +866,48 @@ a:focus-visible {
 
 .section.is-collapsed {
     padding: 0.85rem 1.1rem;
+}
+
+.section-docs {
+    height: clamp(340px, 56vh, 560px);
+    display: flex;
+    flex-direction: column;
+}
+
+.section-docs .section-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.section-docs .research-list {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-right: 0.2rem;
+    align-content: start;
+}
+
+.section-docs .research-list {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(136, 170, 236, 0.55) transparent;
+}
+
+.section-docs .research-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.section-docs .research-list::-webkit-scrollbar-thumb {
+    background: rgba(136, 170, 236, 0.45);
+    border-radius: 999px;
+}
+
+.section-docs .research-list::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .section-toggle {
@@ -1164,6 +1305,12 @@ a:focus-visible {
         row-gap: 0.5rem;
     }
 
+    .hero-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+    }
+
     .hero-title {
         font-size: 2.05rem;
     }
@@ -1177,12 +1324,13 @@ a:focus-visible {
     }
 
     .control-bar {
-        position: sticky;
-        top: 0.75rem;
+        position: static;
         border-radius: 16px;
         justify-content: flex-start;
-        width: 100%;
+        width: auto;
+        max-width: 100%;
         margin-left: 0;
+        margin-bottom: 0;
     }
 
     .hero-links {
@@ -1198,15 +1346,86 @@ a:focus-visible {
 
     .section-link {
         margin-left: 0;
+        white-space: normal;
     }
 
-    .research-list {
-        max-height: none;
+    .section-divider {
+        display: none;
+    }
+
+    .section-label {
+        margin-left: 0;
     }
 
     .hero-tip-inline {
         width: 100%;
         justify-content: flex-start;
+    }
+
+    .section-docs {
+        height: clamp(320px, 54vh, 500px);
+    }
+
+    .spectrum-page .container {
+        padding: 1rem 0.72rem 1.65rem;
+    }
+
+    .spectrum-page .hero {
+        padding: 0.1rem 0 0.72rem;
+        margin-bottom: 0.82rem;
+    }
+
+    .spectrum-page .hero-top {
+        gap: 0.5rem;
+    }
+
+    .spectrum-page .hero-links {
+        flex-direction: row;
+        gap: 0.45rem;
+    }
+
+    .spectrum-page .hero-links .button {
+        width: auto;
+        padding: 0.3rem 0.64rem;
+        font-size: 0.7rem;
+    }
+
+    .spectrum-page .hero-meta {
+        gap: 0.35rem 0.45rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .spectrum-page .hero-meta .label-list {
+        display: none;
+    }
+
+    .spectrum-page .article-content {
+        font-size: 0.94rem;
+        line-height: 1.62;
+    }
+
+    .spectrum-page .article-content h2 {
+        font-size: 1.06rem;
+        margin-top: 0.95rem;
+        letter-spacing: 0.06em;
+    }
+
+    .spectrum-page .article-content h3 {
+        font-size: 0.93rem;
+        margin-top: 0.85rem;
+    }
+
+    .spectrum-page .card {
+        padding: 0.8rem 0.78rem;
+        border-radius: 12px;
+    }
+
+    .spectrum-page .article-content p {
+        margin-bottom: 0.62rem;
+    }
+
+    .spectrum-page .article-content li {
+        margin-bottom: 0.26rem;
     }
 }
 
@@ -1224,12 +1443,11 @@ a:focus-visible {
     }
 
     .card {
-        padding: 0;
+        padding: 0.95rem 1rem;
         min-height: auto;
     }
 
     .section-header {
-        flex-direction: column;
         align-items: flex-start;
     }
 
@@ -1247,9 +1465,14 @@ a:focus-visible {
     }
 
     .control-bar {
-        width: 100%;
+        width: auto;
+        max-width: 100%;
         align-items: flex-start;
         margin-left: 0;
+    }
+
+    .control-bar .button {
+        width: auto;
     }
 
     .hero-tip-inline {
@@ -1259,5 +1482,37 @@ a:focus-visible {
 
     .hero-tip-inline .button {
         padding: 0.2rem 0.5rem;
+    }
+
+    .spectrum-page .container {
+        padding: 0.78rem 0.58rem 1.35rem;
+    }
+
+    .spectrum-page .hero-title {
+        font-size: 1.62rem;
+        line-height: 1.14;
+    }
+
+    .spectrum-page .hero-subtitle {
+        font-size: 0.94rem;
+        margin-bottom: 0.05rem;
+    }
+
+    .spectrum-page .card {
+        padding: 0.72rem 0.72rem;
+    }
+
+    .spectrum-page .hero-meta .label-list {
+        display: none;
+    }
+
+    .spectrum-page .article-content ul,
+    .spectrum-page .article-content ol {
+        margin-left: 0.92rem;
+    }
+
+    .spectrum-page .article-content pre {
+        padding: 0.64rem;
+        font-size: 0.72rem;
     }
 }

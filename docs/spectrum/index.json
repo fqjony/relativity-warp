@@ -1,12 +1,50 @@
 [
   {
+    "name": "Spectrum Documents",
+    "title": "Spectrum Documents",
+    "description": "All spectrum docs with status metadata.",
+    "category": "Spectrum",
+    "format": "json",
+    "path": "spectrum/articles.json"
+  },
+  {
+    "name": "Spectrum Types",
+    "title": "Spectrum Types",
+    "description": "Single doc type index.",
+    "category": "Spectrum",
+    "format": "json",
+    "path": "spectrum/types.json"
+  },
+  {
+    "name": "Spectrum Statuses",
+    "title": "Spectrum Statuses",
+    "description": "Published and draft status indexes.",
+    "category": "Spectrum",
+    "format": "json",
+    "path": "spectrum/statuses.json"
+  },
+  {
+    "name": "Published Docs",
+    "title": "Published Docs",
+    "description": "Published documents only.",
+    "category": "Spectrum",
+    "format": "json",
+    "path": "spectrum/published/index.json"
+  },
+  {
+    "name": "Draft Docs",
+    "title": "Draft Docs",
+    "description": "Draft notes, visible in UI and JSON indexes.",
+    "category": "Spectrum",
+    "format": "json",
+    "path": "spectrum/draft/index.json"
+  },
+  {
     "name": "Engineering Tips",
     "title": "Engineering Tips",
     "description": "Curated engineering guidance grouped by domain.",
     "category": "Common",
     "format": "json",
-    "path": "spectrum/engineering-tips.json",
-    "source": "spectrum/src/engineering-tips.yml",
-    "schema": "spectrum/schema/engineering-tips.schema.json"
+    "path": "tips.json"
   }
 ]

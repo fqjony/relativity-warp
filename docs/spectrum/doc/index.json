@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedAt": "2026-02-16T18:53:19.343Z",
-  "docType": "doc",
+  "type": "doc",
   "items": [
     {
       "title": "Local AI Stack and dev.kit Notes",
