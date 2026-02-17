@@ -25,6 +25,27 @@ const cleanText = (value) =>
     .replace(/\s+/g, " ")
     .trim();
 
+const pad2 = (value) => String(value).padStart(2, "0");
+
+const formatLocalDate = (dateObj) =>
+  `${dateObj.getFullYear()}-${pad2(dateObj.getMonth() + 1)}-${pad2(dateObj.getDate())}`;
+
+const formatLocalDateTime = (dateObj) =>
+  `${formatLocalDate(dateObj)} ${pad2(dateObj.getHours())}:${pad2(dateObj.getMinutes())}`;
+
+const parseTemporalValue = (value) => {
+  if (!value) return Number.NaN;
+  const trimmed = value.trim();
+  if (!trimmed) return Number.NaN;
+
+  const normalized = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(trimmed)
+    ? trimmed.replace(" ", "T")
+    : trimmed;
+
+  const parsed = Date.parse(normalized);
+  return Number.isNaN(parsed) ? Number.NaN : parsed;
+};
+
 const parseFrontmatter = (contents) => {
   if (!contents.startsWith("---")) return { body: contents, meta: {} };
   const end = contents.indexOf("\n---", 3);
@@ -90,9 +111,30 @@ const extractLabels = (contents) => {
     .filter(Boolean);
 };
 
-const extractDate = (contents) => {
+const extractTemporalMeta = (contents, filePath) => {
   const { meta } = parseFrontmatter(contents);
-  return meta.datetime || meta.date || "";
+  const stats = fs.statSync(filePath);
+  const mtime = stats.mtime;
+
+  const fallbackDatetime = formatLocalDateTime(mtime);
+  const fallbackDate = formatLocalDate(mtime);
+
+  const datetime = (meta.datetime || "").trim() || fallbackDatetime;
+  const date = (meta.date || "").trim() || datetime.slice(0, 10) || fallbackDate;
+
+  const parsedDateTime = parseTemporalValue(datetime);
+  const parsedDate = parseTemporalValue(date);
+  const sortValue = Number.isNaN(parsedDateTime)
+    ? Number.isNaN(parsedDate)
+      ? stats.mtimeMs
+      : parsedDate
+    : parsedDateTime;
+
+  return {
+    datetime,
+    date,
+    sortValue,
+  };
 };
 
 const listMarkdownFiles = (dir) => {
@@ -139,12 +181,24 @@ const renderLabelChips = (labels = []) => {
   return labels.map((label) => `<span class="label-chip">${label}</span>`).join("");
 };
 
-const renderArticleTemplate = ({ title, description, content, cssHref, homeHref, canonicalHref, labels, status, date }) => {
+const renderArticleTemplate = ({
+  title,
+  description,
+  content,
+  cssHref,
+  homeHref,
+  canonicalHref,
+  labels,
+  status,
+  date,
+  datetime,
+}) => {
   const canonical = canonicalHref || "";
   const labelChips = renderLabelChips(labels);
   const statusLabel = status === "draft" ? "Draft" : "Published";
   const statusBadge = `<span class="status-badge status-${status}">${statusLabel}</span>`;
-  const dateMeta = date ? `<span class="doc-date">${date}</span>` : "";
+  const displayTimestamp = datetime || date || "";
+  const dateMeta = displayTimestamp ? `<span class="doc-date">${displayTimestamp}</span>` : "";
 
   return `<!doctype html>
 <html lang="en">
@@ -209,6 +263,7 @@ const toItemPayload = ({
   url,
   status,
   date,
+  datetime,
   labels,
 }) => ({
   title,
@@ -219,6 +274,7 @@ const toItemPayload = ({
   url,
   status,
   date,
+  datetime,
   labels,
 });
 
@@ -417,7 +473,7 @@ const buildResearch = () => {
       const outputPath = path.join(publishDir, htmlPath);
       const url = `/spectrum/${relativeSlug}/`;
       const status = extractStatus(raw);
-      const date = extractDate(raw);
+      const temporal = extractTemporalMeta(raw, filePath);
       const labels = extractLabels(raw);
       return {
         title,
@@ -429,18 +485,18 @@ const buildResearch = () => {
         url,
         raw,
         status,
-        date,
+        date: temporal.date,
+        datetime: temporal.datetime,
+        sortValue: temporal.sortValue,
         labels,
         kind: DOC_KIND,
       };
     })
     .sort((a, b) => {
-      const parsedA = a.date ? Date.parse(a.date) : Number.NaN;
-      const parsedB = b.date ? Date.parse(b.date) : Number.NaN;
-      const dateA = Number.isNaN(parsedA) ? 0 : parsedA;
-      const dateB = Number.isNaN(parsedB) ? 0 : parsedB;
-      if (dateA !== dateB) {
-        return dateB - dateA;
+      const sortA = Number.isFinite(a.sortValue) ? a.sortValue : 0;
+      const sortB = Number.isFinite(b.sortValue) ? b.sortValue : 0;
+      if (sortA !== sortB) {
+        return sortB - sortA;
       }
       return a.title.localeCompare(b.title);
     });
@@ -469,6 +525,7 @@ const buildResearch = () => {
       labels: item.labels,
       status: item.status,
       date: item.date,
+      datetime: item.datetime,
     });
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, html, "utf8");
@@ -511,7 +568,8 @@ const renderResearchList = (items) => {
             .map((label) => `<span class="label-chip">${label}</span>`)
             .join("")}</div>`
         : "";
-      const dateMeta = item.date ? `<span class="doc-date">${item.date}</span>` : "";
+      const displayTimestamp = item.datetime || item.date || "";
+      const dateMeta = displayTimestamp ? `<span class="doc-date">${displayTimestamp}</span>` : "";
       return `  <li class="list-item"><a href="${href}">${item.title}</a>${statusBadge}${dateMeta}${labels}</li>`;
     })
     .join("\n");
@@ -546,6 +604,7 @@ const spectrumLandingPath = path.join(publicSpectrumDir, "index.html");
 if (fs.existsSync(spectrumLandingPath)) {
   fs.rmSync(spectrumLandingPath);
 }
+fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });
 copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
 const dataViewerSource = path.join(rootDir, "src", "templates", "data-viewer.html");
 if (fs.existsSync(dataViewerSource)) {

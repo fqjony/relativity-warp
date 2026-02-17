@@ -2,8 +2,6 @@
 title: Start Here
 description: Minimal entry point for shaping Relativity Warp docs with a draft-first workflow.
 status: published
-datetime: 2026-02-16 09:00
-date: 2026-02-16
 labels: entry-point, docs, workflow, dev-kit
 ---
 
@@ -16,7 +14,7 @@ This repo now uses a simple docs model:
 
 ## What to edit first
 
-1. Keep working notes in `src/docs/local-ai-stack-dev-kit-notes.md` (`status: draft`).
+1. Keep working notes in `src/docs/local-dev-stack.md` (`status: draft`).
 2. Promote notes to published by changing `status: published`.
 3. Run `npm run build` after each meaningful update.
 
@@ -27,8 +25,8 @@ Use this frontmatter in every doc:
 - `title`
 - `description`
 - `status`
-- `datetime` (preferred; falls back to `date`)
-- `date` (optional)
+- `datetime` (optional; if missing, build uses file `mtime`)
+- `date` (optional; if missing, build derives from `datetime` or file `mtime`)
 - `labels` (optional)
 
 ## Scope for now

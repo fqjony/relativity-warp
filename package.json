@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-tips.mjs && node scripts/build-research.mjs",
-    "preview": "serve docs"
+    "preview": "serve docs",
+    "hooks:install": "git config core.hooksPath .githooks",
+    "hooks:uninstall": "git config --unset core.hooksPath"
   },
   "devDependencies": {
     "js-yaml": "^4.1.0",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-16T18:53:19.343Z",
+  "generatedAt": "2026-02-17T19:14:34.985Z",
   "status": "published",
   "items": [
     {
@@ -11,7 +11,8 @@
       "path": "spectrum/start-here/index.html",
       "url": "/spectrum/start-here/",
       "status": "published",
-      "date": "2026-02-16 09:00",
+      "date": "2026-02-17",
+      "datetime": "2026-02-17 22:12",
       "labels": [
         "entry-point",
         "docs",

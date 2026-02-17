@@ -21,7 +21,7 @@
         <p class="hero-subtitle">Published doc</p>
         <div class="hero-meta">
           <span class="status-badge status-published">Published</span>
-          <span class="doc-date">2026-02-16 09:00</span>
+          <span class="doc-date">2026-02-17 22:12</span>
           <div class="label-list">
             <span class="label-chip">entry-point</span><span class="label-chip">docs</span><span class="label-chip">workflow</span><span class="label-chip">dev-kit</span>
           </div>
@@ -38,7 +38,7 @@
 </ul>
 <h2>What to edit first</h2>
 <ol>
-<li>Keep working notes in <code>src/docs/local-ai-stack-dev-kit-notes.md</code> (<code>status: draft</code>).</li>
+<li>Keep working notes in <code>src/docs/local-dev-stack.md</code> (<code>status: draft</code>).</li>
 <li>Promote notes to published by changing <code>status: published</code>.</li>
 <li>Run <code>npm run build</code> after each meaningful update.</li>
 </ol>
@@ -48,8 +48,8 @@
 <li><code>title</code></li>
 <li><code>description</code></li>
 <li><code>status</code></li>
-<li><code>datetime</code> (preferred; falls back to <code>date</code>)</li>
-<li><code>date</code> (optional)</li>
+<li><code>datetime</code> (optional; if missing, build uses file <code>mtime</code>)</li>
+<li><code>date</code> (optional; if missing, build derives from <code>datetime</code> or file <code>mtime</code>)</li>
 <li><code>labels</code> (optional)</li>
 </ul>
 <h2>Scope for now</h2>

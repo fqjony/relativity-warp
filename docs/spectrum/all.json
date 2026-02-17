@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T18:53:19.343Z",
+  "generatedAt": "2026-02-17T19:14:34.985Z",
   "items": [
     {
       "name": "Spectrum Documents",
@@ -10,24 +10,24 @@
       "path": "spectrum/articles.json",
       "payload": {
         "schemaVersion": 1,
-        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "generatedAt": "2026-02-17T19:14:34.985Z",
         "docType": "doc",
         "items": [
           {
-            "title": "Local AI Stack and dev.kit Notes",
+            "title": "Local Dev Stack",
             "kind": "doc",
-            "slug": "local-ai-stack-dev-kit-notes",
-            "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
-            "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
-            "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+            "slug": "local-dev-stack",
+            "sourcePath": "src/docs/local-dev-stack.md",
+            "path": "spectrum/local-dev-stack/index.html",
+            "url": "/spectrum/local-dev-stack/",
             "status": "draft",
-            "date": "2026-02-16 20:30",
+            "date": "2026-02-17",
+            "datetime": "2026-02-17 22:12",
             "labels": [
-              "draft",
               "notes",
-              "local-ai",
-              "dev-kit",
-              "workflow"
+              "engineering",
+              "localhost",
+              "tooling"
             ]
           },
           {
@@ -38,7 +38,8 @@
             "path": "spectrum/start-here/index.html",
             "url": "/spectrum/start-here/",
             "status": "published",
-            "date": "2026-02-16 09:00",
+            "date": "2026-02-17",
+            "datetime": "2026-02-17 22:12",
             "labels": [
               "entry-point",
               "docs",
@@ -58,24 +59,24 @@
       "path": "spectrum/types.json",
       "payload": {
         "schemaVersion": 1,
-        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "generatedAt": "2026-02-17T19:14:34.985Z",
         "types": {
           "doc": [
             {
-              "title": "Local AI Stack and dev.kit Notes",
+              "title": "Local Dev Stack",
               "kind": "doc",
-              "slug": "local-ai-stack-dev-kit-notes",
-              "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
-              "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
-              "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+              "slug": "local-dev-stack",
+              "sourcePath": "src/docs/local-dev-stack.md",
+              "path": "spectrum/local-dev-stack/index.html",
+              "url": "/spectrum/local-dev-stack/",
               "status": "draft",
-              "date": "2026-02-16 20:30",
+              "date": "2026-02-17",
+              "datetime": "2026-02-17 22:12",
               "labels": [
-                "draft",
                 "notes",
-                "local-ai",
-                "dev-kit",
-                "workflow"
+                "engineering",
+                "localhost",
+                "tooling"
               ]
             },
             {
@@ -86,7 +87,8 @@
               "path": "spectrum/start-here/index.html",
               "url": "/spectrum/start-here/",
               "status": "published",
-              "date": "2026-02-16 09:00",
+              "date": "2026-02-17",
+              "datetime": "2026-02-17 22:12",
               "labels": [
                 "entry-point",
                 "docs",
@@ -107,7 +109,7 @@
       "path": "spectrum/statuses.json",
       "payload": {
         "schemaVersion": 1,
-        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "generatedAt": "2026-02-17T19:14:34.985Z",
         "statuses": {
           "published": [
             {
@@ -118,7 +120,8 @@
               "path": "spectrum/start-here/index.html",
               "url": "/spectrum/start-here/",
               "status": "published",
-              "date": "2026-02-16 09:00",
+              "date": "2026-02-17",
+              "datetime": "2026-02-17 22:12",
               "labels": [
                 "entry-point",
                 "docs",
@@ -129,20 +132,20 @@
           ],
           "draft": [
             {
-              "title": "Local AI Stack and dev.kit Notes",
+              "title": "Local Dev Stack",
               "kind": "doc",
-              "slug": "local-ai-stack-dev-kit-notes",
-              "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
-              "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
-              "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+              "slug": "local-dev-stack",
+              "sourcePath": "src/docs/local-dev-stack.md",
+              "path": "spectrum/local-dev-stack/index.html",
+              "url": "/spectrum/local-dev-stack/",
               "status": "draft",
-              "date": "2026-02-16 20:30",
+              "date": "2026-02-17",
+              "datetime": "2026-02-17 22:12",
               "labels": [
-                "draft",
                 "notes",
-                "local-ai",
-                "dev-kit",
-                "workflow"
+                "engineering",
+                "localhost",
+                "tooling"
               ]
             }
           ]
@@ -158,7 +161,7 @@
       "path": "spectrum/published/index.json",
       "payload": {
         "schemaVersion": 1,
-        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "generatedAt": "2026-02-17T19:14:34.985Z",
         "status": "published",
         "items": [
           {
@@ -169,7 +172,8 @@
             "path": "spectrum/start-here/index.html",
             "url": "/spectrum/start-here/",
             "status": "published",
-            "date": "2026-02-16 09:00",
+            "date": "2026-02-17",
+            "datetime": "2026-02-17 22:12",
             "labels": [
               "entry-point",
               "docs",
@@ -189,24 +193,24 @@
       "path": "spectrum/draft/index.json",
       "payload": {
         "schemaVersion": 1,
-        "generatedAt": "2026-02-16T18:53:19.343Z",
+        "generatedAt": "2026-02-17T19:14:34.985Z",
         "status": "draft",
         "items": [
           {
-            "title": "Local AI Stack and dev.kit Notes",
+            "title": "Local Dev Stack",
             "kind": "doc",
-            "slug": "local-ai-stack-dev-kit-notes",
-            "sourcePath": "src/docs/local-ai-stack-dev-kit-notes.md",
-            "path": "spectrum/local-ai-stack-dev-kit-notes/index.html",
-            "url": "/spectrum/local-ai-stack-dev-kit-notes/",
+            "slug": "local-dev-stack",
+            "sourcePath": "src/docs/local-dev-stack.md",
+            "path": "spectrum/local-dev-stack/index.html",
+            "url": "/spectrum/local-dev-stack/",
             "status": "draft",
-            "date": "2026-02-16 20:30",
+            "date": "2026-02-17",
+            "datetime": "2026-02-17 22:12",
             "labels": [
-              "draft",
               "notes",
-              "local-ai",
-              "dev-kit",
-              "workflow"
+              "engineering",
+              "localhost",
+              "tooling"
             ]
           }
         ]
