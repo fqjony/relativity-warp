@@ -10,14 +10,9 @@ const docsDir = path.join(rootDir, "src", "docs");
 const homepagePath = path.join(rootDir, "src", "templates", "index.html");
 const publishDir = path.join(rootDir, "docs");
 const publicSpectrumDir = path.join(publishDir, "spectrum");
-const indexOutputPath = path.join(publicSpectrumDir, "articles.json");
 
-const DOC_KIND = "doc";
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
-const legacyTypeBuckets = ["article", "note", "research", "discovery"];
-const legacyTypeFiles = ["types.json"];
-const legacyDataFiles = ["engineering-tips.json"];
 
 const cleanText = (value) =>
   value
@@ -32,19 +27,6 @@ const formatLocalDate = (dateObj) =>
 
 const formatLocalDateTime = (dateObj) =>
   `${formatLocalDate(dateObj)} ${pad2(dateObj.getHours())}:${pad2(dateObj.getMinutes())}`;
-
-const parseTemporalValue = (value) => {
-  if (!value) return Number.NaN;
-  const trimmed = value.trim();
-  if (!trimmed) return Number.NaN;
-
-  const normalized = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(trimmed)
-    ? trimmed.replace(" ", "T")
-    : trimmed;
-
-  const parsed = Date.parse(normalized);
-  return Number.isNaN(parsed) ? Number.NaN : parsed;
-};
 
 const parseFrontmatter = (contents) => {
   if (!contents.startsWith("---")) return { body: contents, meta: {} };
@@ -62,79 +44,15 @@ const parseFrontmatter = (contents) => {
   return { body, meta };
 };
 
-const normalizeSlug = (value) =>
-  value
-    .split("/")
-    .map((segment) => segment.replace(/^\d+_/, ""))
-    .join("/");
-
-const extractTitle = (contents, fallback) => {
-  const { body, meta } = parseFrontmatter(contents);
-  if (meta.title) return meta.title;
-  const match = body.match(/^#\s+(.+)$/m);
-  if (match) return cleanText(match[1]);
-  return fallback;
-};
-
-const extractDescription = (contents) => {
-  const { body, meta } = parseFrontmatter(contents);
-  if (meta.description) return meta.description;
-  const paragraph = body.split("\n").find((line) => line.trim().length > 0);
-  return paragraph ? cleanText(paragraph) : "";
-};
-
-const extractStatus = (contents) => {
-  const { meta } = parseFrontmatter(contents);
-  const status = (meta.status || "").toLowerCase();
-
-  if (status === "draft") {
-    return "draft";
-  }
-
-  if (status === "published") {
-    return "published";
-  }
-
-  if (meta.type) {
-    return "published";
-  }
-
-  return "published";
-};
-
-const extractLabels = (contents) => {
-  const { meta } = parseFrontmatter(contents);
-  if (!meta.labels) return [];
-  return meta.labels
-    .split(",")
-    .map((label) => label.trim())
-    .filter(Boolean);
-};
-
-const extractTemporalMeta = (contents, filePath) => {
-  const { meta } = parseFrontmatter(contents);
-  const stats = fs.statSync(filePath);
-  const mtime = stats.mtime;
-
-  const fallbackDatetime = formatLocalDateTime(mtime);
-  const fallbackDate = formatLocalDate(mtime);
-
-  const datetime = (meta.datetime || "").trim() || fallbackDatetime;
-  const date = (meta.date || "").trim() || datetime.slice(0, 10) || fallbackDate;
-
-  const parsedDateTime = parseTemporalValue(datetime);
-  const parsedDate = parseTemporalValue(date);
-  const sortValue = Number.isNaN(parsedDateTime)
-    ? Number.isNaN(parsedDate)
-      ? stats.mtimeMs
-      : parsedDate
-    : parsedDateTime;
-
-  return {
-    datetime,
-    date,
-    sortValue,
-  };
+const parseTemporalValue = (value) => {
+  if (!value) return Number.NaN;
+  const trimmed = value.trim();
+  if (!trimmed) return Number.NaN;
+  const normalized = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(trimmed)
+    ? trimmed.replace(" ", "T")
+    : trimmed;
+  const parsed = Date.parse(normalized);
+  return Number.isNaN(parsed) ? Number.NaN : parsed;
 };
 
 const listMarkdownFiles = (dir) => {
@@ -148,9 +66,7 @@ const listMarkdownFiles = (dir) => {
       const itemPath = path.join(current, item.name);
       if (item.isDirectory()) {
         stack.push(itemPath);
-        continue;
-      }
-      if (item.isFile() && item.name.endsWith(".md")) {
+      } else if (item.isFile() && item.name.endsWith(".md")) {
         entries.push(itemPath);
       }
     }
@@ -168,37 +84,63 @@ const copyDir = (source, target) => {
     const destPath = path.join(target, entry.name);
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
-      continue;
-    }
-    if (entry.isFile()) {
+    } else if (entry.isFile()) {
       fs.copyFileSync(srcPath, destPath);
     }
   }
 };
 
-const renderLabelChips = (labels = []) => {
-  if (!labels.length) return "";
-  return labels.map((label) => `<span class="label-chip">${label}</span>`).join("");
+const normalizeSlug = (value) =>
+  value
+    .split("/")
+    .map((segment) => segment.replace(/^\d+_/, ""))
+    .join("/");
+
+const getTitle = (body, meta, fallback) => {
+  if (meta.title) return meta.title;
+  const match = body.match(/^#\s+(.+)$/m);
+  return match ? cleanText(match[1]) : fallback;
 };
 
-const renderArticleTemplate = ({
-  title,
-  description,
-  content,
-  cssHref,
-  homeHref,
-  canonicalHref,
-  labels,
-  status,
-  date,
-  datetime,
-}) => {
-  const canonical = canonicalHref || "";
-  const labelChips = renderLabelChips(labels);
+const getDescription = (body, meta) => {
+  if (meta.description) return meta.description;
+  const paragraph = body.split("\n").find((line) => line.trim().length > 0);
+  return paragraph ? cleanText(paragraph) : "";
+};
+
+const getStatus = (meta) => {
+  const status = (meta.status || "").toLowerCase();
+  return status === "draft" ? "draft" : "published";
+};
+
+const getLabels = (meta) =>
+  (meta.labels || "")
+    .split(",")
+    .map((label) => label.trim())
+    .filter(Boolean);
+
+const getTemporalMeta = (meta, filePath) => {
+  const stats = fs.statSync(filePath);
+  const fallbackDatetime = formatLocalDateTime(stats.mtime);
+  const datetime = (meta.datetime || "").trim() || fallbackDatetime;
+  const date = (meta.date || "").trim() || datetime.slice(0, 10) || formatLocalDate(stats.mtime);
+  const parsedDateTime = parseTemporalValue(datetime);
+  const parsedDate = parseTemporalValue(date);
+
+  return {
+    datetime,
+    date,
+    sortValue: Number.isNaN(parsedDateTime)
+      ? Number.isNaN(parsedDate)
+        ? stats.mtimeMs
+        : parsedDate
+      : parsedDateTime,
+  };
+};
+
+const renderPostPage = ({ title, description, content, cssHref, homeHref, labels, status, datetime }) => {
   const statusLabel = status === "draft" ? "Draft" : "Published";
-  const statusBadge = `<span class="status-badge status-${status}">${statusLabel}</span>`;
-  const displayTimestamp = datetime || date || "";
-  const dateMeta = displayTimestamp ? `<span class="doc-date">${displayTimestamp}</span>` : "";
+  const labelsText = labels.length ? ` on ${labels.join(", ")}` : "";
 
   return `<!doctype html>
 <html lang="en">
@@ -206,48 +148,33 @@ const renderArticleTemplate = ({
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title} - Relativity Warp</title>
-    <meta name="description" content="${description || `Document: ${title}`}" />
+    <meta name="description" content="${description || `Post: ${title}`}" />
     <link rel="stylesheet" href="${cssHref}" />
-    ${canonical ? `<link rel="canonical" href="${canonical}" />` : ""}
   </head>
-  <body data-theme="dark" class="spectrum-page">
+  <body>
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
-      <header class="hero">
-        <div class="hero-top">
-          <h1 class="hero-title">${title}</h1>
-          <div class="hero-links">
-            <a href="${homeHref}" class="button button-compact button-ghost">Back to Home</a>
-          </div>
-        </div>
-        <p class="hero-subtitle">${statusLabel} doc</p>
-        <div class="hero-meta">
-          ${statusBadge}
-          ${dateMeta}
-          <div class="label-list">
-            ${labelChips}
-          </div>
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="${homeHref}">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="article-title">${title}</h1>
+        <div class="post-meta">
+          <span class="status-${status}">${statusLabel}</span>
+          ${datetime ? `<span>${datetime}</span>` : ""}
+          ${labelsText ? `<span>${labelsText}</span>` : ""}
         </div>
       </header>
-      <main id="content">
-        <section class="section card">
-          <div class="section-body">
-            <div class="article-content">
-              ${content}
-            </div>
-          </div>
-        </section>
+      <main id="content" class="article">
+        <div class="article-content">
+          ${content}
+        </div>
       </main>
       <footer class="footer">
-        <p class="motto">
-          <a
-            href="https://github.com/fqjony/relativity-warp"
-            target="_blank"
-            rel="noopener"
-            >GitHub repo</a
-          >
-        </p>
-        <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
       </footer>
     </div>
   </body>
@@ -255,362 +182,121 @@ const renderArticleTemplate = ({
 `;
 };
 
-const toItemPayload = ({
-  title,
-  slug,
-  sourcePath,
-  path: entryPath,
-  url,
-  status,
-  date,
-  datetime,
-  labels,
-}) => ({
-  title,
-  kind: DOC_KIND,
-  slug,
-  sourcePath,
-  path: entryPath,
-  url,
-  status,
-  date,
-  datetime,
-  labels,
-});
-
-const writeStatusIndexes = (generatedAt, items) => {
-  const statuses = items.reduce(
-    (acc, item) => {
-      const key = item.status || "draft";
-      if (!acc[key]) acc[key] = [];
-      acc[key].push(item);
-      return acc;
-    },
-    { published: [], draft: [] }
-  );
-
-  fs.writeFileSync(
-    path.join(publicSpectrumDir, "statuses.json"),
-    JSON.stringify({ schemaVersion: 1, generatedAt, statuses }, null, 2) + "\n",
-    "utf8"
-  );
-
-  Object.entries(statuses).forEach(([status, statusItems]) => {
-    const statusDir = path.join(publicSpectrumDir, status);
-    fs.mkdirSync(statusDir, { recursive: true });
-    fs.writeFileSync(
-      path.join(statusDir, "index.json"),
-      JSON.stringify({ schemaVersion: 1, generatedAt, status, items: statusItems }, null, 2) + "\n",
-      "utf8"
-    );
-  });
-};
-
-const writeTypeIndex = (generatedAt, items) => {
-  const types = { [DOC_KIND]: items };
-  fs.writeFileSync(
-    path.join(publicSpectrumDir, "types.json"),
-    JSON.stringify({ schemaVersion: 1, generatedAt, types }, null, 2) + "\n",
-    "utf8"
-  );
-
-  const docTypeDir = path.join(publicSpectrumDir, DOC_KIND);
-  fs.mkdirSync(docTypeDir, { recursive: true });
-  fs.writeFileSync(
-    path.join(docTypeDir, "index.json"),
-    JSON.stringify({ schemaVersion: 1, generatedAt, type: DOC_KIND, items }, null, 2) + "\n",
-    "utf8"
-  );
-};
-
-const buildDataCatalog = (generatedAt) => {
-  const datasets = [
-    {
-      name: "Spectrum Documents",
-      title: "Spectrum Documents",
-      description: "All spectrum docs with status metadata.",
-      category: "Spectrum",
-      format: "json",
-      path: "spectrum/articles.json",
-    },
-    {
-      name: "Spectrum Types",
-      title: "Spectrum Types",
-      description: "Single doc type index.",
-      category: "Spectrum",
-      format: "json",
-      path: "spectrum/types.json",
-    },
-    {
-      name: "Spectrum Statuses",
-      title: "Spectrum Statuses",
-      description: "Published and draft status indexes.",
-      category: "Spectrum",
-      format: "json",
-      path: "spectrum/statuses.json",
-    },
-    {
-      name: "Published Docs",
-      title: "Published Docs",
-      description: "Published documents only.",
-      category: "Spectrum",
-      format: "json",
-      path: "spectrum/published/index.json",
-    },
-    {
-      name: "Draft Docs",
-      title: "Draft Docs",
-      description: "Draft notes, visible in UI and JSON indexes.",
-      category: "Spectrum",
-      format: "json",
-      path: "spectrum/draft/index.json",
-    },
-  ];
-
-  const tipsPath = path.join(publishDir, "tips.json");
-  if (fs.existsSync(tipsPath)) {
-    datasets.push({
-      name: "Engineering Tips",
-      title: "Engineering Tips",
-      description: "Curated engineering guidance grouped by domain.",
-      category: "Common",
-      format: "json",
-      path: "tips.json",
-    });
-  }
-
-  fs.writeFileSync(path.join(publicSpectrumDir, "index.json"), JSON.stringify(datasets, null, 2) + "\n", "utf8");
-
-  const all = {
-    generatedAt,
-    items: datasets.map((entry) => {
-      const absolutePath = path.join(publishDir, entry.path);
-      let payload = null;
-      if (fs.existsSync(absolutePath)) {
-        try {
-          payload = JSON.parse(fs.readFileSync(absolutePath, "utf8"));
-        } catch {
-          payload = null;
-        }
-      }
-      return {
-        ...entry,
-        payload,
-      };
-    }),
-  };
-
-  fs.writeFileSync(path.join(publicSpectrumDir, "all.json"), JSON.stringify(all, null, 2) + "\n", "utf8");
-};
-
-const cleanupLegacyOutputs = () => {
-  legacyTypeBuckets.forEach((bucket) => {
-    fs.rmSync(path.join(publicSpectrumDir, bucket), { recursive: true, force: true });
-  });
-  legacyTypeFiles.forEach((fileName) => {
-    fs.rmSync(path.join(publicSpectrumDir, fileName), { force: true });
-  });
-  legacyDataFiles.forEach((fileName) => {
-    fs.rmSync(path.join(publicSpectrumDir, fileName), { force: true });
-  });
-};
-
-const cleanupStaleDocPages = (items) => {
-  const expectedPageDirs = new Set(
-    items
-      .map((item) => (item.path || "").replace(/^spectrum\//, "").replace(/\/index\.html$/, ""))
-      .filter(Boolean)
-  );
-
-  const previousIndexPath = path.join(publicSpectrumDir, "articles.json");
-  if (!fs.existsSync(previousIndexPath)) {
-    return;
-  }
-
-  let previousItems = [];
-  try {
-    const parsed = JSON.parse(fs.readFileSync(previousIndexPath, "utf8"));
-    previousItems = Array.isArray(parsed.items) ? parsed.items : [];
-  } catch {
-    previousItems = [];
-  }
-
-  const previousPageDirs = new Set(
-    previousItems
-      .map((item) => {
-        return (item?.path || "").replace(/^spectrum\//, "").replace(/\/index\.html$/, "");
-      })
-      .filter(Boolean)
-  );
-
-  previousPageDirs.forEach((pageDir) => {
-    if (!expectedPageDirs.has(pageDir)) {
-      fs.rmSync(path.join(publicSpectrumDir, pageDir), { recursive: true, force: true });
-    }
-  });
-};
-
-const buildResearch = () => {
-  if (!fs.existsSync(docsDir)) {
-    console.error("docs directory not found");
-    process.exit(1);
-  }
-
-  const markdownItems = listMarkdownFiles(docsDir)
-    .map((filePath) => {
-      const relPath = path.relative(rootDir, filePath).replace(/\\/g, "/");
-      const raw = fs.readFileSync(filePath, "utf8");
-      const fallback = path
-        .basename(filePath, ".md")
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (match) => match.toUpperCase());
-      const title = extractTitle(raw, fallback);
-      const description = extractDescription(raw);
-      const relativeSlug = normalizeSlug(
-        relPath.replace(/^src\/docs\//, "").replace(/\.md$/, "")
-      );
-      const htmlPath = path.join("spectrum", relativeSlug, "index.html").replace(/\\/g, "/");
-      const outputPath = path.join(publishDir, htmlPath);
-      const url = `/spectrum/${relativeSlug}/`;
-      const status = extractStatus(raw);
-      const temporal = extractTemporalMeta(raw, filePath);
-      const labels = extractLabels(raw);
-      return {
-        title,
-        description,
-        slug: relativeSlug,
-        sourcePath: relPath,
-        path: htmlPath,
-        outputPath,
-        url,
-        raw,
-        status,
-        date: temporal.date,
-        datetime: temporal.datetime,
-        sortValue: temporal.sortValue,
-        labels,
-        kind: DOC_KIND,
-      };
-    })
-    .sort((a, b) => {
-      const sortA = Number.isFinite(a.sortValue) ? a.sortValue : 0;
-      const sortB = Number.isFinite(b.sortValue) ? b.sortValue : 0;
-      if (sortA !== sortB) {
-        return sortB - sortA;
-      }
-      return a.title.localeCompare(b.title);
-    });
-
-  cleanupStaleDocPages(markdownItems);
-
-  markdownItems.forEach((item) => {
-    const { body } = parseFrontmatter(item.raw);
-    const strippedBody = body.replace(/^# .+?\n+/, "");
-    const content = marked.parse(strippedBody);
-    const outputPath = item.outputPath;
-    const cssHref = path
-      .relative(path.dirname(outputPath), path.join(publishDir, "assets", "index.css"))
-      .replace(/\\/g, "/");
-    const homeHref = path
-      .relative(path.dirname(outputPath), path.join(publishDir, "index.html"))
-      .replace(/\\/g, "/");
-    const canonical = item.url;
-    const html = renderArticleTemplate({
-      title: item.title,
-      description: item.description,
-      content,
-      cssHref: cssHref || "assets/index.css",
-      homeHref: homeHref || "index.html",
-      canonicalHref: canonical,
-      labels: item.labels,
-      status: item.status,
-      date: item.date,
-      datetime: item.datetime,
-    });
-    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-    fs.writeFileSync(outputPath, html, "utf8");
-  });
-
-  const generatedAt = new Date().toISOString();
-  const payloadItems = markdownItems.map(toItemPayload);
-  const payload = {
-    schemaVersion: 1,
-    generatedAt,
-    docType: DOC_KIND,
-    items: payloadItems,
-  };
-
-  fs.mkdirSync(path.dirname(indexOutputPath), { recursive: true });
-  cleanupLegacyOutputs();
-  fs.writeFileSync(indexOutputPath, JSON.stringify(payload, null, 2) + "\n", "utf8");
-  writeTypeIndex(generatedAt, payloadItems);
-  writeStatusIndexes(generatedAt, payloadItems);
-  buildDataCatalog(generatedAt);
-
-  return {
-    allItems: payloadItems,
-    publishedItems: payloadItems.filter((item) => item.status === "published"),
-    draftItems: payloadItems.filter((item) => item.status === "draft"),
-  };
-};
-
-const renderResearchList = (items) => {
+const renderPostList = (items) => {
   if (!items.length) {
-    return `  <li class="list-item">No docs yet.</li>`;
+    return `  <li class="list-item">No posts yet.</li>`;
   }
+
   return items
     .map((item) => {
-      const href = item.url || item.path || "#";
       const statusLabel = item.status === "draft" ? "Draft" : "Published";
-      const statusBadge = `<span class="status-badge status-${item.status}">${statusLabel}</span>`;
-      const labels = item.labels?.length
-        ? `<div class="label-list">${item.labels
-            .map((label) => `<span class="label-chip">${label}</span>`)
-            .join("")}</div>`
-        : "";
-      const displayTimestamp = item.datetime || item.date || "";
-      const dateMeta = displayTimestamp ? `<span class="doc-date">${displayTimestamp}</span>` : "";
-      return `  <li class="list-item"><a href="${href}">${item.title}</a>${statusBadge}${dateMeta}${labels}</li>`;
+      const labels = item.labels.length ? ` on ${item.labels.join(", ")}` : "";
+      const description = item.description ? `<p class="post-description">${item.description}</p>` : "";
+      return `  <li class="post-item">
+    <a class="post-title" href="${item.url}">${item.title}</a>
+    <div class="post-meta">
+      <span class="status-${item.status}">${statusLabel}</span>
+      ${item.datetime ? `<span>${item.datetime}</span>` : ""}
+      ${labels ? `<span>${labels}</span>` : ""}
+    </div>
+    ${description}
+  </li>`;
     })
     .join("\n");
 };
 
 const updateHomepage = (items) => {
-  const homepageOutputPath = path.join(publishDir, "index.html");
-  if (!fs.existsSync(homepagePath)) {
-    console.warn("index.html not found; skipping homepage update.");
-    return;
-  }
   const raw = fs.readFileSync(homepagePath, "utf8");
   const start = raw.indexOf(markerStart);
   const end = raw.indexOf(markerEnd);
   if (start === -1 || end === -1 || end <= start) {
-    console.warn("Research markers not found in index.html; skipping update.");
-    return;
+    throw new Error("Homepage post markers not found.");
   }
 
-  const before = raw.slice(0, start + markerStart.length);
-  const after = raw.slice(end);
-  const list = `\n${renderResearchList(items)}\n`;
-  const updated = `${before}${list}${after}`;
-  fs.mkdirSync(path.dirname(homepageOutputPath), { recursive: true });
-  fs.writeFileSync(homepageOutputPath, updated, "utf8");
+  const updated = `${raw.slice(0, start + markerStart.length)}
+${renderPostList(items)}
+${raw.slice(end)}`;
+
+  fs.mkdirSync(publishDir, { recursive: true });
+  fs.writeFileSync(path.join(publishDir, "index.html"), updated, "utf8");
 };
 
-const { allItems, publishedItems, draftItems } = buildResearch();
-updateHomepage(allItems);
-fs.mkdirSync(publicSpectrumDir, { recursive: true });
-const spectrumLandingPath = path.join(publicSpectrumDir, "index.html");
-if (fs.existsSync(spectrumLandingPath)) {
-  fs.rmSync(spectrumLandingPath);
-}
-fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });
-copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
-const dataViewerSource = path.join(rootDir, "src", "templates", "data-viewer.html");
-if (fs.existsSync(dataViewerSource)) {
-  fs.copyFileSync(dataViewerSource, path.join(publishDir, "data-viewer.html"));
-}
-if (fs.existsSync(path.join(rootDir, "CNAME"))) {
-  fs.copyFileSync(path.join(rootDir, "CNAME"), path.join(publishDir, "CNAME"));
-}
-console.log(`Built ${allItems.length} doc(s): ${publishedItems.length} published, ${draftItems.length} draft.`);
+const buildPosts = () => {
+  if (!fs.existsSync(docsDir)) {
+    throw new Error(`Missing docs directory: ${docsDir}`);
+  }
+
+  fs.rmSync(publicSpectrumDir, { recursive: true, force: true });
+  fs.mkdirSync(publicSpectrumDir, { recursive: true });
+
+  const items = listMarkdownFiles(docsDir)
+    .map((filePath) => {
+      const raw = fs.readFileSync(filePath, "utf8");
+      const { body, meta } = parseFrontmatter(raw);
+      const fallback = path
+        .basename(filePath, ".md")
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (match) => match.toUpperCase());
+      const slug = normalizeSlug(
+        path.relative(docsDir, filePath).replace(/\\/g, "/").replace(/\.md$/, "")
+      );
+      const temporal = getTemporalMeta(meta, filePath);
+
+      return {
+        raw,
+        body,
+        title: getTitle(body, meta, fallback),
+        description: getDescription(body, meta),
+        status: getStatus(meta),
+        labels: getLabels(meta),
+        slug,
+        url: `/spectrum/${slug}/`,
+        outputPath: path.join(publicSpectrumDir, slug, "index.html"),
+        ...temporal,
+      };
+    })
+    .sort((a, b) => {
+      if (a.sortValue !== b.sortValue) return b.sortValue - a.sortValue;
+      return a.title.localeCompare(b.title);
+    });
+
+  items.forEach((item) => {
+    const strippedBody = item.body.replace(/^# .+?\n+/, "");
+    const content = marked.parse(strippedBody);
+    const cssHref = path
+      .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
+      .replace(/\\/g, "/");
+    const homeHref = path
+      .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
+      .replace(/\\/g, "/");
+
+    fs.mkdirSync(path.dirname(item.outputPath), { recursive: true });
+    fs.writeFileSync(
+      item.outputPath,
+      renderPostPage({
+        ...item,
+        content,
+        cssHref,
+        homeHref,
+      }),
+      "utf8"
+    );
+  });
+
+  updateHomepage(items);
+  fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });
+  copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
+
+  if (fs.existsSync(path.join(rootDir, "CNAME"))) {
+    fs.copyFileSync(path.join(rootDir, "CNAME"), path.join(publishDir, "CNAME"));
+  }
+
+  fs.rmSync(path.join(publishDir, "tips.json"), { force: true });
+
+  return items;
+};
+
+const items = buildPosts();
+const publishedCount = items.filter((item) => item.status === "published").length;
+const draftCount = items.filter((item) => item.status === "draft").length;
+console.log(`Built ${items.length} post(s): ${publishedCount} published, ${draftCount} draft.`);

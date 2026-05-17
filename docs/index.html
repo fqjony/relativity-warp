@@ -11,87 +11,62 @@
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b1220" />
     <link rel="stylesheet" href="assets/index.css" />
-    <script src="assets/index.js" defer></script>
   </head>
-  <body data-theme="dark">
+  <body>
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
-      <header class="hero">
-        <div class="hero-top">
-          <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
-          <div class="control-bar" aria-label="Quick controls">
-            <div class="control-widget" aria-live="polite">
-              <button
-                id="theme-toggle"
-                class="button button-compact"
-                type="button"
-                aria-pressed="false"
-                aria-describedby="theme-tooltip"
-              >
-                <span class="theme-icon" aria-hidden="true">◐</span>
-                <span>Theme</span>
-              </button>
-              <span id="theme-tooltip" class="theme-joke" role="tooltip">
-                Theme check: keep the signal crisp.
-              </span>
-            </div>
-          </div>
-        </div>
-        <p class="hero-subtitle">Software Engineering, DevSecOps, Automation</p>
-        <p class="hero-description">
-          Repo-centric systems, automation research, and engineering notes with a physics lens.
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="/">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="site-title">Dmytro Smirnov</h1>
+        <p class="site-subtitle">
+          Software engineering, DevSecOps, automation, and notes from daily UDX work.
         </p>
-        <div id="tip-widget" class="hero-tip-inline" aria-live="polite">
-          <span class="hero-tip-title">Tip</span>
-          <span class="hero-tip-body">Loading tip...</span>
-        </div>
-        <div class="hero-links">
-          <a href="https://github.com/fqjony" target="_blank" rel="noopener"
-            ><span class="link-icon">💻</span> GitHub</a
-          >
-          <a
-            href="https://linkedin.com/in/fqjony"
-            target="_blank"
-            rel="noopener"
-            ><span class="link-icon">💼</span> LinkedIn</a
-          >
-          <a href="https://udx.io" target="_blank" rel="noopener"
-            ><span class="link-icon">🌐</span> UDX</a
-          >
-        </div>
       </header>
 
       <main id="content">
-        <section class="section card section-docs">
-          <div class="section-header">
-            <h2>Docs</h2>
-            <span class="section-divider"></span>
-            <span class="section-label">Published + Draft</span>
-          </div>
-          <div class="section-body">
-            <p class="section-note">
-              All docs sorted by date, with draft notes clearly marked.
-            </p>
-            <ul class="link-list research-list" role="list">
-              <!-- RESEARCH:START -->
-  <li class="list-item"><a href="/spectrum/local-dev-stack/">Local Dev Stack</a><span class="status-badge status-draft">Draft</span><span class="doc-date">2026-02-17 22:12</span><div class="label-list"><span class="label-chip">notes</span><span class="label-chip">engineering</span><span class="label-chip">localhost</span><span class="label-chip">tooling</span></div></li>
-  <li class="list-item"><a href="/spectrum/start-here/">Start Here</a><span class="status-badge status-published">Published</span><span class="doc-date">2026-02-17 22:12</span><div class="label-list"><span class="label-chip">entry-point</span><span class="label-chip">docs</span><span class="label-chip">workflow</span><span class="label-chip">dev-kit</span></div></li>
+        <section>
+          <h2 class="section-title">Daily Posts</h2>
+          <ul class="post-list" role="list">
+            <!-- RESEARCH:START -->
+  <li class="post-item">
+    <a class="post-title" href="/spectrum/2026-05-18-repo-centric-workflows/">Repo-Centric Workflows as the Enterprise Delivery Model</a>
+    <div class="post-meta">
+      <span class="status-published">Published</span>
+      <span>2026-05-18 09:00</span>
+      <span> on udx, dev-kit, rabbit-ci, workflows, sdlc, infrastructure</span>
+    </div>
+    <p class="post-description">How UDX is framing workflows, infra builds, rabbit.ci, and dev.kit around standardized repository contracts and reusable execution parts.</p>
+  </li>
+  <li class="post-item">
+    <a class="post-title" href="/spectrum/local-dev-stack/">Local Dev Stack</a>
+    <div class="post-meta">
+      <span class="status-draft">Draft</span>
+      <span>2026-02-17 22:12</span>
+      <span> on notes, engineering, localhost, tooling</span>
+    </div>
+    <p class="post-description">Notes on local tooling, agent setup, and dev.kit direction.</p>
+  </li>
+  <li class="post-item">
+    <a class="post-title" href="/spectrum/start-here/">Start Here</a>
+    <div class="post-meta">
+      <span class="status-published">Published</span>
+      <span>2026-02-17 22:12</span>
+      <span> on entry-point, docs, workflow, dev-kit</span>
+    </div>
+    <p class="post-description">Minimal entry point for shaping Relativity Warp docs with a draft-first workflow.</p>
+  </li>
 <!-- RESEARCH:END -->
-            </ul>
-          </div>
+          </ul>
         </section>
       </main>
 
       <footer class="footer">
-        <p class="motto">
-          <a
-            href="https://github.com/fqjony/relativity-warp"
-            target="_blank"
-            rel="noopener"
-            >GitHub repo</a
-          >
-        </p>
-        <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
       </footer>
     </div>
   </body>

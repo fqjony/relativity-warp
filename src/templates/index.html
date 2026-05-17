@@ -11,90 +11,38 @@
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b1220" />
     <link rel="stylesheet" href="assets/index.css" />
-    <script src="assets/index.js" defer></script>
   </head>
-  <body data-theme="dark">
+  <body>
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
-      <header class="hero">
-        <div class="hero-top">
-          <h1 class="hero-title">Dmytro Smirnov <span class="flag">🇺🇦</span></h1>
-          <div class="control-bar" aria-label="Quick controls">
-            <div class="control-widget" aria-live="polite">
-              <button
-                id="theme-toggle"
-                class="button button-compact"
-                type="button"
-                aria-pressed="false"
-                aria-describedby="theme-tooltip"
-              >
-                <span class="theme-icon" aria-hidden="true">◐</span>
-                <span>Theme</span>
-              </button>
-              <span id="theme-tooltip" class="theme-joke" role="tooltip">
-                Theme check: keep the signal crisp.
-              </span>
-            </div>
-          </div>
-        </div>
-        <p class="hero-subtitle">Software Engineering, DevSecOps, Automation</p>
-        <p class="hero-description">
-          Repo-centric systems, automation research, and engineering notes with a physics lens.
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="/">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="site-title">Dmytro Smirnov</h1>
+        <p class="site-subtitle">
+          Software engineering, DevSecOps, automation, and notes from daily UDX work.
         </p>
-        <div id="tip-widget" class="hero-tip-inline" aria-live="polite">
-          <span class="hero-tip-title">Tip</span>
-          <span class="hero-tip-body">Loading tip...</span>
-        </div>
-        <div class="hero-links">
-          <a href="https://github.com/fqjony" target="_blank" rel="noopener"
-            ><span class="link-icon">💻</span> GitHub</a
-          >
-          <a
-            href="https://linkedin.com/in/fqjony"
-            target="_blank"
-            rel="noopener"
-            ><span class="link-icon">💼</span> LinkedIn</a
-          >
-          <a href="https://udx.io" target="_blank" rel="noopener"
-            ><span class="link-icon">🌐</span> UDX</a
-          >
-        </div>
       </header>
 
       <main id="content">
-        <section class="section card section-docs">
-          <div class="section-header">
-            <h2>Docs</h2>
-            <span class="section-divider"></span>
-            <span class="section-label">Published + Draft</span>
-          </div>
-          <div class="section-body">
-            <p class="section-note">
-              All docs sorted by date, with draft notes clearly marked.
-            </p>
-            <ul class="link-list research-list" role="list">
-              <!-- RESEARCH:START -->
-              <li class="list-item">
-                <a href="/spectrum/start-here/"
-                  >Start Here</a
-                >
-              </li>
-              <!-- RESEARCH:END -->
-            </ul>
-          </div>
+        <section>
+          <h2 class="section-title">Daily Posts</h2>
+          <ul class="post-list" role="list">
+            <!-- RESEARCH:START -->
+            <li class="post-item">
+              <a class="post-title" href="/spectrum/start-here/">Start Here</a>
+            </li>
+            <!-- RESEARCH:END -->
+          </ul>
         </section>
       </main>
 
       <footer class="footer">
-        <p class="motto">
-          <a
-            href="https://github.com/fqjony/relativity-warp"
-            target="_blank"
-            rel="noopener"
-            >GitHub repo</a
-          >
-        </p>
-        <p class="motto">© 2026 Dmytro Smirnov. All rights reserved.</p>
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
       </footer>
     </div>
   </body>
