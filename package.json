@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-tips.mjs && node scripts/build-research.mjs",
+    "build": "node scripts/build-research.mjs",
+    "post:new": "node scripts/new-post.mjs",
     "preview": "serve docs",
     "hooks:install": "git config core.hooksPath .githooks",
     "hooks:uninstall": "git config --unset core.hooksPath"
   },
   "devDependencies": {
-    "js-yaml": "^4.1.0",
     "marked": "^12.0.2",
     "serve": "^14.2.1"
   }

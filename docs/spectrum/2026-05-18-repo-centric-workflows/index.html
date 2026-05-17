@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repo-Centric Workflows as the Enterprise Delivery Model - Relativity Warp</title>
+    <meta name="description" content="How UDX is framing workflows, infra builds, rabbit.ci, and dev.kit around standardized repository contracts and reusable execution parts." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../../index.html">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="article-title">Repo-Centric Workflows as the Enterprise Delivery Model</h1>
+        <div class="post-meta">
+          <span class="status-published">Published</span>
+          <span>2026-05-18 09:00</span>
+          <span> on udx, dev-kit, rabbit-ci, workflows, sdlc, infrastructure</span>
+        </div>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+          <p>UDX strategy work has been converging on one practical idea: enterprise delivery should be driven from standardized repositories, not from scattered CI files, private notes, assistant memory, or one-off operational habits.</p>
+<p>That sounds obvious until the system has to support more than one repo, more than one cloud, and more than one execution surface. At that point, the repository needs to do more than store source code. It needs to expose the contract for how humans, agents, CI/CD systems, cloud runners, and local tools should collaborate.</p>
+<h2>Workflow Means More Than Pipeline</h2>
+<p>The working definition we refined is:</p>
+<blockquote>
+<p>A workflow is a composable operating model for getting a goal done from independent, self-contained parts.</p>
+</blockquote>
+<p>In UDX terms:</p>
+<pre><code class="language-text">workflow = intent + rules + context + inputs + executable parts + outputs + feedback
+</code></pre>
+<p>A pipeline is one executable path through that workflow. It is the ordered run that happens for a specific purpose. The broader workflow includes the rules, repo context, environment mapping, runtime constraints, outputs, evidence, and feedback loop around that path.</p>
+<p>That distinction matters. A normal CI/CD workflow might compile down to a GitHub Actions pipeline. But the same model should also apply to infrastructure provisioning, environment setup, database operations, service maintenance, application release, runbook execution, diagnostics, and support tasks.</p>
+<h2>The Infra Build Example</h2>
+<p>The cloud deployment workflow, also called infra build, is a concrete example of this model.</p>
+<p>The current private workflow surface is:</p>
+<ul>
+<li><code>udx/gh-workflows</code></li>
+<li><code>.github/workflows/infra-build.yml</code></li>
+</ul>
+<p>The planned public product surface is:</p>
+<ul>
+<li><code>udx/github-rabbit-action</code></li>
+<li>GitHub Marketplace distribution</li>
+</ul>
+<p>The diagram we reviewed showed the shape clearly:</p>
+<ul>
+<li>A developer pushes code.</li>
+<li>GitHub Actions receives the trigger and handles workflow orchestration.</li>
+<li>An R2A container provides a self-contained execution environment.</li>
+<li>Reusable component families handle AWS, GCP, Kubernetes, state, telemetry, Firebase deploy records, worker pods, and edge stack behavior.</li>
+</ul>
+<p>That is a better model than treating CI as a sequence of arbitrary shell commands. GitHub Actions becomes one runner and orchestration surface. R2A becomes the packaged execution environment. Cloud and runtime domains become reusable workflow parts with declared inputs, credentials, state behavior, outputs, and reporting.</p>
+<h2>What Repos Need To Provide</h2>
+<p>For this model to work across enterprise repos, each repo needs to expose enough structure to drive development and operations from the repo itself.</p>
+<p>The repo contract should include:</p>
+<ul>
+<li><code>.rabbit/context.yaml</code></li>
+<li><code>AGENTS.md</code></li>
+<li>workflow files and workflow docs</li>
+<li>README and focused docs</li>
+<li>manifests for workflow, runtime, deployment, environment, or lifecycle behavior</li>
+<li>explicit verify, build, test, diff, plan, and run commands</li>
+<li>branch, lifecycle, and environment mapping where applicable</li>
+</ul>
+<p>The goal is a repo-centric SDLC: the repository contract drives development, tests, agents, CI/CD, lifecycle, environments, releases, and feedback loops.</p>
+<h2>Where dev.kit Fits</h2>
+<p><code>udx/dev.kit</code> fits as the repo standardization and context-normalization layer.</p>
+<p>It is not the source of business truth. The repo remains the source of truth. <code>dev.kit</code> helps discover, normalize, and refresh that truth so humans, agents, and automation can operate from the same evidence.</p>
+<p>That makes agent sessions more useful. An agent should not have to infer a repo&#39;s lifecycle from old chat history or guess at deployment behavior from scattered files. It should be able to enter the repo, read the contract, understand the commands and manifests, inspect known gaps, and run the smallest meaningful verification.</p>
+<h2>Test and Loop</h2>
+<p>The engineering mode behind this is deliberately iterative.</p>
+<p>Each workflow should make it cheap to:</p>
+<ol>
+<li>identify the intended lifecycle or environment</li>
+<li>make the smallest useful change</li>
+<li>run the smallest meaningful verification</li>
+<li>inspect the diff, plan, output, or runtime evidence</li>
+<li>feed the result into the next iteration</li>
+</ol>
+<p>That is TDD thinking applied beyond application code. It applies to infrastructure, database tasks, environment changes, deployments, runbooks, diagnostics, and agent sessions.</p>
+<h2>The UDX Position</h2>
+<p>The stronger UDX claim is not &quot;we have better CI YAML.&quot;</p>
+<p>The stronger claim is:</p>
+<blockquote>
+<p>UDX standardizes how delivery workflows are defined, composed, executed, observed, and improved across repositories and platforms.</p>
+</blockquote>
+<p><code>rabbit.ci</code> is the workflow platform surface. <code>dev.kit</code> makes repos readable and operable enough to participate. R2A and related workers provide self-contained execution. Reusable workflows and manifests connect the pieces into portable delivery paths.</p>
+<p>The long-term value is collaborative, reusable engineering experience: standardized repo contracts, dynamic SDLC workflows, portable execution, tight feedback loops, and a practical path for humans and agents to work from the same operating model.</p>
+
+        </div>
+      </main>
+      <footer class="footer">
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
