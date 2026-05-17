@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Idea Behind dev.kit - Relativity Warp</title>
+    <meta name="description" content="Why dev.kit exists: repositories as operating contracts, not just code folders." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../../index.html">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="article-title">The Idea Behind dev.kit</h1>
+        <div class="post-meta">
+          <span class="status-published">Published</span>
+          <span>2026-05-18 10:00</span>
+          <span> on engineering, dev.kit, repositories, agents, sdlc</span>
+        </div>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+          <p>Start with the broader context: <a href="/spectrum/2026-05-18-repo-centric-workflows/">Repo-Centric Workflows as an Engineering System</a>.</p>
+<p><code>dev.kit</code> came from a repeated frustration in real repo work: the repository usually contains the truth, but not always in a form that a new developer, a CI job, a local script, or an AI agent can use quickly.</p>
+<p>The README might explain the project. Workflows might show how releases happen. Manifests might describe runtime behavior. Commands might live in a build file or script. A good engineer can eventually reconstruct the operating model, but every reconstruction costs time and creates room for drift.</p>
+<p>The idea behind <code>dev.kit</code> is to make that reconstruction explicit.</p>
+<h2>The Repository Is The Contract</h2>
+<p>The core belief is that the repo should be the first operating surface.</p>
+<p>Not chat memory. Not one person&#39;s shell history. Not an assistant thread. Not a wiki page that slowly diverges from the thing that actually runs.</p>
+<p>The repo should answer:</p>
+<ul>
+<li>What is this project?</li>
+<li>What should I read first?</li>
+<li>Which commands are trusted?</li>
+<li>Which manifests shape behavior?</li>
+<li>Which workflows execute delivery?</li>
+<li>Which dependency repos matter?</li>
+<li>Which context is missing or weak?</li>
+<li>How do I verify a change?</li>
+</ul>
+<p>That is what &quot;repo-centric SDLC&quot; means in practice. Development, tests, agents, CI/CD, lifecycle, environments, releases, and feedback loops should all start from the same repo-owned contract.</p>
+<h2>Why A Tool Is Needed</h2>
+<p>Even when the repo is the source of truth, the truth is distributed.</p>
+<p>A typical repo contract is spread across docs, workflows, scripts, manifests, tests, generated context, release notes, and dependency references.</p>
+<p>Humans can synthesize that. Automation needs structure. Agents need both structure and reading order.</p>
+<p>The working idea for <code>dev.kit</code> is to become an adapter between those worlds. It discovers repo-owned evidence, normalizes it, and writes compact context that other actors can use.</p>
+<p>The tool should not replace the repo. It should make the repo easier to use.</p>
+<h2>The Original Product Tension</h2>
+<p>The early sessions explored a larger surface: auditing repos, exposing machine-readable output, generating agent guidance, learning from sessions, improving install flow, detecting repo shapes, and tracing dependencies.</p>
+<p>All of that was directionally useful. It also created a design tension.</p>
+<p>If <code>dev.kit</code> does too much, it becomes another source of truth. If it stores too much local session material, it risks turning working memory into repo context. If it generates too much prose, the output becomes another document to maintain.</p>
+<p>The better line appears narrower:</p>
+<pre><code class="language-text">discover repo evidence
+normalize what can be trusted
+report what is missing
+guide the next repair
+regenerate from source
+</code></pre>
+<h2>The Practical Output</h2>
+<p>The current center of gravity is generated repo context.</p>
+<p>That context can include identity, reading order, commands, gaps, manifests, dependencies, and repair targets.</p>
+<p>This makes the repo more legible without pretending every repo is perfect.</p>
+<p>The most important part is not the happy-path summary. It is the gaps. A gap says, &quot;this repo has an operating contract weakness that can be repaired in a repo-owned source.&quot;</p>
+<p>That is how the tool stays useful during real work. It turns ambiguity into a focused next step.</p>
+<h2>The Agent Angle</h2>
+<p>AI agents made the need sharper, but not separate.</p>
+<p>An agent entering a repo needs the same things a human needs: an entrypoint, reading order, trusted commands, constraints, verification, and known gaps.</p>
+<p>The difference is that agents are more likely to over-read, under-read, or infer from stale memory. A generated repo context gives the agent a current, compact grounding point.</p>
+<p>The hoped-for instruction stays simple:</p>
+<pre><code class="language-bash">dev.kit
+dev.kit repo
+</code></pre>
+<p>Start from the repo, refresh context, then work from the evidence.</p>
+<h2>What dev.kit Should Not Be</h2>
+<p>The sessions also clarified the negative space.</p>
+<p><code>dev.kit</code> should not be a replacement for docs, a transcript archive, a heavyweight platform, an agent prompt dumping tool, or a place to hide repo gaps with generated prose.</p>
+<p>It should be a small normalization layer that helps the repo become more self-explaining.</p>
+<p>That is the idea: make every repository easier to enter, repair, automate, and hand off by keeping the operating contract close to the code and regenerating it from evidence.</p>
+
+        </div>
+      </main>
+      <footer class="footer">
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

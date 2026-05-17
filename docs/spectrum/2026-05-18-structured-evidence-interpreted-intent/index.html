@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Structured Evidence and Interpreted Intent - Relativity Warp</title>
+    <meta name="description" content="A practical boundary for repo-context tools: parse deterministic sources, use prose for meaning, and keep generated context reviewable." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../../index.html">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="article-title">Structured Evidence and Interpreted Intent</h1>
+        <div class="post-meta">
+          <span class="status-published">Published</span>
+          <span>2026-05-18 11:00</span>
+          <span> on engineering, repositories, context, dev.kit, agents</span>
+        </div>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+          <p>The <code>dev.kit</code> series started with the broad idea of <a href="/spectrum/2026-05-18-repo-centric-workflows/">repo-centric workflows</a>, then moved through the <a href="/spectrum/2026-05-18-dev-kit-idea/">tool idea</a>, <a href="/spectrum/2026-05-18-dev-kit-development-log/">development arc</a>, <a href="/spectrum/2026-05-18-dev-kit-repo-sessions/">session synthesis</a>, and <a href="/spectrum/2026-05-18-dev-kit-workflow-contract/">workflow contract</a>.</p>
+<p>The missing piece is the boundary that makes the whole model durable:</p>
+<pre><code class="language-text">structured evidence should be parsed
+interpreted intent should be explained
+generated context should keep the two visibly separate
+</code></pre>
+<p>That sounds small, but it is the difference between a repo-context tool that stays trustworthy and one that turns into generated lore.</p>
+<h2>The Temptation</h2>
+<p>When a tool scans a repository, it is tempting to make the output as helpful as possible.</p>
+<p>That can quickly become too much:</p>
+<ul>
+<li>infer project intent from a README</li>
+<li>infer team workflow from a prompt</li>
+<li>infer release behavior from an old issue</li>
+<li>infer runtime contracts from prose</li>
+<li>merge session notes into generated context</li>
+<li>summarize everything into one confident story</li>
+</ul>
+<p>Some of those inferences may be useful. They are not the same kind of evidence as a workflow file, package script, manifest header, or test command.</p>
+<p>If the generated context does not preserve that distinction, the reader cannot tell which parts are observed and which parts are interpreted.</p>
+<h2>The Useful Split</h2>
+<p>A repository has several kinds of sources.</p>
+<p>Scripts and manifests define what can run.</p>
+<p>Structured refs define what can be parsed.</p>
+<p>Docs and sessions explain why.</p>
+<p>Generated context should summarize the operational contract: reading order, detected commands, structured gaps, dependency contracts, manifest provenance, and repair targets.</p>
+<p>That split gives each source a job.</p>
+<h2>Why This Matters For Agents</h2>
+<p>Humans often understand source quality intuitively. Agents need the boundary stated more clearly.</p>
+<p>A repo agent may read a Markdown paragraph and treat it like an executable rule. It may see an old session note and assume it is current policy. It may infer a deployment path from prose even when the workflow file says something different.</p>
+<p>A good repo-context artifact should help prevent that.</p>
+<p>It should say what was detected from runnable sources, what was traced from structured sources, what caused a gap, and which docs are references rather than executable sources.</p>
+<p>That makes the generated context reviewable by both humans and agents.</p>
+<h2>Gaps Are Where The Boundary Becomes Practical</h2>
+<p>When generated context reports a gap, that is exactly where the boundary matters.</p>
+<p>One bad response would be to edit generated context until it sounds complete.</p>
+<p>The better response is to improve the repo-owned source: document configuration, add an example when it fits the repo, improve manifest metadata, or make the workflow path clearer.</p>
+<p>Then regenerate context.</p>
+<p>The generated file becomes a coverage report over the repo, not a substitute for the repo.</p>
+<h2>Prose Still Matters</h2>
+<p>This boundary is not anti-documentation.</p>
+<p>Prose is where teams explain why the workflow exists, which tradeoffs were accepted, when a command should be used, what a manifest means operationally, how to repair a weak contract, and what still needs human judgment.</p>
+<p>The point is that prose should not silently become deterministic evidence.</p>
+<p>When both structured and prose sources exist, parse the structured source first. Use prose to explain intent, repair guidance, and open decisions.</p>
+<p>That keeps automation deterministic without stripping the repository of human meaning.</p>
+<h2>A Reviewable Contract</h2>
+<p>The goal is not perfect inference. It is a reviewable contract.</p>
+<p>A useful repo-context artifact should let someone ask where a command came from, why a dependency is listed, what evidence caused a gap, which source should be fixed, and which parts are observed versus interpreted.</p>
+<p>If those questions are easy to answer, the context can be trusted even when it is incomplete.</p>
+<p>Incomplete and explicit is better than complete and magical.</p>
+<h2>The Pattern</h2>
+<p>The durable pattern is:</p>
+<pre><code class="language-text">structured source -&gt; deterministic parse
+prose source      -&gt; interpreted intent
+generated context -&gt; compact evidence and gaps
+repo repair       -&gt; improve the owning source
+regeneration      -&gt; prove the contract changed
+</code></pre>
+<p>That is the practical boundary for <code>dev.kit</code>, but it applies more broadly to any repo-context system.</p>
+<p>If repositories are going to drive humans, automation, CI/CD, and agents from the same operating contract, the contract has to stay grounded. It has to say what the repo proves, what the repo suggests, and what the repo still does not explain.</p>
+<p>That is how generated context remains useful without becoming another place for drift.</p>
+
+        </div>
+      </main>
+      <footer class="footer">
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
