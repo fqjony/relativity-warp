@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How dev.kit Changed While Building It - Relativity Warp</title>
+    <meta name="description" content="A development log from the dev.kit sessions, tracing the move from audit and bridge commands toward a smaller repo-context loop." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../../index.html">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="article-title">How dev.kit Changed While Building It</h1>
+        <div class="post-meta">
+          <span class="status-published">Published</span>
+          <span>2026-05-18 10:15</span>
+          <span> on engineering, dev.kit, development-log, repositories, agents</span>
+        </div>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+          <p>This is the development-log companion to <a href="/spectrum/2026-05-18-dev-kit-idea/">The Idea Behind dev.kit</a>. It is not a transcript. It is the shape that emerged across the repo sessions.</p>
+<p>The main pattern was repeated simplification. Each useful idea had to survive the same question: does this make the repository more self-explaining, or does it create another place where truth can drift?</p>
+<h2>1. Start With Reachability</h2>
+<p>The first practical work was basic: make <code>dev.kit</code> easy to install, easy to run, and easy to remove. The lesson was that a repo tool must be reachable from a normal shell, but careful about global machine state.</p>
+<h2>2. Audit Became Repo Context</h2>
+<p>The early mental model was an audit command:</p>
+<pre><code class="language-bash">dev.kit
+dev.kit bridge --json
+</code></pre>
+<p>The tool scanned a repo, reported whether it looked healthy, and exposed machine-readable output for agents. That was a useful starting point, but &quot;audit&quot; was too narrow. It sounded like a scorecard.</p>
+<p>The better model was context coverage.</p>
+<p>The question became:</p>
+<ul>
+<li>What did the repo declare?</li>
+<li>What can be resolved from strong signals?</li>
+<li>What is still missing, partial, stale, or ambiguous?</li>
+</ul>
+<p>That shifted the output from judgment to evidence.</p>
+<h2>3. Bridge Output Exposed The Agent Need</h2>
+<p><code>dev.kit bridge</code> explored how agents should consume repo context.</p>
+<p>The sessions pushed toward output that could answer a small set of practical questions: what this repo is, what to read first, which commands matter, which constraints apply, and which gaps should shape the next step.</p>
+<p>That direction was correct, but the command boundary became questionable. If bridge output is the machine-readable repo contract, then it should come from the same generated context as every other consumer.</p>
+<p>The durable idea survived. The separate public surface became less important.</p>
+<h2>4. Archetype Detection Needed To Be Humble</h2>
+<p>The sessions explored detection for different repo shapes.</p>
+<p>The original temptation was to hardcode lots of repo types. That does not scale well. Repos are mixed, partial, and often weird in useful ways.</p>
+<p>The better direction was signals first:</p>
+<pre><code class="language-text">repo signals -&gt; detected factors -&gt; probable shape -&gt; guidance and gaps
+</code></pre>
+<p>Archetypes should help explain the repo. They should not force the repo into one label.</p>
+<h2>5. Manifests Became First-Class</h2>
+<p>Structured files were a recurring source of confusion. Some are ordinary config. Some define workflows. Some declare deployment or runtime contracts. Some point to another repo or tool through metadata.</p>
+<p>The useful question became: what is the backend?</p>
+<p>For each meaningful manifest, <code>dev.kit</code> should try to show what it is, what uses it, and what evidence supports that trace.</p>
+<p>This moved the tool from &quot;found YAML&quot; to &quot;found an execution-shaping contract.&quot;</p>
+<h2>6. Lessons Were Useful But Risky</h2>
+<p><code>dev.kit learn</code> explored extracting lessons from local sessions.</p>
+<p>The idea was valid: repeated sessions reveal patterns that should improve the next session. But raw session history is too noisy to become durable repo context automatically.</p>
+<p>The better rule is promotion: local sessions can inspire lessons, but reusable lessons should be rewritten compactly and moved into the right durable source only after they prove stable. Raw transcripts should not become the contract.</p>
+<p>That is why local lesson extraction became less central to the current shape.</p>
+<h2>7. Agent Guidance Was Separated From Repo Facts</h2>
+<p>Another major change was the boundary between generated repo context and agent instruction files.</p>
+<p>At one point, the tool generated both structured context and broader agent guidance. That helped demonstrate the workflow, but it also duplicated responsibility.</p>
+<p>The cleaner split is simple: generated context carries repo facts and gaps; instruction files carry assistant behavior; docs explain the workflow and repair loop.</p>
+<p>The generated context should not become a long prompt.</p>
+<h2>8. The Command Surface Shrunk</h2>
+<p>The most important development outcome was reducing the public loop.</p>
+<p>The surviving shape is:</p>
+<pre><code class="language-bash">dev.kit      # orient and suggest the next step
+dev.kit env  # inspect local capability
+dev.kit repo # generate or refresh repo context
+</code></pre>
+<p>That is small enough to remember and broad enough to test against real repos.</p>
+<p><code>dev.kit</code> orients. <code>dev.kit env</code> explains available tools and credentials. <code>dev.kit repo</code> regenerates the repo contract.</p>
+<h2>9. Testing Followed The Workflow</h2>
+<p>The test suite became valuable when it matched the working loop.</p>
+<p>Useful tests covered install behavior, command discovery, machine-readable output, repo fixtures, gap detection, manifest tracing, dependency tracing, and stale or broken context coverage.</p>
+<p>The lesson was direct: test the repo repair loop, not just individual shell functions.</p>
+<h2>10. The Current Working Definition</h2>
+<p>The working definition is intentionally plain:</p>
+<p><code>dev.kit</code> turns repositories into self-explaining repo contracts for humans, scripts, and CI/CD.</p>
+<p>The hoped-for loop is: inspect environment capability, read repo-owned evidence, generate compact context, expose gaps, and point to the next repair.</p>
+<p>The implementation still has room to improve, but the boundary is clearer than it was at the start.</p>
+<p>The next useful development work should keep using the same test: if a feature does not make repo evidence more trustworthy, easier to regenerate, or easier to act on, it probably does not belong in the core loop.</p>
+
+        </div>
+      </main>
+      <footer class="footer">
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

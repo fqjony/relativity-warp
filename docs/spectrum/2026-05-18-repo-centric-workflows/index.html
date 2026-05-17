@@ -27,7 +27,7 @@
       <main id="content" class="article">
         <div class="article-content">
           <p>I have been thinking about software delivery less as a collection of CI jobs and more as an engineering system.</p>
-<p>This note comes from ongoing UDX team work around delivery workflows, repository standards, cloud infrastructure, and AI-assisted engineering. The details are intentionally generalized, but the ideas are grounded in real collaborative work across repos, tools, and deployment environments.</p>
+<p>This note comes from ongoing work around delivery workflows, repository standards, cloud infrastructure, and AI-assisted engineering. The details are intentionally generalized, but the ideas are grounded in real collaborative work across repos, tools, and deployment environments.</p>
 <p>The practical question is simple: how should a repository describe enough of itself that humans, automation, local tools, CI/CD systems, cloud runners, and AI agents can all collaborate without relying on hidden assumptions?</p>
 <p>The answer I keep coming back to is repo-centric delivery. The repository should not only store source code. It should expose the operating contract for how work is understood, tested, planned, executed, reviewed, released, and improved.</p>
 <h2>Workflow Means More Than Pipeline</h2>
@@ -42,17 +42,11 @@
 <p>That distinction matters. A normal CI/CD workflow might compile down to a GitHub Actions pipeline. But the same model should also apply to infrastructure provisioning, environment setup, database operations, service maintenance, application release, runbook execution, diagnostics, and support tasks.</p>
 <h2>A Cloud Deployment Example</h2>
 <p>A cloud deployment workflow is a useful example.</p>
-<p>At the visible level, it might look like this:</p>
-<ul>
-<li>A developer pushes a change.</li>
-<li>A CI system receives the event.</li>
-<li>A packaged execution environment runs the infrastructure workflow.</li>
-<li>Independent component families handle cloud resources, Kubernetes resources, state, telemetry, deployment records, runtime workers, and edge behavior.</li>
-</ul>
-<p>That is a better model than treating CI as a sequence of arbitrary shell commands. The CI system becomes one possible runner and orchestration surface. The container or worker becomes the packaged execution environment. Cloud and runtime domains become reusable workflow parts with declared inputs, credentials, state behavior, outputs, and reporting.</p>
+<p>At the visible level, it might look simple: a change enters the repo, a runner picks it up, a packaged environment executes the workflow, and the result is reported back.</p>
+<p>That is a better model than treating CI as a sequence of arbitrary shell commands. The CI system becomes one possible runner and orchestration surface. The packaged environment becomes the place where the workflow runs. Runtime domains become reusable workflow parts with declared inputs, permissions, outputs, and reporting.</p>
 <p>The important design move is to make the parts independent enough to reuse and explicit enough to inspect. A workflow part should declare what it needs, what it changes, what it produces, and how failure is represented.</p>
 <h2>What Repositories Need To Provide</h2>
-<p>For this model to work across enterprise repos, each repo needs to expose enough structure to drive development and operations from the repo itself.</p>
+<p>For this model to work across many repos, each repo needs to expose enough structure to drive development and operations from the repo itself.</p>
 <p>The repo contract should include:</p>
 <ul>
 <li>clear project identity and ownership</li>
@@ -68,7 +62,7 @@
 <h2>The Normalization Layer</h2>
 <p>If repositories are the source of truth, teams still need a way to normalize how that truth is discovered.</p>
 <p>A useful tool in this space should not become the source of business truth. The repo remains the source of truth. The tool&#39;s job is to discover, normalize, and refresh the repo contract so humans, agents, and automation can operate from the same evidence.</p>
-<p>In the UDX context, this is also a collaboration problem. Team knowledge should not live only in Slack threads, individual memory, or one assistant session. The useful parts need a path back into repo contracts, docs, manifests, workflows, and reusable patterns.</p>
+<p>This is also a collaboration problem. Team knowledge should not live only in chat threads, individual memory, or one assistant session. The useful parts need a path back into repo contracts, docs, manifests, workflows, and reusable patterns.</p>
 <p>That makes AI agent sessions more useful, but the benefit is broader than AI. A new human engineer, a local script, a release workflow, or a cloud runner should all be able to enter the repo and answer the same basic questions:</p>
 <ul>
 <li>What is this repo?</li>
@@ -103,7 +97,7 @@
 <li>human and agent collaboration</li>
 </ul>
 <p>If that relationship is designed well, software delivery becomes less dependent on individual memory and more like an inspectable system. Repositories become the control surface. Workflows become composable. Runners become interchangeable. Feedback becomes part of the contract.</p>
-<p>For UDX, this is the collaborative layer I want to keep improving: team discussion turns into shared vocabulary, shared vocabulary turns into repo contracts, repo contracts drive workflows, and workflow results feed the next iteration.</p>
+<p>This is the collaborative layer I want to keep improving: team discussion turns into shared vocabulary, shared vocabulary turns into repo contracts, repo contracts drive workflows, and workflow results feed the next iteration.</p>
 <p>That is the kind of engineering system I want to keep exploring.</p>
 
         </div>
