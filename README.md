@@ -28,6 +28,10 @@ npm run build
 
 New posts start as `status: draft`. Publish by changing that frontmatter field to `published`.
 
+## Article tone
+
+Relativity Warp posts should usually read as engineering notes, tips, research, or discovery logs. Prefer durable technical ideas, patterns, tradeoffs, and learning loops over internal project exposure. Mention specific companies, repos, clients, products, or private implementation details only when the post is intentionally about that public context.
+
 ## Agent publishing workflow
 
 Use this workflow when an AI agent in any repo needs to turn a work session into an fqjony.com article.
