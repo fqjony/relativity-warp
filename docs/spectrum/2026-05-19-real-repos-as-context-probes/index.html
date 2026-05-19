@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real Repositories as Context Probes - Relativity Warp</title>
+    <meta name="description" content="A continuation of the dev.kit research series: using real repos to test whether generated context actually improves engineering work." />
+    <link rel="stylesheet" href="../../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../../index.html">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>
+        <h1 class="article-title">Real Repositories as Context Probes</h1>
+        <div class="post-meta">
+          <span class="status-published">Published</span>
+          <span>2026-05-19 19:05</span>
+          <span> on engineering, dev.kit, repositories, context, testing, agents</span>
+        </div>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+          <p>The previous notes in this series worked toward a boundary: the repository is the source of truth, and <code>dev.kit</code> is only a normalization layer around that truth.</p>
+<p>That boundary raises a practical testing question.</p>
+<p>If the point of a repo-context tool is to make real repositories easier to enter, repair, and automate, then fixture tests are not enough. Fixtures are necessary, but they can only prove that a known contract still behaves the same way. They do not prove that the tool is reading the messy, uneven, partially documented shape of real repositories well.</p>
+<p>The next useful step is to treat real repositories as context probes.</p>
+<h2>Fixtures Test The Contract</h2>
+<p>Small fixtures are still important.</p>
+<p>They should cover deterministic behavior:</p>
+<ul>
+<li>output shape</li>
+<li>gap categories</li>
+<li>manifest inventory</li>
+<li>command detection</li>
+<li>stale context handling</li>
+<li>known regressions</li>
+</ul>
+<p>That is where a synthetic repo is useful. It can be intentionally small. It can represent a narrow edge case. It can protect a bug fix forever.</p>
+<p>But fixtures should not grow into a fake universe of every possible repo type. When that happens, the tool starts optimizing for its own test model instead of the repositories it is supposed to help.</p>
+<h2>Real Repos Test The Reading</h2>
+<p>A real repo is different from a fixture because it contains accidental complexity.</p>
+<p>Docs may be uneven. Workflows may be partial. A manifest may be important even when it is not part of the first reading path. Config may be implied by deployment files. Test commands may be obvious to the team but not encoded strongly enough for a new reader.</p>
+<p>Those are not just defects. They are exactly the conditions a repo-context tool has to handle.</p>
+<p>For <code>dev.kit</code>, the useful question is not only:</p>
+<pre><code class="language-text">does the parser work?
+</code></pre>
+<p>It is:</p>
+<pre><code class="language-text">does the generated context help the next human or agent choose the right next step?
+</code></pre>
+<p>That requires running against real repos and looking at the output as an engineering artifact.</p>
+<h2>The Probe Should Be Read-Only First</h2>
+<p>The safest default is read-only.</p>
+<p>The probe should inspect a repo, emit JSON, summarize the workflow state, and stop. It should not silently regenerate context in another working tree. If write mode is needed, it should be explicit and usually pointed at a temp clone or disposable local copy.</p>
+<p>That keeps the feedback loop clean:</p>
+<pre><code class="language-text">inspect repo
+report context status
+report gap count
+report read-first refs
+compare noise and coverage
+change dev.kit or the owning repo source
+rerun
+</code></pre>
+<p>The important part is that the probe produces comparable signals. A release check should make it easy to see whether a change reduced noisy refs, improved a gap, preserved manifest coverage, or made the workflow state clearer.</p>
+<h2>Environment Definitions Are Still Evidence</h2>
+<p>One concrete example from the current work is nested environment definitions.</p>
+<p>A directory such as <code>.rabbit/infra_configs/</code> can contain environment definitions deployed by workflows. Those files are real repo evidence. They should be included in manifest and context validation.</p>
+<p>But that does not mean every nested environment manifest should flood the first reading list.</p>
+<p>That distinction matters:</p>
+<ul>
+<li>include the manifest in structured coverage</li>
+<li>avoid turning first-read refs into a long inventory dump</li>
+</ul>
+<p>This is the same boundary from the earlier evidence note. Structured sources should be parsed. Reading order should stay useful.</p>
+<h2>Values Belong In Config</h2>
+<p>Another practical refinement is where release probes are declared.</p>
+<p>Hardcoding repo lists, recommended tooling repos, or validation defaults in shell code makes the tool harder to manage. Those values are part of the repo contract for <code>dev.kit</code> itself, so they belong in config or manifests.</p>
+<p>That does not make the tool more complex. It makes the contract more reviewable.</p>
+<p>The code executes behavior. The config declares the managed values. The docs explain how to use the loop.</p>
+<h2>Gaps Drive The Optimization Loop</h2>
+<p>The useful release question becomes:</p>
+<pre><code class="language-text">which repo made the output feel wrong?
+</code></pre>
+<p>Maybe a gap points to the wrong repair target. Maybe a manifest is inventoried but not explained. Maybe the first-read refs are too noisy. Maybe a slow run reveals that context generation is scanning too much. Maybe the JSON contract is technically correct but redundant for an agent.</p>
+<p>Each of those is a useful signal.</p>
+<p>The repair should follow the same rule as before:</p>
+<ol>
+<li>identify the strongest repo-owned gap or normalization problem</li>
+<li>fix the owning source or the normalization rule</li>
+<li>rerun the probe</li>
+<li>verify that the output changed in the intended direction</li>
+</ol>
+<p>That is how real repos become part of the test loop without turning every repo into a permanent fixture.</p>
+<h2>The Release Gate</h2>
+<p>For a <code>dev.kit</code> release, the gate should stay modest.</p>
+<p>Run deterministic fixture tests to protect the contract. Run a small read-only real-repo matrix to test whether the tool still reads practical repo shapes. Compare context status, gap count, and read-first ref count. Look for obvious redundancy, missing coverage, and slow paths.</p>
+<p>Do not assert exact output for moving public repositories unless they are pinned. Do not write into real working repos unless explicitly requested. Do not let generated context replace the repo-owned sources it summarizes.</p>
+<p>That keeps the tool aligned with the research story:</p>
+<pre><code class="language-text">repo-owned evidence
+  -&gt; normalized context
+  -&gt; visible gaps
+  -&gt; real repo probes
+  -&gt; targeted repair
+  -&gt; regenerated evidence
+</code></pre>
+<p>The goal is not to make <code>dev.kit</code> smarter than the repo.</p>
+<p>The goal is to make the repo easier to understand, test, and improve.</p>
+
+        </div>
+      </main>
+      <footer class="footer">
+        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
