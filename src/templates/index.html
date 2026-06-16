@@ -11,6 +11,7 @@
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b1220" />
     <link rel="stylesheet" href="assets/index.css" />
+    <script src="assets/index.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -30,7 +31,10 @@
 
       <main id="content">
         <section>
-          <h2 class="section-title">Daily Posts</h2>
+          <div class="section-heading">
+            <h2 class="section-title">Daily Posts</h2>
+            <p class="post-count" data-post-count></p>
+          </div>
           <ul class="post-list" role="list">
             <!-- RESEARCH:START -->
             <li class="post-item">
@@ -38,6 +42,11 @@
             </li>
             <!-- RESEARCH:END -->
           </ul>
+          <nav class="pagination" data-pagination aria-label="Post pages" hidden>
+            <button type="button" data-page-prev>Previous</button>
+            <span data-page-status></span>
+            <button type="button" data-page-next>Next</button>
+          </nav>
         </section>
       </main>
 

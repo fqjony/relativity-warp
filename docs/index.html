@@ -11,6 +11,7 @@
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b1220" />
     <link rel="stylesheet" href="assets/index.css" />
+    <script src="assets/index.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -30,10 +31,13 @@
 
       <main id="content">
         <section>
-          <h2 class="section-title">Daily Posts</h2>
+          <div class="section-heading">
+            <h2 class="section-title">Daily Posts</h2>
+            <p class="post-count" data-post-count></p>
+          </div>
           <ul class="post-list" role="list">
             <!-- RESEARCH:START -->
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-25-repositories-as-operational-execution-surfaces/">Repositories as Operational Execution Surfaces</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -42,7 +46,7 @@
     </div>
     <p class="post-description">A research note on repositories as active operational surfaces where workflow contracts, automation boundaries, runtime feedback, and AI-assisted execution converge.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-19-local-agent-dev-kit-enterprise-workflow/">A Local Driver for Repo-Centric Engineering Research</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -51,7 +55,7 @@
     </div>
     <p class="post-description">A research note on environment capability, normalized repo context, and agent orchestration as a practical loop for experimentation, collaboration, and delivery.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-19-real-repos-as-context-probes/">Real Repositories as Context Probes</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -60,7 +64,7 @@
     </div>
     <p class="post-description">A continuation of the dev.kit research series: using real repos to test whether generated context actually improves engineering work.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-18-structured-evidence-interpreted-intent/">Structured Evidence and Interpreted Intent</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -69,7 +73,7 @@
     </div>
     <p class="post-description">A practical boundary for repo-context tools: parse deterministic sources, use prose for meaning, and keep generated context reviewable.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-18-dev-kit-workflow-contract/">Turning Repo Output Into a Workflow Contract</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -78,7 +82,7 @@
     </div>
     <p class="post-description">A practical note on exposing repo status, environment capability, context gaps, and repair steps as one workflow.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-18-dev-kit-repo-sessions/">What the dev.kit Sessions Converged On</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -87,7 +91,7 @@
     </div>
     <p class="post-description">A synthesis note collecting repo-session lessons from building dev.kit as a repo-context and workflow normalization tool.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-18-dev-kit-development-log/">How dev.kit Changed While Building It</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -96,7 +100,7 @@
     </div>
     <p class="post-description">A development log from the dev.kit sessions, tracing the move from audit and bridge commands toward a smaller repo-context loop.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-18-dev-kit-idea/">The Idea Behind dev.kit</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -105,7 +109,7 @@
     </div>
     <p class="post-description">Why dev.kit exists: repositories as operating contracts, not just code folders.</p>
   </li>
-  <li class="post-item">
+  <li class="post-item" data-post-item>
     <a class="post-title" href="/spectrum/2026-05-18-repo-centric-workflows/">Repo-Centric Workflows as an Engineering System</a>
     <div class="post-meta">
       <span class="status-published">Published</span>
@@ -116,6 +120,11 @@
   </li>
 <!-- RESEARCH:END -->
           </ul>
+          <nav class="pagination" data-pagination aria-label="Post pages" hidden>
+            <button type="button" data-page-prev>Previous</button>
+            <span data-page-status></span>
+            <button type="button" data-page-next>Next</button>
+          </nav>
         </section>
       </main>
 
