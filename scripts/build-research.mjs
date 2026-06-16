@@ -20,6 +20,14 @@ const cleanText = (value) =>
     .replace(/\s+/g, " ")
     .trim();
 
+const escapeHtml = (value) =>
+  String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
 const pad2 = (value) => String(value).padStart(2, "0");
 
 const formatLocalDate = (dateObj) =>
@@ -138,17 +146,67 @@ const getTemporalMeta = (meta, filePath) => {
   };
 };
 
-const renderPostPage = ({ title, description, content, cssHref, homeHref, labels, status, datetime }) => {
+const renderPostNavItem = (label, item) => {
+  if (!item) return "";
+  return `<a class="article-nav-link" href="${escapeHtml(item.url)}">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(item.title)}</strong>
+        </a>`;
+};
+
+const renderPostNav = (newerPost, olderPost) => {
+  const links = [renderPostNavItem("Newer", newerPost), renderPostNavItem("Older", olderPost)].filter(Boolean);
+  if (!links.length) return "";
+
+  return `<nav class="article-nav" aria-label="Article navigation">
+        ${links.join("\n        ")}
+      </nav>`;
+};
+
+const renderRelatedPosts = (relatedPosts) => {
+  if (!relatedPosts.length) return "";
+
+  return `<section class="related-posts" aria-labelledby="related-posts-title">
+        <h2 id="related-posts-title" class="section-title">Related</h2>
+        <ul class="related-list" role="list">
+${relatedPosts
+  .map(
+    (post) => `          <li>
+            <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
+            <span>${escapeHtml(post.date)}</span>
+          </li>`
+  )
+  .join("\n")}
+        </ul>
+      </section>`;
+};
+
+const renderPostPage = ({
+  title,
+  description,
+  content,
+  cssHref,
+  homeHref,
+  labels,
+  status,
+  datetime,
+  newerPost,
+  olderPost,
+  relatedPosts,
+}) => {
   const statusLabel = status === "draft" ? "Draft" : "Published";
-  const labelsText = labels.length ? ` on ${labels.join(", ")}` : "";
+  const safeTitle = escapeHtml(title);
+  const safeDescription = escapeHtml(description || `Post: ${title}`);
+  const safeDatetime = datetime ? escapeHtml(datetime) : "";
+  const labelsText = labels.length ? ` on ${escapeHtml(labels.join(", "))}` : "";
 
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${title} - Relativity Warp</title>
-    <meta name="description" content="${description || `Post: ${title}`}" />
+    <title>${safeTitle} - Relativity Warp</title>
+    <meta name="description" content="${safeDescription}" />
     <link rel="stylesheet" href="${cssHref}" />
   </head>
   <body>
@@ -161,10 +219,10 @@ const renderPostPage = ({ title, description, content, cssHref, homeHref, labels
           <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
         </nav>
-        <h1 class="article-title">${title}</h1>
+        <h1 class="article-title">${safeTitle}</h1>
         <div class="post-meta">
           <span class="status-${status}">${statusLabel}</span>
-          ${datetime ? `<span>${datetime}</span>` : ""}
+          ${safeDatetime ? `<span>${safeDatetime}</span>` : ""}
           ${labelsText ? `<span>${labelsText}</span>` : ""}
         </div>
       </header>
@@ -173,6 +231,8 @@ const renderPostPage = ({ title, description, content, cssHref, homeHref, labels
           ${content}
         </div>
       </main>
+      ${renderPostNav(newerPost, olderPost)}
+      ${renderRelatedPosts(relatedPosts)}
       <footer class="footer">
         <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
       </footer>
@@ -190,13 +250,15 @@ const renderPostList = (items) => {
   return items
     .map((item) => {
       const statusLabel = item.status === "draft" ? "Draft" : "Published";
-      const labels = item.labels.length ? ` on ${item.labels.join(", ")}` : "";
-      const description = item.description ? `<p class="post-description">${item.description}</p>` : "";
-      return `  <li class="post-item">
-    <a class="post-title" href="${item.url}">${item.title}</a>
+      const labels = item.labels.length ? ` on ${escapeHtml(item.labels.join(", "))}` : "";
+      const description = item.description
+        ? `<p class="post-description">${escapeHtml(item.description)}</p>`
+        : "";
+      return `  <li class="post-item" data-post-item>
+    <a class="post-title" href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
     <div class="post-meta">
       <span class="status-${item.status}">${statusLabel}</span>
-      ${item.datetime ? `<span>${item.datetime}</span>` : ""}
+      ${item.datetime ? `<span>${escapeHtml(item.datetime)}</span>` : ""}
       ${labels ? `<span>${labels}</span>` : ""}
     </div>
     ${description}
@@ -260,9 +322,22 @@ const buildPosts = () => {
       return a.title.localeCompare(b.title);
     });
 
-  items.forEach((item) => {
+  items.forEach((item, index) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
     const content = marked.parse(strippedBody);
+    const itemLabels = new Set(item.labels);
+    const relatedPosts = items
+      .filter((candidate) => candidate !== item)
+      .map((candidate) => ({
+        ...candidate,
+        sharedLabelCount: candidate.labels.filter((label) => itemLabels.has(label)).length,
+      }))
+      .filter((candidate) => candidate.sharedLabelCount > 0)
+      .sort((a, b) => {
+        if (a.sharedLabelCount !== b.sharedLabelCount) return b.sharedLabelCount - a.sharedLabelCount;
+        return b.sortValue - a.sortValue;
+      })
+      .slice(0, 3);
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
@@ -278,6 +353,9 @@ const buildPosts = () => {
         content,
         cssHref,
         homeHref,
+        newerPost: index > 0 ? items[index - 1] : null,
+        olderPost: index < items.length - 1 ? items[index + 1] : null,
+        relatedPosts,
       }),
       "utf8"
     );
