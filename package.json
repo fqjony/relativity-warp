@@ -11,7 +11,7 @@
     "hooks:uninstall": "git config --unset core.hooksPath"
   },
   "devDependencies": {
-    "marked": "^12.0.2",
+    "marked": "^18.0.5",
     "serve": "^14.2.6"
   }
 }
