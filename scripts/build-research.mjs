@@ -15,6 +15,7 @@ const siteUrl = "https://fqjony.com";
 const siteName = "Relativity Warp";
 const siteDescription =
   "An engineering memory system for repo-centric work, runtime evidence, operational boundaries, and source-backed automation.";
+const googleAnalyticsId = "G-G2LLCNLPPD";
 
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
@@ -253,6 +254,13 @@ ${articleTags}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${safeSeoTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "${googleAnalyticsId}");
+    </script>
     <link rel="stylesheet" href="${cssHref}" />
   </head>
   <body>
