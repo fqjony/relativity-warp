@@ -1,6 +1,6 @@
 ---
 title: A Local Driver for Repo-Centric Engineering Research
-description: A research note on environment capability, normalized repo context, AI-assisted engineering, workflow automation, and engineering memory as a practical delivery loop.
+description: A local engineering loop works when environment capability, normalized repo context, agent orchestration, and verification evidence stay separate.
 status: published
 date: 2026-05-19
 datetime: 2026-05-19 22:30
@@ -9,7 +9,7 @@ labels: engineering, research, dev.kit, agents, repositories, workflow, ai-assis
 
 # A Local Driver for Repo-Centric Engineering Research
 
-This note is part of an ongoing engineering research thread around repo-centric workflows and agent-assisted development. The previous notes have been circling the same boundary from different angles:
+This engineering research thread keeps circling the same boundary from different angles:
 
 - [repo-centric workflows](/spectrum/2026-05-18-repo-centric-workflows/)
 - [the idea behind dev.kit](/spectrum/2026-05-18-dev-kit-idea/)

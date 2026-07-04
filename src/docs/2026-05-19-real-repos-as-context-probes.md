@@ -1,6 +1,6 @@
 ---
 title: Real Repositories as Context Probes
-description: A continuation of the dev.kit research series: using real repositories as context probes for repository-centric engineering, runtime evidence, and AI-assisted engineering.
+description: Real repositories expose whether a repo-context tool can read uneven docs, partial manifests, runtime clues, and source-backed gaps.
 status: published
 date: 2026-05-19
 datetime: 2026-05-19 19:05
@@ -9,7 +9,7 @@ labels: engineering, dev.kit, repositories, context, testing, agents, repository
 
 # Real Repositories as Context Probes
 
-The previous notes in this series worked toward a boundary: the repository is the source of truth, and `dev.kit` is only a normalization layer around that truth.
+The earlier `dev.kit` notes worked toward a boundary: the repository is the source of truth, and `dev.kit` is only a normalization layer around that truth.
 
 That boundary raises a practical testing question.
 

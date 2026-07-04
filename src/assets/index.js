@@ -21,7 +21,7 @@ const render = () => {
 
   if (pagination && pageStatus && pagePrev && pageNext) {
     pagination.hidden = posts.length <= pageSize;
-    pageStatus.textContent = `Showing ${start + 1}-${end} of ${posts.length}`;
+    pageStatus.textContent = `Notes ${start + 1}-${end} of ${posts.length}`;
     pagePrev.disabled = currentPage === 1;
     pageNext.disabled = currentPage === pageCount;
   }

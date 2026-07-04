@@ -1,6 +1,6 @@
 ---
 title: Operational Truth and Engineering Memory
-description: A research note on operational truth and engineering memory as AI-assisted engineering connects repositories, GitHub, runtime evidence, and human intent.
+description: Operational truth stays with verifiable sources; engineering memory is promoted only when a lesson has an owner, boundary, and reuse path.
 status: published
 date: 2026-06-17
 datetime: 2026-06-17 01:45

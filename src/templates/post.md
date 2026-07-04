@@ -4,7 +4,7 @@ description: {{description}}
 status: draft
 date: {{date}}
 datetime: {{datetime}}
-labels: udx, daily
+labels: engineering-memory, repo-systems
 ---
 
 # {{title}}
@@ -16,4 +16,3 @@ labels: udx, daily
 
 
 ## Next
-

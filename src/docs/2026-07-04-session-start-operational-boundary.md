@@ -1,6 +1,6 @@
 ---
 title: Session Start Is an Operational Boundary
-description: A research note on session boundaries: why AI-assisted engineering should begin by recovering operational truth, engineering memory, and runtime evidence before implementation.
+description: Session start establishes the operating boundary before AI-assisted work begins: repo, branch, objective, evidence, limits, and current state.
 status: published
 date: 2026-07-04
 datetime: 2026-07-04 03:15

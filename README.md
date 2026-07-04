@@ -1,6 +1,6 @@
 # Relativity Warp
 
-Repo-centric automation playground and daily posts site.
+Repo-centric engineering memory and research notes site.
 
 ## Quick start
 
@@ -19,10 +19,10 @@ npm run preview
 - `npm run hooks:install` - enable repo git hooks (`.githooks/`).
 - `npm run hooks:uninstall` - disable repo git hooks for this clone.
 
-## Daily post workflow
+## Research note workflow
 
 ```bash
-npm run post:new -- "What I worked on today"
+npm run post:new -- "Operational boundary from repeated repo friction"
 npm run build
 ```
 
@@ -30,9 +30,11 @@ New posts start as `status: draft`. Publish by changing that frontmatter field t
 
 ## Article tone
 
-Relativity Warp posts should usually read as engineering notes, tips, research, or discovery logs. Prefer durable technical ideas, patterns, tradeoffs, and learning loops over internal project exposure. Mention specific companies, repos, clients, products, or private implementation details only when the post is intentionally about that public context.
+Relativity Warp posts should usually read as engineering notes, research, or discovery logs. Prefer durable technical ideas, patterns, tradeoffs, and learning loops over internal project exposure. Mention specific companies, repos, clients, products, or private implementation details only when the post is intentionally about that public context.
 
-Keep articles at the engineering-story level. Avoid implementation-heavy walkthroughs, long code examples, file-by-file change logs, and narrow technical details that will age quickly. Use short commands, snippets, or pseudo-code only when they clarify the concept.
+Keep articles at the engineering-story level. Avoid implementation-heavy walkthroughs, long code examples, file-by-file change logs, and narrow technical details that will age quickly. Use short commands, snippets, or pseudo-code only when they clarify the mechanism.
+
+For editorial guidance, see [guides/editorial-guide.md](guides/editorial-guide.md).
 
 ## Agent publishing workflow
 
@@ -162,6 +164,7 @@ SKIP_PRECOMMIT_BUILD=1 git commit -m "message"
 - `src/docs/` - markdown source posts.
 - `src/templates/` - source HTML templates.
 - `src/assets/` - source CSS/JS/images.
+- `guides/` - repo-owned editorial and publishing guidance.
 - `scripts/` - build scripts.
 - `docs/` - generated publish root (GitHub Pages).
 
