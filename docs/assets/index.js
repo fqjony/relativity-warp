@@ -1,39 +1,30 @@
 const pageSize = 6;
 
 const posts = Array.from(document.querySelectorAll("[data-post-item]"));
-const pagination = document.querySelector("[data-pagination]");
-const pagePrev = document.querySelector("[data-page-prev]");
-const pageNext = document.querySelector("[data-page-next]");
-const pageStatus = document.querySelector("[data-page-status]");
+const noteReveal = document.querySelector("[data-note-reveal]");
+const noteMore = document.querySelector("[data-note-more]");
 
-let currentPage = 1;
+let visibleCount = pageSize;
 
 const render = () => {
-  const pageCount = Math.max(1, Math.ceil(posts.length / pageSize));
-  currentPage = Math.min(currentPage, pageCount);
-  const start = (currentPage - 1) * pageSize;
-  const end = Math.min(start + pageSize, posts.length);
-  const visible = new Set(posts.slice(start, end));
+  const end = Math.min(visibleCount, posts.length);
+  const visible = new Set(posts.slice(0, end));
 
   posts.forEach((post) => {
     post.hidden = !visible.has(post);
+    post.classList.toggle("is-last-visible", post === posts[end - 1]);
   });
 
-  if (pagination && pageStatus && pagePrev && pageNext) {
-    pagination.hidden = posts.length <= pageSize;
-    pageStatus.textContent = `Notes ${start + 1}-${end} of ${posts.length}`;
-    pagePrev.disabled = currentPage === 1;
-    pageNext.disabled = currentPage === pageCount;
+  if (noteReveal && noteMore) {
+    const remaining = posts.length - end;
+    noteReveal.hidden = remaining <= 0;
+    noteMore.hidden = end >= posts.length;
+    noteMore.textContent = "Show more notes";
   }
 };
 
-pagePrev?.addEventListener("click", () => {
-  currentPage = Math.max(1, currentPage - 1);
-  render();
-});
-
-pageNext?.addEventListener("click", () => {
-  currentPage += 1;
+noteMore?.addEventListener("click", () => {
+  visibleCount += pageSize;
   render();
 });
 
