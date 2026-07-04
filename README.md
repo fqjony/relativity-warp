@@ -38,6 +38,8 @@ Keep articles at the engineering-story level. Avoid implementation-heavy walkthr
 
 Use this workflow when an AI agent in any repo needs to turn a work session into an fqjony.com article.
 
+Publishing changes must go through a pull request. Do not push directly to `main`, even for generated `docs/` output or small metadata edits. GitHub Pages deploys from `main` after the PR is reviewed and merged.
+
 1. Build a source-context bundle before writing.
    - Read the source repo `README.md`, `AGENTS.md` or `CLAUDE.md` when present, and `.rabbit/context.yaml` when present.
    - Inspect `git status --short`, recent commits, and the current diff in the source repo.
@@ -64,9 +66,9 @@ Use this workflow when an AI agent in any repo needs to turn a work session into
    - `labels: comma, separated, labels`
 7. Run `npm run build`.
 8. Start local preview with `npm run preview` and share the local URL for review.
-9. Ask for explicit confirmation before pushing or opening a PR.
+9. Ask for explicit confirmation before pushing a branch or opening a PR.
 10. After confirmation, stop the local preview server.
-11. Create a focused branch, commit the article and generated `docs/` output, push, open a PR, wait for checks, and merge only when green.
+11. Create a focused branch, commit the article and generated `docs/` output, push the branch, open a PR, wait for checks, and merge only when green.
 
 Example:
 
@@ -87,6 +89,16 @@ gh pr merge --squash --delete-branch
 ```
 
 If checks fail, inspect the failure, fix the repo, rebuild, push again, and wait for checks again before merging.
+
+After merge, verify GitHub Pages rather than assuming deployment completed:
+
+```bash
+gh api repos/fqjony/relativity-warp/pages
+gh api repos/fqjony/relativity-warp/pages/builds/latest
+curl -sS https://fqjony.com/ | head -c 2000
+```
+
+Expected Pages settings are legacy GitHub Pages from branch `main`, path `/docs`, with custom domain `fqjony.com`.
 
 Codex users can also trigger the global skill `session-to-article`, which is a thin wrapper around this README workflow. Non-Codex agents should use this section directly.
 
