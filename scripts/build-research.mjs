@@ -122,11 +122,13 @@ const getTitle = (body, meta, fallback) => {
 const getSeoTitle = (meta, title) => meta.seo_title || meta.seoTitle || title;
 
 const getDescription = (body, meta) => {
-  if (meta.seo_description || meta.seoDescription) return meta.seo_description || meta.seoDescription;
   if (meta.description) return meta.description;
   const paragraph = body.split("\n").find((line) => line.trim().length > 0);
   return paragraph ? cleanText(paragraph) : "";
 };
+
+const getSeoDescription = (meta, description) =>
+  meta.seo_description || meta.seoDescription || description;
 
 const getStatus = (meta) => {
   const status = (meta.status || "").toLowerCase();
@@ -197,6 +199,7 @@ const renderPostPage = ({
   title,
   seoTitle,
   description,
+  seoDescription,
   content,
   cssHref,
   homeHref,
@@ -209,14 +212,18 @@ const renderPostPage = ({
   olderPost,
   relatedPosts,
 }) => {
-  const statusLabel = status === "draft" ? "Draft" : "Published";
   const safeTitle = escapeHtml(title);
   const safeSeoTitle = escapeHtml(seoTitle);
-  const safeDescription = escapeHtml(description || `Post: ${title}`);
+  const safeDescription = escapeHtml(seoDescription || description || `Post: ${title}`);
   const safeDatetime = datetime ? escapeHtml(datetime) : "";
-  const labelsText = labels.length ? ` on ${escapeHtml(labels.join(", "))}` : "";
   const canonicalUrl = absoluteUrl(url);
   const safeCanonicalUrl = escapeHtml(canonicalUrl);
+  const visibleMeta = [
+    status === "draft" ? `<span class="status-draft">Draft</span>` : "",
+    safeDatetime ? `<span>${safeDatetime}</span>` : "",
+  ]
+    .filter(Boolean)
+    .join("\n          ");
   const publishedTime = datetime
     ? escapeHtml(`${datetime.replace(" ", "T")}:00+03:00`)
     : escapeHtml(`${date}T00:00:00+03:00`);
@@ -260,9 +267,7 @@ ${articleTags}
         </nav>
         <h1 class="article-title">${safeTitle}</h1>
         <div class="post-meta">
-          <span class="status-${status}">${statusLabel}</span>
-          ${safeDatetime ? `<span>${safeDatetime}</span>` : ""}
-          ${labelsText ? `<span>${labelsText}</span>` : ""}
+          ${visibleMeta}
         </div>
       </header>
       <main id="content" class="article">
@@ -288,19 +293,17 @@ const renderPostList = (items) => {
 
   return items
     .map((item) => {
-      const statusLabel = item.status === "draft" ? "Draft" : "Published";
-      const labels = item.labels.length ? ` on ${escapeHtml(item.labels.join(", "))}` : "";
-      const description = item.description
-        ? `<p class="post-description">${escapeHtml(item.description)}</p>`
-        : "";
+      const visibleMeta = [
+        item.status === "draft" ? `<span class="status-draft">Draft</span>` : "",
+        item.datetime ? `<span>${escapeHtml(item.datetime)}</span>` : "",
+      ]
+        .filter(Boolean)
+        .join("\n      ");
       return `  <li class="post-item" data-post-item>
     <a class="post-title" href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
     <div class="post-meta">
-      <span class="status-${item.status}">${statusLabel}</span>
-      ${item.datetime ? `<span>${escapeHtml(item.datetime)}</span>` : ""}
-      ${labels ? `<span>${labels}</span>` : ""}
+      ${visibleMeta}
     </div>
-    ${description}
   </li>`;
     })
     .join("\n");
@@ -391,12 +394,16 @@ const buildPosts = () => {
       );
       const temporal = getTemporalMeta(meta, filePath);
 
+      const title = getTitle(body, meta, fallback);
+      const description = getDescription(body, meta);
+
       return {
         raw,
         body,
-        title: getTitle(body, meta, fallback),
-        seoTitle: getSeoTitle(meta, getTitle(body, meta, fallback)),
-        description: getDescription(body, meta),
+        title,
+        seoTitle: getSeoTitle(meta, title),
+        description,
+        seoDescription: getSeoDescription(meta, description),
         status: getStatus(meta),
         labels: getLabels(meta),
         slug,
