@@ -148,15 +148,15 @@ Three examples make the pattern concrete.
 
 First, session starts.
 
-The observation was that AI-assisted work often begins in the middle of an existing operational state. The same prompt can mean different things depending on the repository, branch, dirty state, issue reference, recent sessions, and explicit limits. The owner is not a new task database. The owner is the live worktree, Git history, repo guidance, issue trail, and human objective. The boundary is a session-start helper that recovers that state before implementation work begins. The verification is a smoke check that the helper still prints orientation.
+The observation was that AI-assisted work often begins in the middle of an existing operational state. The same prompt can mean different things depending on the repository, branch, dirty state, issue reference, recent sessions, and explicit limits. The authority is not a new task database. The authority is the live worktree, Git history, repo guidance, issue trail, and human objective. The boundary is a session-start helper that recovers that state before implementation work begins. The verification is a smoke check that the helper still prints orientation.
 
 Second, generated context.
 
-The observation was that generated files can become tempting to edit because they are compact and easy to read. The owner is still the README, docs, manifests, scripts, workflows, and generator. The boundary is to mark generated context clearly, point back to the source, and repair the owning source before regenerating. The verification is an audit that checks generated-context markers, declared references, and locally declared commands.
+The observation was that generated files can become tempting to edit because they are compact and easy to read. The authority is still the README, docs, manifests, scripts, workflows, and generator. The boundary is to mark generated context clearly, point back to the source, and repair the owning source before regenerating. The verification is an audit that checks generated-context markers, declared references, and locally declared commands.
 
 Third, public delivery.
 
-The observation was that an assistant can move from private working context to public delivery too quickly. The owner of public evidence is the article, pull request, issue comment, or release artifact. The boundary is to treat "do not post," "do not push," and "research first" as execution modes, not tone preferences. The verification is a workflow that builds, previews, waits for review, and only then proceeds to branch, commit, push, and open a pull request.
+The observation was that an assistant can move from private working context to public delivery too quickly. The authority for public evidence is the article, pull request, issue comment, or release artifact. The boundary is to treat "do not post," "do not push," and "research first" as execution modes, not tone preferences. The verification is a workflow that builds, previews, waits for review, and only then proceeds to branch, commit, push, and open a pull request.
 
 None of these examples require a new authority layer.
 
@@ -166,7 +166,7 @@ They make existing authorities harder to bypass.
 
 Not every preference deserves automation.
 
-A boundary is justified when repeated friction has real execution cost and the correct owner is clear.
+A boundary is justified when repeated friction has real execution cost and the correct authority is clear.
 
 The useful questions are:
 
