@@ -95,7 +95,9 @@ Codex users can also trigger the global skill `session-to-article`, which is a t
 Frontmatter contract for `src/docs/*.md`:
 
 - `title`
+- `seo_title` (optional, used in `<title>` and social metadata while preserving the visible article title)
 - `description`
+- `seo_description` (optional, used in metadata when it should differ from the visible listing description)
 - `status` (`published` or `draft`)
 - `datetime` (optional, `YYYY-MM-DD HH:mm`)
 - `date` (optional, `YYYY-MM-DD`)
@@ -108,6 +110,22 @@ Publishing behavior:
 - `status: published` is rendered to HTML and marked as published in UI.
 - `status: draft` is rendered to HTML and marked as draft in UI.
 - date sorting uses resolved datetime (frontmatter first, fallback to file `mtime`).
+
+## Discovery model
+
+The build script in `scripts/build-research.mjs` is the source of truth for generated publishing metadata. It reads the Markdown frontmatter, renders each post under `docs/spectrum/<slug>/`, and keeps the checked-in GitHub Pages output aligned with the source posts.
+
+Generated discovery behavior:
+
+- The homepage metadata lives in `src/templates/index.html`.
+- Article `<title>`, description, canonical URL, Open Graph, Twitter card, published time, and article tags are generated from each post's frontmatter.
+- `seo_title` and `seo_description` can make metadata more searchable while leaving the visible article title and listing description calm and research-oriented.
+- `labels` drive both visible post metadata and the generated "Related" links on article pages. Prefer improving the existing label taxonomy before adding a new navigation system.
+- `status: draft` pages are rendered for preview but receive `noindex, nofollow` metadata and are excluded from `docs/sitemap.xml`.
+- `docs/sitemap.xml` lists the homepage and published articles with canonical `https://fqjony.com` URLs.
+- `docs/robots.txt` allows crawling and points search engines at the sitemap.
+
+For future publishing, keep source edits in `src/docs/` and `src/templates/`; do not hand-edit generated article pages in `docs/`. After source changes, run `npm run build` and commit both source files and generated `docs/` output.
 
 ## Commit-time local build
 
@@ -131,3 +149,5 @@ SKIP_PRECOMMIT_BUILD=1 git commit -m "message"
 
 - `docs/index.html`
 - `docs/spectrum/<post-slug>/index.html`
+- `docs/sitemap.xml`
+- `docs/robots.txt`

@@ -1,10 +1,10 @@
 ---
 title: Real Repositories as Context Probes
-description: A continuation of the dev.kit research series: using real repos to test whether generated context actually improves engineering work.
+description: A continuation of the dev.kit research series: using real repositories as context probes for repository-centric engineering, runtime evidence, and AI-assisted engineering.
 status: published
 date: 2026-05-19
 datetime: 2026-05-19 19:05
-labels: engineering, dev.kit, repositories, context, testing, agents
+labels: engineering, dev.kit, repositories, context, testing, agents, repository-centric-engineering, runtime-evidence, ai-assisted-engineering
 ---
 
 # Real Repositories as Context Probes

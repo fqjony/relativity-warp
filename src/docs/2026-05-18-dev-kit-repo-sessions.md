@@ -1,10 +1,10 @@
 ---
 title: What the dev.kit Sessions Converged On
-description: A synthesis note collecting repo-session lessons from building dev.kit as a repo-context and workflow normalization tool.
+description: A synthesis note collecting repo-session lessons from building dev.kit as a repository context, workflow automation, and engineering memory tool.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:30
-labels: engineering, dev.kit, repositories, agents, workflow
+labels: engineering, dev.kit, repositories, agents, workflow, repository-centric-engineering, engineering-memory, workflow-automation, session-boundaries
 ---
 
 # What the dev.kit Sessions Converged On

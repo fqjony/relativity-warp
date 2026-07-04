@@ -1,15 +1,15 @@
 ---
 title: Session Start Is an Operational Boundary
-description: A research note on why AI-assisted engineering sessions should begin by recovering the current operational boundary before proposing implementation work.
+description: A research note on session boundaries: why AI-assisted engineering should begin by recovering operational truth, engineering memory, and runtime evidence before implementation.
 status: published
 date: 2026-07-04
 datetime: 2026-07-04 03:15
-labels: engineering, research, operations, repositories, agents, workflow
+labels: engineering, research, operations, repositories, agents, workflow, session-boundaries, operational-truth, engineering-memory, runtime-evidence, ai-assisted-engineering
 ---
 
 # Session Start Is an Operational Boundary
 
-The previous note in this thread argued that operational truth should remain where it can be validated: repositories, runtime systems, GitHub history, review evidence, and human judgment.
+The [previous note in this thread](/spectrum/2026-06-17-operational-truth-and-engineering-memory/) argued that operational truth should remain where it can be validated: repositories, runtime systems, GitHub history, review evidence, and human judgment.
 
 That leaves a practical question for AI-assisted engineering:
 

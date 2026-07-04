@@ -1,10 +1,10 @@
 ---
 title: Repositories as Operational Execution Surfaces
-description: A research note on repositories as active operational surfaces where workflow contracts, automation boundaries, runtime feedback, and AI-assisted execution converge.
+description: A research note on repositories as active operational surfaces where workflow automation, runtime evidence, operational truth, and AI-assisted engineering converge.
 status: published
 date: 2026-05-25
 datetime: 2026-05-25 02:55
-labels: engineering, research, repositories, operations, agents, workflow
+labels: engineering, research, repositories, operations, agents, workflow, repository-centric-engineering, workflow-automation, runtime-evidence, operational-truth, ai-assisted-engineering
 ---
 
 # Repositories as Operational Execution Surfaces

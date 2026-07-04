@@ -1,10 +1,10 @@
 ---
 title: Operational Truth and Engineering Memory
-description: A research note on where engineering knowledge should live as AI-assisted workflows connect repositories, GitHub, runtime systems, and human intent.
+description: A research note on operational truth and engineering memory as AI-assisted engineering connects repositories, GitHub, runtime evidence, and human intent.
 status: published
 date: 2026-06-17
 datetime: 2026-06-17 01:45
-labels: engineering, research, operations, repositories, agents, memory
+labels: engineering, research, operations, repositories, agents, memory, operational-truth, engineering-memory, runtime-evidence, ai-assisted-engineering, repository-centric-engineering
 ---
 
 # Operational Truth and Engineering Memory
@@ -13,7 +13,7 @@ Modern engineering systems generate information everywhere.
 
 Repositories contain code and documentation. GitHub records issues, pull requests, reviews, releases, and deployment history. Cloud platforms expose runtime behavior through logs, metrics, traces, and incidents. Engineers accumulate workflow knowledge through repeated execution.
 
-The earlier notes in this research thread argued for repo-centric workflows, structured evidence, local agent drivers, and repositories as operational execution surfaces. This note narrows the next boundary: if those surfaces all produce useful evidence, where should durable knowledge live?
+The earlier notes in this research thread argued for [repo-centric workflows](/spectrum/2026-05-18-repo-centric-workflows/), [structured evidence](/spectrum/2026-05-18-structured-evidence-interpreted-intent/), [local agent drivers](/spectrum/2026-05-19-local-agent-dev-kit-enterprise-workflow/), and [repositories as operational execution surfaces](/spectrum/2026-05-25-repositories-as-operational-execution-surfaces/). This note narrows the next boundary: if those surfaces all produce useful evidence, where should durable knowledge live?
 
 As AI-assisted workflows become more common, a new challenge emerges:
 

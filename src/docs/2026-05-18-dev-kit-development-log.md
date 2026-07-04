@@ -1,10 +1,10 @@
 ---
 title: How dev.kit Changed While Building It
-description: A development log from the dev.kit sessions, tracing the move from audit and bridge commands toward a smaller repo-context loop.
+description: A development log from the dev.kit sessions, tracing the move from audit and bridge commands toward a smaller repository-centric engineering memory loop.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:15
-labels: engineering, dev.kit, development-log, repositories, agents
+labels: engineering, dev.kit, development-log, repositories, agents, repository-centric-engineering, engineering-memory, workflow-automation
 ---
 
 # How dev.kit Changed While Building It

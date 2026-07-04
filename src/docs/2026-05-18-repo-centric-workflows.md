@@ -1,10 +1,10 @@
 ---
 title: Repo-Centric Workflows as an Engineering System
-description: A research note on workflows as composable systems, repository contracts, portable execution, and test-and-loop software delivery.
+description: A research note on repository-centric engineering, DevSecOps automation, workflow automation, runtime evidence, and test-and-loop software delivery.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 09:00
-labels: engineering, workflows, sdlc, infrastructure, research
+labels: engineering, workflows, sdlc, infrastructure, research, repository-centric-engineering, workflow-automation, devsecops-automation, runtime-evidence, ai-assisted-engineering
 ---
 
 # Repo-Centric Workflows as an Engineering System

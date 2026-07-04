@@ -1,10 +1,10 @@
 ---
 title: Structured Evidence and Interpreted Intent
-description: A practical boundary for repo-context tools: parse deterministic sources, use prose for meaning, and keep generated context reviewable.
+description: A practical boundary for repo-context tools: parse deterministic runtime evidence, use prose for intent, and keep operational truth reviewable.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 11:00
-labels: engineering, repositories, context, dev.kit, agents
+labels: engineering, repositories, context, dev.kit, agents, repository-centric-engineering, runtime-evidence, operational-truth, engineering-memory
 ---
 
 # Structured Evidence and Interpreted Intent

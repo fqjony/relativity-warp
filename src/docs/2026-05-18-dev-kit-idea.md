@@ -1,10 +1,10 @@
 ---
 title: The Idea Behind dev.kit
-description: Why dev.kit exists: repositories as operating contracts, not just code folders.
+description: Why dev.kit exists: repositories as operating contracts for repository-centric engineering, engineering memory, AI-assisted engineering, and workflow automation.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:00
-labels: engineering, dev.kit, repositories, agents, sdlc
+labels: engineering, dev.kit, repositories, agents, sdlc, repository-centric-engineering, engineering-memory, workflow-automation, ai-assisted-engineering
 ---
 
 # The Idea Behind dev.kit

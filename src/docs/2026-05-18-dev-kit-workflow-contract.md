@@ -1,10 +1,10 @@
 ---
 title: Turning Repo Output Into a Workflow Contract
-description: A practical note on exposing repo status, environment capability, context gaps, and repair steps as one workflow.
+description: A practical note on exposing repo status, environment capability, context gaps, runtime evidence, and repair steps as one workflow automation contract.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:45
-labels: engineering, dev.kit, workflow, repositories, agents
+labels: engineering, dev.kit, workflow, repositories, agents, repository-centric-engineering, workflow-automation, runtime-evidence, operational-truth
 ---
 
 # Turning Repo Output Into a Workflow Contract

@@ -1,15 +1,15 @@
 ---
 title: When Experience Becomes Automation
-description: A research note on how repeated engineering friction becomes reusable workflow mechanisms without creating new authorities.
+description: A research note on how repeated engineering friction becomes workflow automation, engineering memory, and session boundaries without creating new authorities.
 status: published
 date: 2026-07-04
 datetime: 2026-07-04 12:20
-labels: engineering, research, operations, repositories, agents, workflow
+labels: engineering, research, operations, repositories, agents, workflow, workflow-automation, engineering-memory, session-boundaries, operational-truth, ai-assisted-engineering
 ---
 
 # When Experience Becomes Automation
 
-The previous note argued that every AI-assisted engineering session should begin by recovering the current operational boundary. That is useful, but it points to a larger pattern.
+The [previous note](/spectrum/2026-07-04-session-start-operational-boundary/) argued that every AI-assisted engineering session should begin by recovering the current operational boundary. That is useful, but it points to a larger pattern.
 
 Engineering experience becomes durable when it changes the workflow.
 

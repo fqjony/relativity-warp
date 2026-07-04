@@ -11,6 +11,11 @@ const homepagePath = path.join(rootDir, "src", "templates", "index.html");
 const publishDir = path.join(rootDir, "docs");
 const publicSpectrumDir = path.join(publishDir, "spectrum");
 
+const siteUrl = "https://fqjony.com";
+const siteName = "Relativity Warp";
+const siteDescription =
+  "An engineering memory system and research journal about AI-assisted engineering, DevSecOps automation, operational truth, repository-centric workflows, runtime evidence, and session boundaries.";
+
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
 
@@ -27,6 +32,10 @@ const escapeHtml = (value) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+
+const escapeXml = escapeHtml;
+
+const absoluteUrl = (pathname) => new URL(pathname, siteUrl).href;
 
 const pad2 = (value) => String(value).padStart(2, "0");
 
@@ -110,7 +119,10 @@ const getTitle = (body, meta, fallback) => {
   return match ? cleanText(match[1]) : fallback;
 };
 
+const getSeoTitle = (meta, title) => meta.seo_title || meta.seoTitle || title;
+
 const getDescription = (body, meta) => {
+  if (meta.seo_description || meta.seoDescription) return meta.seo_description || meta.seoDescription;
   if (meta.description) return meta.description;
   const paragraph = body.split("\n").find((line) => line.trim().length > 0);
   return paragraph ? cleanText(paragraph) : "";
@@ -183,6 +195,7 @@ ${relatedPosts
 
 const renderPostPage = ({
   title,
+  seoTitle,
   description,
   content,
   cssHref,
@@ -190,23 +203,49 @@ const renderPostPage = ({
   labels,
   status,
   datetime,
+  date,
+  url,
   newerPost,
   olderPost,
   relatedPosts,
 }) => {
   const statusLabel = status === "draft" ? "Draft" : "Published";
   const safeTitle = escapeHtml(title);
+  const safeSeoTitle = escapeHtml(seoTitle);
   const safeDescription = escapeHtml(description || `Post: ${title}`);
   const safeDatetime = datetime ? escapeHtml(datetime) : "";
   const labelsText = labels.length ? ` on ${escapeHtml(labels.join(", "))}` : "";
+  const canonicalUrl = absoluteUrl(url);
+  const safeCanonicalUrl = escapeHtml(canonicalUrl);
+  const publishedTime = datetime
+    ? escapeHtml(`${datetime.replace(" ", "T")}:00+03:00`)
+    : escapeHtml(`${date}T00:00:00+03:00`);
+  const draftRobotsMeta =
+    status === "draft" ? '    <meta name="robots" content="noindex, nofollow" />\n' : "";
+  const articleTags = labels
+    .map((label) => `    <meta property="article:tag" content="${escapeHtml(label)}" />`)
+    .join("\n");
 
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${safeTitle} - Relativity Warp</title>
+    <title>${safeSeoTitle} | ${siteName}</title>
     <meta name="description" content="${safeDescription}" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+${draftRobotsMeta}    <link rel="canonical" href="${safeCanonicalUrl}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="${siteName}" />
+    <meta property="og:title" content="${safeSeoTitle}" />
+    <meta property="og:description" content="${safeDescription}" />
+    <meta property="og:url" content="${safeCanonicalUrl}" />
+    <meta property="article:published_time" content="${publishedTime}" />
+${articleTags}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${safeSeoTitle}" />
+    <meta name="twitter:description" content="${safeDescription}" />
     <link rel="stylesheet" href="${cssHref}" />
   </head>
   <body>
@@ -283,6 +322,54 @@ ${raw.slice(end)}`;
   fs.writeFileSync(path.join(publishDir, "index.html"), updated, "utf8");
 };
 
+const writeRobotsTxt = () => {
+  fs.writeFileSync(
+    path.join(publishDir, "robots.txt"),
+    `User-agent: *
+Allow: /
+
+Sitemap: ${absoluteUrl("/sitemap.xml")}
+`,
+    "utf8"
+  );
+};
+
+const writeSitemap = (items) => {
+  const publishedItems = items.filter((item) => item.status === "published");
+  const urls = [
+    {
+      loc: absoluteUrl("/"),
+      lastmod: publishedItems[0]?.date || formatLocalDate(new Date()),
+      priority: "1.0",
+    },
+    ...publishedItems.map((item) => ({
+      loc: absoluteUrl(item.url),
+      lastmod: item.date,
+      priority: "0.8",
+    })),
+  ];
+
+  const body = urls
+    .map(
+      (item) => `  <url>
+    <loc>${escapeXml(item.loc)}</loc>
+    <lastmod>${escapeXml(item.lastmod)}</lastmod>
+    <priority>${item.priority}</priority>
+  </url>`
+    )
+    .join("\n");
+
+  fs.writeFileSync(
+    path.join(publishDir, "sitemap.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${body}
+</urlset>
+`,
+    "utf8"
+  );
+};
+
 const buildPosts = () => {
   if (!fs.existsSync(docsDir)) {
     throw new Error(`Missing docs directory: ${docsDir}`);
@@ -308,6 +395,7 @@ const buildPosts = () => {
         raw,
         body,
         title: getTitle(body, meta, fallback),
+        seoTitle: getSeoTitle(meta, getTitle(body, meta, fallback)),
         description: getDescription(body, meta),
         status: getStatus(meta),
         labels: getLabels(meta),
@@ -362,6 +450,8 @@ const buildPosts = () => {
   });
 
   updateHomepage(items);
+  writeSitemap(items);
+  writeRobotsTxt();
   fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });
   copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
 

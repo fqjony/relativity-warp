@@ -1,10 +1,10 @@
 ---
 title: A Local Driver for Repo-Centric Engineering Research
-description: A research note on environment capability, normalized repo context, and agent orchestration as a practical loop for experimentation, collaboration, and delivery.
+description: A research note on environment capability, normalized repo context, AI-assisted engineering, workflow automation, and engineering memory as a practical delivery loop.
 status: published
 date: 2026-05-19
 datetime: 2026-05-19 22:30
-labels: engineering, research, dev.kit, agents, repositories, workflow
+labels: engineering, research, dev.kit, agents, repositories, workflow, ai-assisted-engineering, engineering-memory, workflow-automation, repository-centric-engineering
 ---
 
 # A Local Driver for Repo-Centric Engineering Research
