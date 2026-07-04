@@ -1,7 +1,6 @@
 const pageSize = 6;
 
 const posts = Array.from(document.querySelectorAll("[data-post-item]"));
-const postCount = document.querySelector("[data-post-count]");
 const pagination = document.querySelector("[data-pagination]");
 const pagePrev = document.querySelector("[data-page-prev]");
 const pageNext = document.querySelector("[data-page-next]");
@@ -19,10 +18,6 @@ const render = () => {
   posts.forEach((post) => {
     post.hidden = !visible.has(post);
   });
-
-  if (postCount) {
-    postCount.textContent = `${posts.length} ${posts.length === 1 ? "post" : "posts"}`;
-  }
 
   if (pagination && pageStatus && pagePrev && pageNext) {
     pagination.hidden = posts.length <= pageSize;
