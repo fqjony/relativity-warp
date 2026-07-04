@@ -72,7 +72,7 @@
     <link rel="stylesheet" href="assets/index.css" />
     <script src="assets/index.js" defer></script>
   </head>
-  <body>
+  <body class="home">
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header">
@@ -83,15 +83,18 @@
           <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
         </nav>
-        <p class="site-kicker">Relativity Warp</p>
-        <h1 class="site-title">Dmytro Smirnov</h1>
-        <div class="site-intro">
-          <p class="site-subtitle">
-            A spectrum of software engineering research, science-minded discovery notes, DevSecOps, and daily UDX automation.
-          </p>
-          <p class="site-summary">
-            Daily work becomes useful when it leaves behind evidence, boundaries, and decisions another engineer can trust.
-          </p>
+        <div class="site-hero">
+          <div class="site-identity">
+            <h1 class="site-title">Dmytro Smirnov</h1>
+          </div>
+          <div class="site-intro">
+            <p class="site-subtitle">
+              A spectrum of software engineering research, science-minded discovery notes, DevSecOps, and daily UDX automation.
+            </p>
+            <p class="site-summary">
+              Daily work becomes useful when it leaves behind evidence, boundaries, and decisions another engineer can trust.
+            </p>
+          </div>
         </div>
       </header>
 
@@ -174,16 +177,14 @@
   </li>
 <!-- RESEARCH:END -->
           </ul>
-          <nav class="pagination" data-pagination aria-label="Research note pages" hidden>
-            <button type="button" data-page-prev>Previous</button>
-            <span data-page-status></span>
-            <button type="button" data-page-next>Next</button>
-          </nav>
+          <div class="note-reveal" data-note-reveal hidden>
+            <button type="button" data-note-more>Show more notes</button>
+          </div>
         </section>
       </main>
 
       <footer class="footer">
-        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
+        <p>© 2026 Dmytro Smirnov · Relativity Warp</p>
       </footer>
     </div>
   </body>

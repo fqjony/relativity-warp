@@ -13,12 +13,12 @@ const publicSpectrumDir = path.join(publishDir, "spectrum");
 
 const siteUrl = "https://fqjony.com";
 const siteName = "Relativity Warp";
-const siteDescription =
-  "An engineering memory system for repo-centric work, runtime evidence, operational boundaries, and source-backed automation.";
 const googleAnalyticsId = "G-G2LLCNLPPD";
 
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
+const navMarker = "<!-- SITE_NAV -->";
+const footerMarker = "<!-- SITE_FOOTER -->";
 
 const cleanText = (value) =>
   value
@@ -127,6 +127,18 @@ const getDescription = (body, meta) => {
   const paragraph = body.split("\n").find((line) => line.trim().length > 0);
   return paragraph ? cleanText(paragraph) : "";
 };
+
+const renderSiteNav = (homeHref = "/") => `<nav class="site-nav" aria-label="Main navigation">
+          <span class="ua-flag" role="img" aria-label="Ukrainian flag"></span>
+          <a href="${homeHref}">Home</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+        </nav>`;
+
+const renderFooter = () => `<footer class="footer">
+        <p>© 2026 Dmytro Smirnov · ${siteName}</p>
+      </footer>`;
 
 const getSeoDescription = (meta, description) =>
   meta.seo_description || meta.seoDescription || description;
@@ -267,12 +279,7 @@ ${articleTags}
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="${homeHref}">Home</a>
-          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
-        </nav>
+        ${renderSiteNav(homeHref)}
         <h1 class="article-title">${safeTitle}</h1>
         <div class="post-meta">
           ${visibleMeta}
@@ -285,9 +292,7 @@ ${articleTags}
       </main>
       ${renderPostNav(newerPost, olderPost)}
       ${renderRelatedPosts(relatedPosts)}
-      <footer class="footer">
-        <p>© 2026 Dmytro Smirnov. <a href="https://github.com/fqjony/relativity-warp" target="_blank" rel="noopener">GitHub repo</a>.</p>
-      </footer>
+      ${renderFooter()}
     </div>
   </body>
 </html>
@@ -324,10 +329,17 @@ const updateHomepage = (items) => {
   if (start === -1 || end === -1 || end <= start) {
     throw new Error("Homepage post markers not found.");
   }
+  if (!raw.includes(navMarker)) {
+    throw new Error("Homepage nav marker not found.");
+  }
+  if (!raw.includes(footerMarker)) {
+    throw new Error("Homepage footer marker not found.");
+  }
 
-  const updated = `${raw.slice(0, start + markerStart.length)}
+  const withPosts = `${raw.slice(0, start + markerStart.length)}
 ${renderPostList(items)}
 ${raw.slice(end)}`;
+  const updated = withPosts.replace(navMarker, renderSiteNav()).replace(footerMarker, renderFooter());
 
   fs.mkdirSync(publishDir, { recursive: true });
   fs.writeFileSync(path.join(publishDir, "index.html"), updated, "utf8");
