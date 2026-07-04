@@ -1,6 +1,6 @@
 ---
 title: Repo-Centric Workflows as an Engineering System
-description: A research note on repository-centric engineering, DevSecOps automation, workflow automation, runtime evidence, and test-and-loop software delivery.
+description: Repositories define operating contracts where workflow rules, runtime evidence, delivery paths, and feedback loops meet.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 09:00
@@ -11,7 +11,7 @@ labels: engineering, workflows, sdlc, infrastructure, research, repository-centr
 
 I have been thinking about software delivery less as a collection of CI jobs and more as an engineering system.
 
-This note comes from ongoing work around delivery workflows, repository standards, cloud infrastructure, and AI-assisted engineering. The details are intentionally generalized, but the ideas are grounded in real collaborative work across repos, tools, and deployment environments.
+This comes from ongoing work around delivery workflows, repository standards, cloud infrastructure, and AI-assisted engineering. The details are intentionally generalized, but the ideas are grounded in real collaborative work across repos, tools, and deployment environments.
 
 The practical question is simple: how should a repository describe enough of itself that humans, automation, local tools, CI/CD systems, cloud runners, and AI agents can all collaborate without relying on hidden assumptions?
 

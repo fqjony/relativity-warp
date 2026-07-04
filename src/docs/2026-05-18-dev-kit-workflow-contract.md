@@ -1,6 +1,6 @@
 ---
 title: Turning Repo Output Into a Workflow Contract
-description: A practical note on exposing repo status, environment capability, context gaps, runtime evidence, and repair steps as one workflow automation contract.
+description: Repo output becomes useful when status, environment capability, context gaps, runtime evidence, and repair steps form one workflow contract.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:45
@@ -16,7 +16,7 @@ The earlier notes in this series explain the bigger idea:
 - [How dev.kit Changed While Building It](/spectrum/2026-05-18-dev-kit-development-log/)
 - [Structured Evidence and Interpreted Intent](/spectrum/2026-05-18-structured-evidence-interpreted-intent/)
 
-This note is more concrete. It comes from the current `dev.kit` direction, where command output is being reshaped from a set of reports into a workflow contract.
+The current `dev.kit` direction is more concrete: command output is being reshaped from a set of reports into a workflow contract.
 
 The change is small in plain language:
 

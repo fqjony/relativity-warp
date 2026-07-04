@@ -14,7 +14,7 @@ const publicSpectrumDir = path.join(publishDir, "spectrum");
 const siteUrl = "https://fqjony.com";
 const siteName = "Relativity Warp";
 const siteDescription =
-  "An engineering memory system and research journal about AI-assisted engineering, DevSecOps automation, operational truth, repository-centric workflows, runtime evidence, and session boundaries.";
+  "An engineering memory system for repo-centric work, runtime evidence, operational boundaries, and source-backed automation.";
 
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
@@ -288,7 +288,7 @@ ${articleTags}
 
 const renderPostList = (items) => {
   if (!items.length) {
-    return `  <li class="list-item">No posts yet.</li>`;
+    return `  <li class="list-item">No research notes yet.</li>`;
   }
 
   return items

@@ -1,6 +1,6 @@
 ---
 title: How dev.kit Changed While Building It
-description: A development log from the dev.kit sessions, tracing the move from audit and bridge commands toward a smaller repository-centric engineering memory loop.
+description: dev.kit moved from audit-style reports toward a smaller repo-context loop where commands expose evidence, gaps, and repair targets.
 status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:15
@@ -9,7 +9,7 @@ labels: engineering, dev.kit, development-log, repositories, agents, repository-
 
 # How dev.kit Changed While Building It
 
-This is the development-log companion to [The Idea Behind dev.kit](/spectrum/2026-05-18-dev-kit-idea/). It is not a transcript. It is the shape that emerged across the repo sessions.
+This companion to [The Idea Behind dev.kit](/spectrum/2026-05-18-dev-kit-idea/) is not a transcript. It is the shape that emerged across the repo sessions.
 
 The main pattern was repeated simplification. Each useful idea had to survive the same question: does this make the repository more self-explaining, or does it create another place where truth can drift?
 
