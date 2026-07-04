@@ -137,6 +137,14 @@ Generated discovery behavior:
 - `docs/sitemap.xml` lists the homepage and published articles with canonical `https://fqjony.com` URLs.
 - `docs/robots.txt` allows crawling and points search engines at the sitemap.
 
+SEO guide for every new article:
+
+- Write a strong `description`, and use `seo_description` when search/social metadata should be more precise than the visible listing copy.
+- Use 3-5 precise `labels` that describe the article topic and connect it to the existing taxonomy.
+- Include 2-4 internal related links in the article body when there are genuinely relevant published posts.
+- Confirm the canonical published URL will be `https://fqjony.com/spectrum/<post-slug>/`.
+- Do not change article or site structure unless repeated publishing friction shows the structure itself is the problem.
+
 For future publishing, keep source edits in `src/docs/` and `src/templates/`; do not hand-edit generated article pages in `docs/`. After source changes, run `npm run build` and commit both source files and generated `docs/` output.
 
 ## Commit-time local build
