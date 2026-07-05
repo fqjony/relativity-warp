@@ -196,12 +196,14 @@ a:hover {
   padding: 0;
 }
 
+.research-callout,
 .model-callout {
   margin-bottom: 2.35rem;
   padding-bottom: 1.35rem;
   border-bottom: 1px solid var(--line-soft);
 }
 
+.research-callout p,
 .model-callout p {
   max-width: 42rem;
   margin: 0 0 0.5rem;
@@ -390,22 +392,70 @@ a:hover {
 }
 
 .model-index-list,
+.research-index-list,
 .model-link-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.research-index-item,
 .model-index-item {
   padding: 1.35rem 0;
   border-bottom: 1px solid var(--line-soft);
 }
 
+.research-index-item p,
 .model-index-item p,
 .model-summary {
   max-width: 62ch;
   margin: 0.55rem 0 0;
   color: var(--muted);
+}
+
+.research-thesis {
+  margin-bottom: 2.35rem;
+  padding-bottom: 1.35rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.research-thesis p {
+  max-width: 62ch;
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.research-object-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem 1.25rem;
+  max-width: 42rem;
+  margin: 1.25rem 0 0;
+  font-family: var(--sans);
+}
+
+.research-object-meta div {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 0.55rem;
+}
+
+.research-object-meta dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.research-object-meta dd {
+  margin: 0.1rem 0 0;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.research-links {
+  margin-top: 2.4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line-soft);
 }
 
 .model-meta {
@@ -471,6 +521,10 @@ a:hover {
   }
 
   .article-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .research-object-meta {
     grid-template-columns: 1fr;
   }
 

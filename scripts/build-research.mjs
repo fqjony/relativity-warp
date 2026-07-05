@@ -8,10 +8,12 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "src", "docs");
 const modelsDir = path.join(rootDir, "src", "models");
+const researchDir = path.join(rootDir, "src", "research");
 const homepagePath = path.join(rootDir, "src", "templates", "index.html");
 const publishDir = path.join(rootDir, "docs");
 const publicSpectrumDir = path.join(publishDir, "spectrum");
 const publicModelsDir = path.join(publishDir, "models");
+const publicResearchDir = path.join(publishDir, "research");
 
 const siteUrl = "https://fqjony.com";
 const siteName = "Relativity Warp";
@@ -130,9 +132,10 @@ const getDescription = (body, meta) => {
   return paragraph ? cleanText(paragraph) : "";
 };
 
-const renderSiteNav = (homeHref = "/", modelsHref = "/models/") => `<nav class="site-nav" aria-label="Main navigation">
+const renderSiteNav = (homeHref = "/", modelsHref = "/models/", researchHref = "/research/") => `<nav class="site-nav" aria-label="Main navigation">
           <span class="ua-flag" role="img" aria-label="Ukrainian flag"></span>
           <a href="${homeHref}">Home</a>
+          <a href="${researchHref}">Research</a>
           <a href="${modelsHref}">Models</a>
           <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
           <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
@@ -150,6 +153,8 @@ const getStatus = (meta) => {
   const status = (meta.status || "").toLowerCase();
   return status === "draft" ? "draft" : "published";
 };
+
+const getResearchStatus = (meta) => (meta.status || "developing").trim().toLowerCase();
 
 const getLabels = (meta) =>
   (meta.labels || "")
@@ -235,6 +240,52 @@ ${models
       </section>`;
 };
 
+const renderResearchObjectMeta = (item) => {
+  const rows = [
+    ["Type", item.type],
+    ["Status", item.status],
+    ["Area", item.researchArea],
+    ["Confidence", item.confidence],
+    ["Maturity", item.maturity],
+    ["Concepts", item.concepts.join(", ")],
+    ["Evidence", item.evidence.join(", ")],
+    ["References", item.references.join(", ")],
+    ["Updated", item.updated || item.date],
+  ].filter(([, value]) => value);
+
+  if (!rows.length) return "";
+
+  return `<dl class="research-object-meta">
+${rows
+  .map(
+    ([label, value]) => `          <div>
+            <dt>${escapeHtml(label)}</dt>
+            <dd>${escapeHtml(value)}</dd>
+          </div>`
+  )
+  .join("\n")}
+        </dl>`;
+};
+
+const renderResearchLinks = (title, slugs, objectBySlug) => {
+  const links = slugs.map((slug) => objectBySlug.get(slug)).filter(Boolean);
+  if (!links.length) return "";
+
+  return `<section class="research-links" aria-labelledby="${escapeHtml(title.toLowerCase().replace(/[^a-z0-9]+/g, "-"))}">
+        <h2 id="${escapeHtml(title.toLowerCase().replace(/[^a-z0-9]+/g, "-"))}" class="section-title">${escapeHtml(title)}</h2>
+        <ul class="model-link-list" role="list">
+${links
+  .map(
+    (item) => `          <li>
+            <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+            <span>${escapeHtml(item.type || item.status)}</span>
+          </li>`
+  )
+  .join("\n")}
+        </ul>
+      </section>`;
+};
+
 const renderQuestions = (questions) => {
   if (!questions.length) return "";
 
@@ -255,6 +306,7 @@ const renderPostPage = ({
   cssHref,
   homeHref,
   modelsHref,
+  researchHref,
   labels,
   classification,
   status,
@@ -322,7 +374,7 @@ ${articleTags}
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        ${renderSiteNav(homeHref, modelsHref)}
+        ${renderSiteNav(homeHref, modelsHref, researchHref)}
         <h1 class="article-title">${safeTitle}</h1>
         <div class="post-meta">
           ${visibleMeta}
@@ -413,7 +465,7 @@ ${robotsMeta}    <link rel="canonical" href="${absoluteUrl("/models/")}" />
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        ${renderSiteNav("../index.html", "index.html")}
+        ${renderSiteNav("../index.html", "index.html", "../research/")}
         <h1 class="article-title">Models</h1>
         <div class="post-meta">
           <span>Working research structures</span>
@@ -431,7 +483,7 @@ ${renderModelIndexList(items)}
 `;
 };
 
-const renderModelPage = ({ title, version, summary, content, cssHref, homeHref, modelsHref, labels, questions, status, date, url, relatedPosts }) => {
+const renderModelPage = ({ title, version, summary, content, cssHref, homeHref, modelsHref, researchHref, labels, questions, status, date, url, relatedPosts }) => {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(summary || `Research model: ${title}`);
   const safeCanonicalUrl = escapeHtml(absoluteUrl(url));
@@ -488,7 +540,7 @@ ${modelTags}
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        ${renderSiteNav(homeHref, modelsHref)}
+        ${renderSiteNav(homeHref, modelsHref, researchHref)}
         <h1 class="article-title">${safeTitle}</h1>
         <div class="model-meta">
           ${visibleMeta}
@@ -502,6 +554,130 @@ ${modelTags}
         ${questionList}
       </main>
       ${renderRelatedPosts(relatedPosts)}
+      ${renderFooter()}
+    </div>
+  </body>
+</html>
+`;
+};
+
+const renderResearchIndexList = (items) => {
+  if (!items.length) {
+    return `          <li class="research-index-item">No research objects yet.</li>`;
+  }
+
+  return items
+    .map(
+      (item) => `          <li class="research-index-item">
+            <a class="post-title" href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+            <div class="model-meta">
+              ${[
+                item.type ? `<span>${escapeHtml(item.type)}</span>` : "",
+                item.status ? `<span>${escapeHtml(item.status)}</span>` : "",
+                item.updated ? `<span>${escapeHtml(item.updated)}</span>` : "",
+              ]
+                .filter(Boolean)
+                .join("\n              ")}
+            </div>
+            <p>${escapeHtml(item.summary || item.description)}</p>
+          </li>`
+    )
+    .join("\n");
+};
+
+const renderResearchIndexPage = (items) => `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research | ${siteName}</title>
+    <meta name="description" content="An evolving research corpus of concepts, hypotheses, questions, evidence, and frameworks for software engineering." />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="canonical" href="${absoluteUrl("/research/")}" />
+    <link rel="stylesheet" href="../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        ${renderSiteNav("../index.html", "../models/", "index.html")}
+        <h1 class="article-title">Research</h1>
+        <p class="model-summary">An evolving research corpus for turning software engineering experience into reusable understanding. These objects are working material, not a finished publication archive.</p>
+      </header>
+      <main id="content" class="research-index">
+        <section class="research-thesis" aria-labelledby="research-thesis-title">
+          <h2 id="research-thesis-title" class="section-title">Thesis</h2>
+          <p>Software engineering organizations preserve artifacts better than they preserve reusable understanding.</p>
+        </section>
+        <section aria-labelledby="research-objects-title">
+          <h2 id="research-objects-title" class="section-title">Objects</h2>
+          <ul class="research-index-list" role="list">
+${renderResearchIndexList(items)}
+          </ul>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+  </body>
+</html>
+`;
+
+const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref, researchHref, objectBySlug }) => {
+  const safeTitle = escapeHtml(item.title);
+  const safeDescription = escapeHtml(item.summary || `Research object: ${item.title}`);
+  const safeCanonicalUrl = escapeHtml(absoluteUrl(item.url));
+  const relatedSections = [
+    renderResearchLinks("Related", item.related, objectBySlug),
+    renderResearchLinks("Depends On", item.dependsOn, objectBySlug),
+    renderResearchLinks("Supports", item.supports, objectBySlug),
+    renderResearchLinks("Contradicts", item.contradicts, objectBySlug),
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${safeTitle} | ${siteName}</title>
+    <meta name="description" content="${safeDescription}" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="canonical" href="${safeCanonicalUrl}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="${siteName}" />
+    <meta property="og:title" content="${safeTitle}" />
+    <meta property="og:description" content="${safeDescription}" />
+    <meta property="og:url" content="${safeCanonicalUrl}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${safeTitle}" />
+    <meta name="twitter:description" content="${safeDescription}" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "${googleAnalyticsId}");
+    </script>
+    <link rel="stylesheet" href="${cssHref}" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        ${renderSiteNav(homeHref, modelsHref, researchHref)}
+        <h1 class="article-title">${safeTitle}</h1>
+        ${item.summary ? `<p class="model-summary">${escapeHtml(item.summary)}</p>` : ""}
+        ${renderResearchObjectMeta(item)}
+      </header>
+      <main id="content" class="article research-object-page">
+        <div class="article-content">
+          ${content}
+        </div>
+      </main>
+      ${relatedSections}
       ${renderFooter()}
     </div>
   </body>
@@ -544,9 +720,10 @@ Sitemap: ${absoluteUrl("/sitemap.xml")}
   );
 };
 
-const writeSitemap = (items, models) => {
+const writeSitemap = (items, models, researchObjects) => {
   const publishedItems = items.filter((item) => item.status === "published");
   const publishedModels = models.filter((item) => item.status === "published");
+  const publishedResearchObjects = researchObjects.filter((item) => item.status !== "draft");
   const urls = [
     {
       loc: absoluteUrl("/"),
@@ -562,6 +739,15 @@ const writeSitemap = (items, models) => {
           },
         ]
       : []),
+    ...(publishedResearchObjects.length
+      ? [
+          {
+            loc: absoluteUrl("/research/"),
+            lastmod: publishedResearchObjects[0].updated || publishedResearchObjects[0].date,
+            priority: "0.7",
+          },
+        ]
+      : []),
     ...publishedItems.map((item) => ({
       loc: absoluteUrl(item.url),
       lastmod: item.date,
@@ -571,6 +757,11 @@ const writeSitemap = (items, models) => {
       loc: absoluteUrl(item.url),
       lastmod: item.date,
       priority: "0.7",
+    })),
+    ...publishedResearchObjects.map((item) => ({
+      loc: absoluteUrl(item.url),
+      lastmod: item.updated || item.date,
+      priority: "0.6",
     })),
   ];
 
@@ -703,6 +894,9 @@ const buildModels = (posts) => {
     const modelsHref = path
       .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
       .replace(/\\/g, "/");
+    const researchHref = path
+      .relative(path.dirname(item.outputPath), path.join(publicResearchDir, "index.html"))
+      .replace(/\\/g, "/");
 
     fs.mkdirSync(path.dirname(item.outputPath), { recursive: true });
     fs.writeFileSync(
@@ -713,6 +907,7 @@ const buildModels = (posts) => {
         cssHref,
         homeHref,
         modelsHref,
+        researchHref,
         relatedPosts,
       }),
       "utf8"
@@ -720,6 +915,98 @@ const buildModels = (posts) => {
   });
 
   fs.writeFileSync(path.join(publicModelsDir, "index.html"), renderModelIndexPage(items), "utf8");
+
+  return items;
+};
+
+const buildResearchObjects = () => {
+  fs.rmSync(publicResearchDir, { recursive: true, force: true });
+  fs.mkdirSync(publicResearchDir, { recursive: true });
+
+  const items = fs.existsSync(researchDir)
+    ? listMarkdownFiles(researchDir)
+        .map((filePath) => {
+          const raw = fs.readFileSync(filePath, "utf8");
+          const { body, meta } = parseFrontmatter(raw);
+          const fallback = path
+            .basename(filePath, ".md")
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (match) => match.toUpperCase());
+          const slug = normalizeSlug(
+            path.relative(researchDir, filePath).replace(/\\/g, "/").replace(/\.md$/, "")
+          );
+          const temporal = getTemporalMeta({ date: meta.updated || meta.created || meta.date }, filePath);
+          const title = getTitle(body, meta, fallback);
+          const summary = (meta.summary || "").trim() || getDescription(body, meta);
+
+          return {
+            raw,
+            body,
+            title,
+            summary,
+            description: summary,
+            type: (meta.type || "note").trim(),
+            status: getResearchStatus(meta),
+            created: (meta.created || meta.date || "").trim(),
+            updated: (meta.updated || meta.date || "").trim(),
+            researchArea: (meta.research_area || "").trim(),
+            concepts: getListField(meta, "concepts"),
+            related: getListField(meta, "related"),
+            dependsOn: getListField(meta, "depends_on"),
+            supports: getListField(meta, "supports"),
+            contradicts: getListField(meta, "contradicts"),
+            evidence: getListField(meta, "evidence"),
+            references: getListField(meta, "references"),
+            confidence: (meta.confidence || "").trim(),
+            maturity: (meta.maturity || "").trim(),
+            slug,
+            url: `/research/${slug}/`,
+            outputPath: path.join(publicResearchDir, slug, "index.html"),
+            ...temporal,
+          };
+        })
+        .sort((a, b) => {
+          const typeCompare = a.type.localeCompare(b.type);
+          if (typeCompare !== 0) return typeCompare;
+          return a.title.localeCompare(b.title);
+        })
+    : [];
+
+  const objectBySlug = new Map(items.map((item) => [item.slug, item]));
+
+  items.forEach((item) => {
+    const strippedBody = item.body.replace(/^# .+?\n+/, "");
+    const content = marked.parse(strippedBody);
+    const cssHref = path
+      .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
+      .replace(/\\/g, "/");
+    const homeHref = path
+      .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
+      .replace(/\\/g, "/");
+    const modelsHref = path
+      .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
+      .replace(/\\/g, "/");
+    const researchHref = path
+      .relative(path.dirname(item.outputPath), path.join(publicResearchDir, "index.html"))
+      .replace(/\\/g, "/");
+
+    fs.mkdirSync(path.dirname(item.outputPath), { recursive: true });
+    fs.writeFileSync(
+      item.outputPath,
+      renderResearchObjectPage({
+        item,
+        content,
+        cssHref,
+        homeHref,
+        modelsHref,
+        researchHref,
+        objectBySlug,
+      }),
+      "utf8"
+    );
+  });
+
+  fs.writeFileSync(path.join(publicResearchDir, "index.html"), renderResearchIndexPage(items), "utf8");
 
   return items;
 };
@@ -753,6 +1040,9 @@ const writePostPages = (items, models) => {
     const modelsHref = path
       .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
       .replace(/\\/g, "/");
+    const researchHref = path
+      .relative(path.dirname(item.outputPath), path.join(publicResearchDir, "index.html"))
+      .replace(/\\/g, "/");
 
     fs.mkdirSync(path.dirname(item.outputPath), { recursive: true });
     fs.writeFileSync(
@@ -763,6 +1053,7 @@ const writePostPages = (items, models) => {
         cssHref,
         homeHref,
         modelsHref,
+        researchHref,
         newerPost: index > 0 ? items[index - 1] : null,
         olderPost: index < items.length - 1 ? items[index + 1] : null,
         relatedPosts,
@@ -783,11 +1074,12 @@ const buildSite = () => {
 
   const items = buildPosts();
   const models = buildModels(items);
+  const researchObjects = buildResearchObjects();
 
   writePostPages(items, models);
 
   updateHomepage(items);
-  writeSitemap(items, models);
+  writeSitemap(items, models, researchObjects);
   writeRobotsTxt();
   fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });
   copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
@@ -798,14 +1090,16 @@ const buildSite = () => {
 
   fs.rmSync(path.join(publishDir, "tips.json"), { force: true });
 
-  return { items, models };
+  return { items, models, researchObjects };
 };
 
-const { items, models } = buildSite();
+const { items, models, researchObjects } = buildSite();
 const publishedCount = items.filter((item) => item.status === "published").length;
 const draftCount = items.filter((item) => item.status === "draft").length;
 const publishedModelCount = models.filter((item) => item.status === "published").length;
 const draftModelCount = models.filter((item) => item.status === "draft").length;
+const publicResearchCount = researchObjects.filter((item) => item.status !== "draft").length;
+const draftResearchCount = researchObjects.filter((item) => item.status === "draft").length;
 console.log(
-  `Built ${items.length} post(s): ${publishedCount} published, ${draftCount} draft. Built ${models.length} model(s): ${publishedModelCount} published, ${draftModelCount} draft.`
+  `Built ${items.length} post(s): ${publishedCount} published, ${draftCount} draft. Built ${models.length} model(s): ${publishedModelCount} published, ${draftModelCount} draft. Built ${researchObjects.length} research object(s): ${publicResearchCount} public, ${draftResearchCount} draft.`
 );

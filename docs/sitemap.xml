@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://fqjony.com/research/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://fqjony.com/spectrum/2026-07-04-when-experience-becomes-automation/</loc>
     <lastmod>2026-07-04</lastmod>
     <priority>0.8</priority>
@@ -64,5 +69,30 @@
     <loc>https://fqjony.com/spectrum/2026-05-18-repo-centric-workflows/</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fqjony.com/research/engineering-memory/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fqjony.com/research/operational-truth/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fqjony.com/research/repository-centric-engineering/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fqjony.com/research/knowledge-promotion/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fqjony.com/research/software-organizations-preserve-artifacts-better-than-reusable-understanding/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
