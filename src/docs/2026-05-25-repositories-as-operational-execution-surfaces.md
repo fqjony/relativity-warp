@@ -5,6 +5,9 @@ status: published
 date: 2026-05-25
 datetime: 2026-05-25 02:55
 labels: engineering, research, repositories, operations, agents, workflow, repository-centric-engineering, workflow-automation, runtime-evidence, operational-truth, ai-assisted-engineering
+classification: Model
+models: engineering-memory-model-v0-1
+questions: where-does-operational-continuity-live
 ---
 
 # Repositories as Operational Execution Surfaces

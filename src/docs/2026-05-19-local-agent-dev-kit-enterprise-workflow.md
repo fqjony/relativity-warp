@@ -5,6 +5,9 @@ status: published
 date: 2026-05-19
 datetime: 2026-05-19 22:30
 labels: engineering, research, dev.kit, agents, repositories, workflow, ai-assisted-engineering, engineering-memory, workflow-automation, repository-centric-engineering
+classification: Experiment
+models: engineering-memory-model-v0-1
+questions: how-can-local-agent-work-preserve-reusable-knowledge
 ---
 
 # A Local Driver for Repo-Centric Engineering Research

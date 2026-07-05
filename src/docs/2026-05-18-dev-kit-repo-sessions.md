@@ -5,6 +5,9 @@ status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:30
 labels: engineering, dev.kit, repositories, agents, workflow, repository-centric-engineering, engineering-memory, workflow-automation, session-boundaries
+classification: Pattern
+models: engineering-memory-model-v0-1
+questions: how-do-sessions-become-reusable-knowledge
 ---
 
 # What the dev.kit Sessions Converged On

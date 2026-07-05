@@ -5,6 +5,9 @@ status: published
 date: 2026-05-18
 datetime: 2026-05-18 11:00
 labels: engineering, repositories, context, dev.kit, agents, repository-centric-engineering, runtime-evidence, operational-truth, engineering-memory
+classification: Principle
+models: engineering-memory-model-v0-1
+questions: how-should-evidence-and-intent-stay-separate
 ---
 
 # Structured Evidence and Interpreted Intent

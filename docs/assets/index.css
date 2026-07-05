@@ -196,6 +196,18 @@ a:hover {
   padding: 0;
 }
 
+.model-callout {
+  margin-bottom: 2.35rem;
+  padding-bottom: 1.35rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.model-callout p {
+  max-width: 42rem;
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+}
+
 .post-item {
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--line-soft);
@@ -248,6 +260,13 @@ a:hover {
 
 .status-draft {
   color: #e2a85f;
+}
+
+.classification-badge {
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  color: var(--text);
+  padding: 0.05rem 0.55rem;
 }
 
 .article {
@@ -338,13 +357,26 @@ a:hover {
   border-top: 1px solid var(--line-warm);
 }
 
+.related-models {
+  margin-top: 2.4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line-warm);
+}
+
+.article-questions {
+  margin-top: 2.4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line-soft);
+}
+
 .related-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.related-list li {
+.related-list li,
+.model-link-list li {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -352,8 +384,49 @@ a:hover {
   border-bottom: 1px solid var(--line-soft);
 }
 
-.related-list a {
+.related-list a,
+.model-link-list a {
   color: var(--text);
+}
+
+.model-index-list,
+.model-link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.model-index-item {
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.model-index-item p,
+.model-summary {
+  max-width: 62ch;
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+}
+
+.model-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+}
+
+.model-page .model-questions {
+  margin-top: 2.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.model-link-list span {
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.78rem;
 }
 
 .footer {
@@ -402,7 +475,8 @@ a:hover {
   }
 
   .section-heading,
-  .related-list li {
+  .related-list li,
+  .model-link-list li {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.35rem;

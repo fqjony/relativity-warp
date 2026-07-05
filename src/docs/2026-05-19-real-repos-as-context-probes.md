@@ -5,6 +5,9 @@ status: published
 date: 2026-05-19
 datetime: 2026-05-19 19:05
 labels: engineering, dev.kit, repositories, context, testing, agents, repository-centric-engineering, runtime-evidence, ai-assisted-engineering
+classification: Experiment
+models:
+questions:
 ---
 
 # Real Repositories as Context Probes

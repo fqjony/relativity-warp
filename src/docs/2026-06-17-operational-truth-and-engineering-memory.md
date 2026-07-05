@@ -5,6 +5,9 @@ status: published
 date: 2026-06-17
 datetime: 2026-06-17 01:45
 labels: engineering, research, operations, repositories, agents, memory, operational-truth, engineering-memory, runtime-evidence, ai-assisted-engineering, repository-centric-engineering
+classification: Model
+models: engineering-memory-model-v0-1
+questions: why-does-engineering-experience-not-compound
 ---
 
 # Operational Truth and Engineering Memory

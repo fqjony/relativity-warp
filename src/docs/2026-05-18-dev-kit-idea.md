@@ -5,6 +5,9 @@ status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:00
 labels: engineering, dev.kit, repositories, agents, sdlc, repository-centric-engineering, engineering-memory, workflow-automation, ai-assisted-engineering
+classification: Pattern
+models: engineering-memory-model-v0-1
+questions: where-should-operational-truth-live
 ---
 
 # The Idea Behind dev.kit

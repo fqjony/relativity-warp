@@ -5,6 +5,9 @@ status: published
 date: 2026-07-04
 datetime: 2026-07-04 03:15
 labels: engineering, research, operations, repositories, agents, workflow, session-boundaries, operational-truth, engineering-memory, runtime-evidence, ai-assisted-engineering
+classification: Pattern
+models: engineering-memory-model-v0-1
+questions: what-boundary-should-exist-before-ai-assisted-work
 ---
 
 # Session Start Is an Operational Boundary

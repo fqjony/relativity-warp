@@ -5,6 +5,9 @@ status: published
 date: 2026-05-18
 datetime: 2026-05-18 09:00
 labels: engineering, workflows, sdlc, infrastructure, research, repository-centric-engineering, workflow-automation, devsecops-automation, runtime-evidence, ai-assisted-engineering
+classification: Principle
+models:
+questions: where-should-workflow-truth-live
 ---
 
 # Repo-Centric Workflows as an Engineering System

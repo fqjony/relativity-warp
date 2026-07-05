@@ -5,6 +5,9 @@ status: published
 date: 2026-07-04
 datetime: 2026-07-04 12:20
 labels: engineering, research, operations, repositories, agents, workflow, workflow-automation, engineering-memory, session-boundaries, operational-truth, ai-assisted-engineering
+classification: Principle
+models: engineering-memory-model-v0-1
+questions: why-does-engineering-experience-not-compound
 ---
 
 # When Experience Becomes Automation

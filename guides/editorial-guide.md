@@ -86,6 +86,44 @@ Avoid titles that sound like a generic DevOps article, marketing page, or SEO qu
 - `seo_title`: optional; use only when metadata needs a slightly clearer search/social title.
 - `seo_description`: optional; use when metadata needs more precision than the visible description.
 - `labels`: use precise labels that connect related notes. Prefer `engineering-memory`, `runtime-evidence`, `operational-truth`, `session-boundaries`, `repository-centric-engineering`, `workflow-automation`, and `ai-assisted-engineering` when accurate.
+- `classification`: optional research role for the note. Use one of `Observation`, `Experiment`, `Pattern`, `Model`, or `Principle`.
+- `models`: optional comma-separated model slugs. Add a model only when the article directly supports, tests, or explains that model.
+- `questions`: optional comma-separated question slugs. Use only for questions the note materially raises or advances.
+
+## Classifications
+
+- `Observation`: a grounded note about something seen in real work.
+- `Experiment`: a test of a workflow, tool, structure, or research loop.
+- `Pattern`: a reusable mechanism that has appeared more than once.
+- `Model`: a structured explanation of how several patterns or principles fit together.
+- `Principle`: a stable operating rule or boundary that should guide future work.
+
+Do not over-classify. The classification should describe the article's role in the research system, not every topic it mentions.
+
+## Models
+
+Model pages live in `src/models/` and render under `/models/`. A model is a living research note that connects observations into reusable engineering knowledge.
+
+Model frontmatter:
+
+- `title`
+- `version`
+- `status`
+- `date`
+- `summary`
+- `labels`
+- `questions`
+
+Keep early models as `status: draft`. Draft model pages are rendered for review but should not be treated as settled public claims.
+
+Link an article to a model when the article provides evidence for the model, tests the model, refines its language, or explains one of its boundaries. Do not link an article to a model just because it shares a broad topic label.
+
+Current limitations:
+
+- Frontmatter is flat `key: value`; do not use YAML arrays.
+- `models` and `questions` are comma-separated slugs.
+- Questions do not have pages yet.
+- Model version relationships are not represented yet.
 
 ## New Note Checklist
 
@@ -96,4 +134,6 @@ Avoid titles that sound like a generic DevOps article, marketing page, or SEO qu
 - Is verification named or implied by concrete evidence?
 - Does the lesson strengthen an existing source of truth instead of creating a new one?
 - Are frontmatter description and labels specific?
+- Is the classification accurate and restrained?
+- Does any model link represent a real relationship?
 - Does the body preserve the author's calm research voice?
