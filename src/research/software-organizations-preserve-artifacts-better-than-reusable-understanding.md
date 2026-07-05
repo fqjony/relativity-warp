@@ -7,11 +7,11 @@ updated: 2026-07-05
 summary: Engineering systems are good at retaining artifacts of work but weak at promoting lessons into reusable understanding.
 research_area: engineering memory
 concepts: engineering-memory, knowledge-promotion, operational-truth, reusable-engineering-knowledge
-related: engineering-memory, knowledge-promotion, operational-truth
+related: engineering-memory, knowledge-promotion, operational-truth, can-software-engineering-become-a-cumulative-discipline, what-makes-engineering-knowledge-reusable
 depends_on: engineering-memory, operational-truth
-supports:
+supports: can-software-engineering-become-a-cumulative-discipline
 contradicts:
-evidence: 2026-06-17-operational-truth-and-engineering-memory, 2026-07-04-when-experience-becomes-automation, engineering-memory-model-v0-1
+evidence: postmortems-create-knowledge-but-rarely-create-memory, 2026-06-17-operational-truth-and-engineering-memory, 2026-07-04-when-experience-becomes-automation, engineering-memory-model-v0-1
 references:
 confidence: medium
 maturity: early

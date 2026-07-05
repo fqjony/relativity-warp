@@ -28,6 +28,68 @@ npm run build
 
 New posts start as `status: draft`. Publish by changing that frontmatter field to `published`.
 
+## Research object schema
+
+Research objects are small Markdown records in `src/research/`. They describe the working corpus behind the site: concepts, hypotheses, questions, evidence, and frameworks. Each object renders under `/research/<slug>/`, and `/research/` groups objects by `type`.
+
+Keep frontmatter flat. List fields are comma-separated slugs or short text values.
+
+Core fields:
+
+- `title` - display title.
+- `type` - object category. Suggested values: `concept`, `hypothesis`, `question`, `evidence`, `framework`, `principle`, or `note`.
+- `status` - working state. Suggested values: `seed`, `developing`, `active`, `paused`, `draft`, or `retired`.
+- `created` - first object date, `YYYY-MM-DD`.
+- `updated` - latest meaningful update date, `YYYY-MM-DD`.
+- `summary` - one-sentence object summary used in index and metadata.
+- `research_area` - broad area, for example `engineering memory` or `repository systems`.
+- `concepts` - related concept slugs or vocabulary tags.
+- `related` - peer research object slugs when known; unresolved values render as plain text.
+- `depends_on` - objects this object relies on.
+- `supports` - objects this object strengthens.
+- `contradicts` - objects this object challenges or complicates.
+- `evidence` - evidence object slugs when known; unresolved article, model, or external values render as plain text.
+- `references` - non-relation references such as model slugs, article slugs, papers, or URLs.
+- `confidence` - current confidence. Suggested values: `low`, `medium`, or `high`.
+- `maturity` - development stage. Suggested values: `seed`, `early`, `developing`, `stable`, or `deprecated`.
+
+Example concept:
+
+```markdown
+---
+title: Engineering Memory
+type: concept
+status: developing
+created: 2026-07-05
+updated: 2026-07-05
+summary: Engineering memory is reusable understanding promoted from execution evidence into owned and verifiable structures.
+research_area: engineering memory
+related: operational-truth, knowledge-promotion
+depends_on: operational-truth
+supports: software-organizations-preserve-artifacts-better-than-reusable-understanding
+evidence: postmortems-create-knowledge-but-rarely-create-memory
+confidence: medium
+maturity: early
+---
+```
+
+Example question:
+
+```markdown
+---
+title: What makes engineering knowledge reusable?
+type: question
+status: active
+created: 2026-07-05
+updated: 2026-07-05
+summary: A question about the conditions that let engineering lessons survive beyond the work that produced them.
+research_area: engineering memory
+related: engineering-memory, knowledge-promotion
+confidence: medium
+maturity: seed
+---
+```
+
 ## Model workflow
 
 Models are living research structures that connect observations into reusable engineering knowledge. They live in `src/models/` and render under `/models/`.
