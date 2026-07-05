@@ -86,19 +86,18 @@ Avoid titles that sound like a generic DevOps article, marketing page, or SEO qu
 - `seo_title`: optional; use only when metadata needs a slightly clearer search/social title.
 - `seo_description`: optional; use when metadata needs more precision than the visible description.
 - `labels`: use precise labels that connect related notes. Prefer `engineering-memory`, `runtime-evidence`, `operational-truth`, `session-boundaries`, `repository-centric-engineering`, `workflow-automation`, and `ai-assisted-engineering` when accurate.
-- `classification`: optional research role for the note. Use one of `Observation`, `Experiment`, `Pattern`, `Model`, or `Principle`.
+- `classification`: optional research role for the source record. Use one of `Concept`, `Model`, `Research Note`, or `Reference`.
 - `models`: optional comma-separated model slugs. Add a model only when the article directly supports, tests, or explains that model.
 - `questions`: optional comma-separated question slugs. Use only for questions the note materially raises or advances.
 
 ## Classifications
 
-- `Observation`: a grounded note about something seen in real work.
-- `Experiment`: a test of a workflow, tool, structure, or research loop.
-- `Pattern`: a reusable mechanism that has appeared more than once.
-- `Model`: a structured explanation of how several patterns or principles fit together.
-- `Principle`: a stable operating rule or boundary that should guide future work.
+- `Concept`: a canonical research idea or vocabulary object. Prefer a `src/research/` page when the object should remain current.
+- `Model`: a structured relationship model. Prefer a `src/models/` page when the object explains a versioned model or framework.
+- `Research Note`: a dated Spectrum article under `src/docs/`; use this for observations, experiments, patterns, and synthesis tied to a moment in the research thread.
+- `Reference`: a stable supporting reference, guide, index, or source note that helps readers or agents navigate the research body.
 
-Do not over-classify. The classification should describe the article's role in the research system, not every topic it mentions.
+Do not over-classify. The classification should describe the record's role in the research system, not every topic it mentions. Existing published notes may retain older classification values; do not rewrite them only to reorganize navigation.
 
 ## Models
 

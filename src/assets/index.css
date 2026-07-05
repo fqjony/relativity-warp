@@ -196,6 +196,9 @@ a:hover {
   padding: 0;
 }
 
+.research-map,
+.research-layers,
+.latest-notes,
 .research-callout,
 .model-callout {
   margin-bottom: 2.35rem;
@@ -203,10 +206,84 @@ a:hover {
   border-bottom: 1px solid var(--line-soft);
 }
 
+.latest-notes {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 .research-callout p,
 .model-callout p {
   max-width: 42rem;
   margin: 0 0 0.5rem;
+  color: var(--muted);
+}
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-heading .section-title {
+  margin-bottom: 0;
+}
+
+.section-heading a {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+}
+
+.research-map-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.research-map-item {
+  border-top: 1px solid var(--line-warm);
+  padding-top: 0.8rem;
+}
+
+.research-map-item h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.research-map-item h3 a {
+  color: var(--text);
+}
+
+.research-map-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.research-layer-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.research-layer-list a {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  border-top: 1px solid var(--line-soft);
+  padding-top: 0.75rem;
+}
+
+.research-layer-list strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.research-layer-list span {
   color: var(--muted);
 }
 
@@ -360,6 +437,12 @@ a:hover {
 }
 
 .related-models {
+  margin-top: 2.4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line-warm);
+}
+
+.related-research {
   margin-top: 2.4rem;
   padding-top: 1.35rem;
   border-top: 1px solid var(--line-warm);
@@ -546,7 +629,21 @@ a:hover {
     grid-template-columns: 1fr;
   }
 
-  .section-heading,
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .research-map-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .research-layer-list a {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
   .related-list li,
   .model-link-list li {
     align-items: flex-start;
