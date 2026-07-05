@@ -201,7 +201,7 @@ Frontmatter contract for `src/docs/*.md`:
 - `datetime` (optional, `YYYY-MM-DD HH:mm`)
 - `date` (optional, `YYYY-MM-DD`)
 - `labels` (comma-separated, optional)
-- `classification` (optional: `Observation`, `Experiment`, `Pattern`, `Model`, or `Principle`)
+- `classification` (optional: `Concept`, `Model`, `Research Note`, or `Reference`)
 - `models` (comma-separated model slugs, optional)
 - `questions` (comma-separated question slugs, optional)
 
@@ -215,6 +215,17 @@ Publishing behavior:
 - `models` renders related model links when matching `src/models/<slug>.md` exists.
 - `questions` renders simple text slugs on article pages. Question pages are not implemented yet.
 - date sorting uses resolved datetime (frontmatter first, fallback to file `mtime`).
+
+## Publication Classification
+
+Classify new public source records by the role they play in the research memory system:
+
+- `Concept` - a canonical research idea or vocabulary object. Prefer `src/research/` when the page should be maintained as the current concept.
+- `Model` - a structured relationship model. Prefer `src/models/` when the page explains a model version or framework.
+- `Research Note` - a dated Spectrum article under `src/docs/`; use this for observations, experiments, patterns, and calm synthesis notes tied to a moment in the research thread.
+- `Reference` - a stable supporting reference, guide, index, or source note that helps readers or agents navigate the system.
+
+Published Spectrum URLs under `/spectrum/<slug>/` are stable artifacts. Do not rename, move, or delete those source files to revise information architecture; improve navigation, metadata, and relationships around them instead.
 
 ## Discovery model
 

@@ -240,6 +240,24 @@ ${models
       </section>`;
 };
 
+const renderRelatedResearchObjects = (items) => {
+  if (!items.length) return "";
+
+  return `<section class="related-research" aria-labelledby="related-research-title">
+        <h2 id="related-research-title" class="section-title">Related Research</h2>
+        <ul class="model-link-list" role="list">
+${items
+  .map(
+    (item) => `          <li>
+            <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+            <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
+          </li>`
+  )
+  .join("\n")}
+        </ul>
+      </section>`;
+};
+
 const getResearchObjectTypeLabel = (type) =>
   String(type || "note")
     .split(/[-_\s]+/)
@@ -333,6 +351,7 @@ const renderPostPage = ({
   olderPost,
   relatedPosts,
   relatedModels,
+  relatedResearchObjects,
   questions,
 }) => {
   const safeTitle = escapeHtml(title);
@@ -402,6 +421,7 @@ ${articleTags}
         </div>
       </main>
       ${renderRelatedModels(relatedModels)}
+      ${renderRelatedResearchObjects(relatedResearchObjects)}
       ${renderQuestions(questions)}
       ${renderPostNav(newerPost, olderPost)}
       ${renderRelatedPosts(relatedPosts)}
@@ -1055,13 +1075,15 @@ const buildResearchObjects = () => {
   return items;
 };
 
-const writePostPages = (items, models) => {
+const writePostPages = (items, models, researchObjects) => {
   const modelBySlug = new Map(models.map((model) => [model.slug, model]));
+  const publicResearchObjects = researchObjects.filter((item) => item.status !== "draft");
 
   items.forEach((item, index) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
     const content = marked.parse(strippedBody);
     const itemLabels = new Set(item.labels);
+    const itemModelSlugs = new Set(item.modelSlugs);
     const relatedPosts = items
       .filter((candidate) => candidate !== item)
       .map((candidate) => ({
@@ -1075,6 +1097,28 @@ const writePostPages = (items, models) => {
       })
       .slice(0, 3);
     const relatedModels = item.modelSlugs.map((slug) => modelBySlug.get(slug)).filter(Boolean);
+    const relatedResearchObjects = publicResearchObjects
+      .map((candidate) => {
+        let relationScore = 0;
+        if (candidate.evidence.includes(item.slug)) relationScore += 4;
+        if (candidate.references.includes(item.slug)) relationScore += 3;
+        if (itemLabels.has(candidate.slug)) relationScore += 3;
+        relationScore += candidate.concepts.filter((concept) => itemLabels.has(concept)).length;
+        relationScore += candidate.references.filter((reference) => itemModelSlugs.has(reference)).length;
+        relationScore += candidate.evidence.filter((reference) => itemModelSlugs.has(reference)).length;
+        relationScore += candidate.related.filter((reference) => item.questions.includes(reference)).length;
+
+        return {
+          ...candidate,
+          relationScore,
+        };
+      })
+      .filter((candidate) => candidate.relationScore > 0)
+      .sort((a, b) => {
+        if (a.relationScore !== b.relationScore) return b.relationScore - a.relationScore;
+        return a.title.localeCompare(b.title);
+      })
+      .slice(0, 4);
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
@@ -1102,6 +1146,7 @@ const writePostPages = (items, models) => {
         olderPost: index < items.length - 1 ? items[index + 1] : null,
         relatedPosts,
         relatedModels,
+        relatedResearchObjects,
       }),
       "utf8"
     );
@@ -1120,7 +1165,7 @@ const buildSite = () => {
   const models = buildModels(items);
   const researchObjects = buildResearchObjects();
 
-  writePostPages(items, models);
+  writePostPages(items, models, researchObjects);
 
   updateHomepage(items);
   writeSitemap(items, models, researchObjects);
