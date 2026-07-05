@@ -7,9 +7,9 @@ updated: 2026-07-05
 summary: Repository-centric engineering treats the repository as the primary surface for implementation truth, workflow contracts, and reusable project knowledge.
 research_area: repository systems
 concepts: engineering-memory, operational-truth, workflow-contracts, agentic-engineering-workflows
-related: engineering-memory, operational-truth, knowledge-promotion
+related: engineering-memory, operational-truth, knowledge-promotion, what-makes-engineering-knowledge-reusable
 depends_on: operational-truth
-supports: engineering-memory
+supports: engineering-memory, what-makes-engineering-knowledge-reusable
 contradicts:
 evidence: 2026-05-18-repo-centric-workflows, 2026-05-25-repositories-as-operational-execution-surfaces, 2026-05-19-real-repos-as-context-probes
 references:

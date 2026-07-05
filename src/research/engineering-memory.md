@@ -6,12 +6,12 @@ created: 2026-07-05
 updated: 2026-07-05
 summary: Engineering memory is reusable understanding promoted from execution evidence into owned and verifiable structures.
 research_area: engineering memory
-concepts: operational-truth, knowledge-promotion, repository-centric-engineering, execution-evidence
-related: operational-truth, knowledge-promotion, repository-centric-engineering
+concepts: operational-truth, knowledge-promotion, repository-centric-engineering, execution-evidence, reusable-engineering-knowledge
+related: operational-truth, knowledge-promotion, repository-centric-engineering, what-makes-engineering-knowledge-reusable, can-software-engineering-become-a-cumulative-discipline
 depends_on: operational-truth
-supports: software-organizations-preserve-artifacts-better-than-reusable-understanding
+supports: software-organizations-preserve-artifacts-better-than-reusable-understanding, what-makes-engineering-knowledge-reusable
 contradicts:
-evidence: 2026-06-17-operational-truth-and-engineering-memory, engineering-memory-model-v0-1
+evidence: postmortems-create-knowledge-but-rarely-create-memory, 2026-06-17-operational-truth-and-engineering-memory, engineering-memory-model-v0-1
 references: engineering-memory-model-v0-1
 confidence: medium
 maturity: early

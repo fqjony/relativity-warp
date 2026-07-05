@@ -7,11 +7,11 @@ updated: 2026-07-05
 summary: Operational truth is the verifiable state of engineering reality as held by the systems that own it.
 research_area: engineering memory
 concepts: engineering-memory, execution-evidence, workflow-contracts
-related: engineering-memory, repository-centric-engineering, knowledge-promotion
+related: engineering-memory, repository-centric-engineering, knowledge-promotion, what-makes-engineering-knowledge-reusable
 depends_on:
 supports: engineering-memory
 contradicts:
-evidence: 2026-06-17-operational-truth-and-engineering-memory, 2026-05-25-repositories-as-operational-execution-surfaces
+evidence: postmortems-create-knowledge-but-rarely-create-memory, 2026-06-17-operational-truth-and-engineering-memory, 2026-05-25-repositories-as-operational-execution-surfaces
 references:
 confidence: medium
 maturity: early

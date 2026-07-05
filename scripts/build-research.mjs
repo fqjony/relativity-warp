@@ -240,15 +240,21 @@ ${models
       </section>`;
 };
 
+const getResearchObjectTypeLabel = (type) =>
+  String(type || "note")
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
 const renderResearchObjectMeta = (item) => {
   const rows = [
-    ["Type", item.type],
+    ["Type", getResearchObjectTypeLabel(item.type)],
     ["Status", item.status],
     ["Area", item.researchArea],
     ["Confidence", item.confidence],
     ["Maturity", item.maturity],
     ["Concepts", item.concepts.join(", ")],
-    ["Evidence", item.evidence.join(", ")],
     ["References", item.references.join(", ")],
     ["Updated", item.updated || item.date],
   ].filter(([, value]) => value);
@@ -267,21 +273,31 @@ ${rows
         </dl>`;
 };
 
-const renderResearchLinks = (title, slugs, objectBySlug) => {
-  const links = slugs.map((slug) => objectBySlug.get(slug)).filter(Boolean);
-  if (!links.length) return "";
+const getResearchFieldId = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-  return `<section class="research-links" aria-labelledby="${escapeHtml(title.toLowerCase().replace(/[^a-z0-9]+/g, "-"))}">
-        <h2 id="${escapeHtml(title.toLowerCase().replace(/[^a-z0-9]+/g, "-"))}" class="section-title">${escapeHtml(title)}</h2>
-        <ul class="model-link-list" role="list">
-${links
-  .map(
-    (item) => `          <li>
+const renderResearchReferenceItem = (value, objectBySlug) => {
+  const item = objectBySlug.get(value);
+  if (!item) {
+    return `<li>
+            <span>${escapeHtml(value)}</span>
+          </li>`;
+  }
+
+  return `<li>
             <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
-            <span>${escapeHtml(item.type || item.status)}</span>
-          </li>`
-  )
-  .join("\n")}
+            <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
+          </li>`;
+};
+
+const renderResearchLinks = (title, values, objectBySlug) => {
+  if (!values.length) return "";
+
+  const id = getResearchFieldId(title);
+
+  return `<section class="research-links" aria-labelledby="${escapeHtml(id)}">
+        <h2 id="${escapeHtml(id)}" class="section-title">${escapeHtml(title)}</h2>
+        <ul class="model-link-list" role="list">
+${values.map((value) => `          ${renderResearchReferenceItem(value, objectBySlug)}`).join("\n")}
         </ul>
       </section>`;
 };
@@ -561,6 +577,15 @@ ${modelTags}
 `;
 };
 
+const getResearchObjectMeta = (item) =>
+  [
+    item.status ? `<span>${escapeHtml(item.status)}</span>` : "",
+    item.maturity ? `<span>${escapeHtml(item.maturity)}</span>` : "",
+    item.confidence ? `<span>${escapeHtml(item.confidence)}</span>` : "",
+  ]
+    .filter(Boolean)
+    .join("\n              ");
+
 const renderResearchIndexList = (items) => {
   if (!items.length) {
     return `          <li class="research-index-item">No research objects yet.</li>`;
@@ -571,16 +596,36 @@ const renderResearchIndexList = (items) => {
       (item) => `          <li class="research-index-item">
             <a class="post-title" href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
             <div class="model-meta">
-              ${[
-                item.type ? `<span>${escapeHtml(item.type)}</span>` : "",
-                item.status ? `<span>${escapeHtml(item.status)}</span>` : "",
-                item.updated ? `<span>${escapeHtml(item.updated)}</span>` : "",
-              ]
-                .filter(Boolean)
-                .join("\n              ")}
+              ${getResearchObjectMeta(item)}
             </div>
             <p>${escapeHtml(item.summary || item.description)}</p>
           </li>`
+    )
+    .join("\n");
+};
+
+const renderResearchIndexGroups = (items) => {
+  if (!items.length) {
+    return `<ul class="research-index-list" role="list">
+${renderResearchIndexList(items)}
+          </ul>`;
+  }
+
+  const groups = new Map();
+  items.forEach((item) => {
+    const type = item.type || "note";
+    if (!groups.has(type)) groups.set(type, []);
+    groups.get(type).push(item);
+  });
+
+  return Array.from(groups.entries())
+    .map(
+      ([type, groupItems]) => `          <section class="research-type-group" aria-labelledby="research-type-${escapeHtml(type)}">
+            <h3 id="research-type-${escapeHtml(type)}" class="research-type-title">${escapeHtml(getResearchObjectTypeLabel(type))}</h3>
+            <ul class="research-index-list" role="list">
+${renderResearchIndexList(groupItems)}
+            </ul>
+          </section>`
     )
     .join("\n");
 };
@@ -612,9 +657,7 @@ const renderResearchIndexPage = (items) => `<!doctype html>
         </section>
         <section aria-labelledby="research-objects-title">
           <h2 id="research-objects-title" class="section-title">Objects</h2>
-          <ul class="research-index-list" role="list">
-${renderResearchIndexList(items)}
-          </ul>
+${renderResearchIndexGroups(items)}
         </section>
       </main>
       ${renderFooter()}
@@ -632,6 +675,7 @@ const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref
     renderResearchLinks("Depends On", item.dependsOn, objectBySlug),
     renderResearchLinks("Supports", item.supports, objectBySlug),
     renderResearchLinks("Contradicts", item.contradicts, objectBySlug),
+    renderResearchLinks("Evidence", item.evidence, objectBySlug),
   ]
     .filter(Boolean)
     .join("\n");

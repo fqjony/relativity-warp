@@ -405,6 +405,24 @@ a:hover {
   border-bottom: 1px solid var(--line-soft);
 }
 
+.research-type-group {
+  margin-top: 1.7rem;
+}
+
+.research-type-group:first-of-type {
+  margin-top: 0;
+}
+
+.research-type-title {
+  margin: 0 0 0.2rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
 .research-index-item p,
 .model-index-item p,
 .model-summary {

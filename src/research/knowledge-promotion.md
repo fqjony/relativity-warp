@@ -7,11 +7,11 @@ updated: 2026-07-05
 summary: Knowledge promotion is the process of moving a validated lesson from temporary execution into the smallest durable layer that can reuse it.
 research_area: engineering memory
 concepts: engineering-memory, operational-truth, reusable-engineering-knowledge, execution-evidence
-related: engineering-memory, operational-truth, repository-centric-engineering
+related: engineering-memory, operational-truth, repository-centric-engineering, what-makes-engineering-knowledge-reusable, can-software-engineering-become-a-cumulative-discipline
 depends_on: operational-truth
-supports: software-organizations-preserve-artifacts-better-than-reusable-understanding
+supports: software-organizations-preserve-artifacts-better-than-reusable-understanding, what-makes-engineering-knowledge-reusable
 contradicts:
-evidence: 2026-07-04-when-experience-becomes-automation, 2026-06-17-operational-truth-and-engineering-memory
+evidence: postmortems-create-knowledge-but-rarely-create-memory, 2026-07-04-when-experience-becomes-automation, 2026-06-17-operational-truth-and-engineering-memory
 references:
 confidence: medium
 maturity: early
