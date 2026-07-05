@@ -7,9 +7,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "src", "docs");
+const modelsDir = path.join(rootDir, "src", "models");
 const homepagePath = path.join(rootDir, "src", "templates", "index.html");
 const publishDir = path.join(rootDir, "docs");
 const publicSpectrumDir = path.join(publishDir, "spectrum");
+const publicModelsDir = path.join(publishDir, "models");
 
 const siteUrl = "https://fqjony.com";
 const siteName = "Relativity Warp";
@@ -128,9 +130,10 @@ const getDescription = (body, meta) => {
   return paragraph ? cleanText(paragraph) : "";
 };
 
-const renderSiteNav = (homeHref = "/") => `<nav class="site-nav" aria-label="Main navigation">
+const renderSiteNav = (homeHref = "/", modelsHref = "/models/") => `<nav class="site-nav" aria-label="Main navigation">
           <span class="ua-flag" role="img" aria-label="Ukrainian flag"></span>
           <a href="${homeHref}">Home</a>
+          <a href="${modelsHref}">Models</a>
           <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
           <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
@@ -152,6 +155,12 @@ const getLabels = (meta) =>
   (meta.labels || "")
     .split(",")
     .map((label) => label.trim())
+    .filter(Boolean);
+
+const getListField = (meta, key) =>
+  (meta[key] || "")
+    .split(",")
+    .map((value) => value.trim())
     .filter(Boolean);
 
 const getTemporalMeta = (meta, filePath) => {
@@ -208,6 +217,35 @@ ${relatedPosts
       </section>`;
 };
 
+const renderRelatedModels = (models) => {
+  if (!models.length) return "";
+
+  return `<section class="related-models" aria-labelledby="related-models-title">
+        <h2 id="related-models-title" class="section-title">Related Models</h2>
+        <ul class="model-link-list" role="list">
+${models
+  .map(
+    (model) => `          <li>
+            <a href="${escapeHtml(model.url)}">${escapeHtml(model.title)}</a>
+            <span>${escapeHtml(model.version || model.status)}</span>
+          </li>`
+  )
+  .join("\n")}
+        </ul>
+      </section>`;
+};
+
+const renderQuestions = (questions) => {
+  if (!questions.length) return "";
+
+  return `<section class="article-questions" aria-labelledby="article-questions-title">
+        <h2 id="article-questions-title" class="section-title">Questions</h2>
+        <ul class="model-link-list" role="list">
+${questions.map((question) => `          <li><span>${escapeHtml(question)}</span></li>`).join("\n")}
+        </ul>
+      </section>`;
+};
+
 const renderPostPage = ({
   title,
   seoTitle,
@@ -216,7 +254,9 @@ const renderPostPage = ({
   content,
   cssHref,
   homeHref,
+  modelsHref,
   labels,
+  classification,
   status,
   datetime,
   date,
@@ -224,6 +264,8 @@ const renderPostPage = ({
   newerPost,
   olderPost,
   relatedPosts,
+  relatedModels,
+  questions,
 }) => {
   const safeTitle = escapeHtml(title);
   const safeSeoTitle = escapeHtml(seoTitle);
@@ -233,6 +275,7 @@ const renderPostPage = ({
   const safeCanonicalUrl = escapeHtml(canonicalUrl);
   const visibleMeta = [
     status === "draft" ? `<span class="status-draft">Draft</span>` : "",
+    classification ? `<span class="classification-badge">${escapeHtml(classification)}</span>` : "",
     safeDatetime ? `<span>${safeDatetime}</span>` : "",
   ]
     .filter(Boolean)
@@ -279,7 +322,7 @@ ${articleTags}
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        ${renderSiteNav(homeHref)}
+        ${renderSiteNav(homeHref, modelsHref)}
         <h1 class="article-title">${safeTitle}</h1>
         <div class="post-meta">
           ${visibleMeta}
@@ -290,6 +333,8 @@ ${articleTags}
           ${content}
         </div>
       </main>
+      ${renderRelatedModels(relatedModels)}
+      ${renderQuestions(questions)}
       ${renderPostNav(newerPost, olderPost)}
       ${renderRelatedPosts(relatedPosts)}
       ${renderFooter()}
@@ -320,6 +365,148 @@ const renderPostList = (items) => {
   </li>`;
     })
     .join("\n");
+};
+
+const renderModelIndexList = (items) => {
+  if (!items.length) {
+    return `          <li class="model-index-item">No research models yet.</li>`;
+  }
+
+  return items
+    .map((item) => {
+      const visibleMeta = [
+        item.status === "draft" ? `<span class="status-draft">Draft</span>` : "",
+        item.version ? `<span>${escapeHtml(item.version)}</span>` : "",
+        item.date ? `<span>${escapeHtml(item.date)}</span>` : "",
+      ]
+        .filter(Boolean)
+        .join("\n              ");
+
+      return `          <li class="model-index-item">
+            <a class="post-title" href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+            <div class="model-meta">
+              ${visibleMeta}
+            </div>
+            <p>${escapeHtml(item.summary || item.description)}</p>
+          </li>`;
+    })
+    .join("\n");
+};
+
+const renderModelIndexPage = (items) => {
+  const hasPublishedModels = items.some((item) => item.status === "published");
+  const robotsMeta = hasPublishedModels ? "" : '    <meta name="robots" content="noindex, nofollow" />\n';
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Models | ${siteName}</title>
+    <meta name="description" content="Working research models behind Relativity Warp." />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+${robotsMeta}    <link rel="canonical" href="${absoluteUrl("/models/")}" />
+    <link rel="stylesheet" href="../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        ${renderSiteNav("../index.html", "index.html")}
+        <h1 class="article-title">Models</h1>
+        <div class="post-meta">
+          <span>Working research structures</span>
+        </div>
+      </header>
+      <main id="content" class="model-index">
+        <ul class="model-index-list" role="list">
+${renderModelIndexList(items)}
+        </ul>
+      </main>
+      ${renderFooter()}
+    </div>
+  </body>
+</html>
+`;
+};
+
+const renderModelPage = ({ title, version, summary, content, cssHref, homeHref, modelsHref, labels, questions, status, date, url, relatedPosts }) => {
+  const safeTitle = escapeHtml(title);
+  const safeDescription = escapeHtml(summary || `Research model: ${title}`);
+  const safeCanonicalUrl = escapeHtml(absoluteUrl(url));
+  const visibleMeta = [
+    status === "draft" ? `<span class="status-draft">Draft</span>` : "",
+    version ? `<span>${escapeHtml(version)}</span>` : "",
+    date ? `<span>${escapeHtml(date)}</span>` : "",
+  ]
+    .filter(Boolean)
+    .join("\n          ");
+  const draftRobotsMeta =
+    status === "draft" ? '    <meta name="robots" content="noindex, nofollow" />\n' : "";
+  const modelTags = labels
+    .map((label) => `    <meta property="article:tag" content="${escapeHtml(label)}" />`)
+    .join("\n");
+  const questionList = questions.length
+    ? `<div class="model-questions">
+          <h2 class="section-title">Questions</h2>
+          <ul class="model-link-list" role="list">
+${questions.map((question) => `            <li><span>${escapeHtml(question)}</span></li>`).join("\n")}
+          </ul>
+        </div>`
+    : "";
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${safeTitle} | ${siteName}</title>
+    <meta name="description" content="${safeDescription}" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+${draftRobotsMeta}    <link rel="canonical" href="${safeCanonicalUrl}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="${siteName}" />
+    <meta property="og:title" content="${safeTitle}" />
+    <meta property="og:description" content="${safeDescription}" />
+    <meta property="og:url" content="${safeCanonicalUrl}" />
+${modelTags}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${safeTitle}" />
+    <meta name="twitter:description" content="${safeDescription}" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "${googleAnalyticsId}");
+    </script>
+    <link rel="stylesheet" href="${cssHref}" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        ${renderSiteNav(homeHref, modelsHref)}
+        <h1 class="article-title">${safeTitle}</h1>
+        <div class="model-meta">
+          ${visibleMeta}
+        </div>
+        ${summary ? `<p class="model-summary">${escapeHtml(summary)}</p>` : ""}
+      </header>
+      <main id="content" class="article model-page">
+        <div class="article-content">
+          ${content}
+        </div>
+        ${questionList}
+      </main>
+      ${renderRelatedPosts(relatedPosts)}
+      ${renderFooter()}
+    </div>
+  </body>
+</html>
+`;
 };
 
 const updateHomepage = (items) => {
@@ -357,18 +544,33 @@ Sitemap: ${absoluteUrl("/sitemap.xml")}
   );
 };
 
-const writeSitemap = (items) => {
+const writeSitemap = (items, models) => {
   const publishedItems = items.filter((item) => item.status === "published");
+  const publishedModels = models.filter((item) => item.status === "published");
   const urls = [
     {
       loc: absoluteUrl("/"),
       lastmod: publishedItems[0]?.date || formatLocalDate(new Date()),
       priority: "1.0",
     },
+    ...(publishedModels.length
+      ? [
+          {
+            loc: absoluteUrl("/models/"),
+            lastmod: publishedModels[0].date,
+            priority: "0.6",
+          },
+        ]
+      : []),
     ...publishedItems.map((item) => ({
       loc: absoluteUrl(item.url),
       lastmod: item.date,
       priority: "0.8",
+    })),
+    ...publishedModels.map((item) => ({
+      loc: absoluteUrl(item.url),
+      lastmod: item.date,
+      priority: "0.7",
     })),
   ];
 
@@ -426,6 +628,9 @@ const buildPosts = () => {
         seoDescription: getSeoDescription(meta, description),
         status: getStatus(meta),
         labels: getLabels(meta),
+        classification: (meta.classification || "").trim(),
+        modelSlugs: getListField(meta, "models"),
+        questions: getListField(meta, "questions"),
         slug,
         url: `/spectrum/${slug}/`,
         outputPath: path.join(publicSpectrumDir, slug, "index.html"),
@@ -436,6 +641,91 @@ const buildPosts = () => {
       if (a.sortValue !== b.sortValue) return b.sortValue - a.sortValue;
       return a.title.localeCompare(b.title);
     });
+
+  return items;
+};
+
+const buildModels = (posts) => {
+  fs.rmSync(publicModelsDir, { recursive: true, force: true });
+  fs.mkdirSync(publicModelsDir, { recursive: true });
+
+  const items = fs.existsSync(modelsDir)
+    ? listMarkdownFiles(modelsDir)
+        .map((filePath) => {
+          const raw = fs.readFileSync(filePath, "utf8");
+          const { body, meta } = parseFrontmatter(raw);
+          const fallback = path
+            .basename(filePath, ".md")
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (match) => match.toUpperCase());
+          const slug = normalizeSlug(
+            path.relative(modelsDir, filePath).replace(/\\/g, "/").replace(/\.md$/, "")
+          );
+          const temporal = getTemporalMeta(meta, filePath);
+          const title = getTitle(body, meta, fallback);
+          const summary = (meta.summary || "").trim() || getDescription(body, meta);
+
+          return {
+            raw,
+            body,
+            title,
+            summary,
+            description: summary,
+            status: getStatus(meta),
+            labels: getLabels(meta),
+            questions: getListField(meta, "questions"),
+            version: (meta.version || "").trim(),
+            slug,
+            url: `/models/${slug}/`,
+            outputPath: path.join(publicModelsDir, slug, "index.html"),
+            ...temporal,
+          };
+        })
+        .sort((a, b) => {
+          if (a.sortValue !== b.sortValue) return b.sortValue - a.sortValue;
+          return a.title.localeCompare(b.title);
+        })
+    : [];
+
+  items.forEach((item) => {
+    const strippedBody = item.body.replace(/^# .+?\n+/, "");
+    const content = marked.parse(strippedBody);
+    const relatedPosts = posts
+      .filter((post) => post.modelSlugs.includes(item.slug))
+      .sort((a, b) => b.sortValue - a.sortValue)
+      .slice(0, 5);
+    const cssHref = path
+      .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
+      .replace(/\\/g, "/");
+    const homeHref = path
+      .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
+      .replace(/\\/g, "/");
+    const modelsHref = path
+      .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
+      .replace(/\\/g, "/");
+
+    fs.mkdirSync(path.dirname(item.outputPath), { recursive: true });
+    fs.writeFileSync(
+      item.outputPath,
+      renderModelPage({
+        ...item,
+        content,
+        cssHref,
+        homeHref,
+        modelsHref,
+        relatedPosts,
+      }),
+      "utf8"
+    );
+  });
+
+  fs.writeFileSync(path.join(publicModelsDir, "index.html"), renderModelIndexPage(items), "utf8");
+
+  return items;
+};
+
+const writePostPages = (items, models) => {
+  const modelBySlug = new Map(models.map((model) => [model.slug, model]));
 
   items.forEach((item, index) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
@@ -453,11 +743,15 @@ const buildPosts = () => {
         return b.sortValue - a.sortValue;
       })
       .slice(0, 3);
+    const relatedModels = item.modelSlugs.map((slug) => modelBySlug.get(slug)).filter(Boolean);
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
     const homeHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
+      .replace(/\\/g, "/");
+    const modelsHref = path
+      .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
       .replace(/\\/g, "/");
 
     fs.mkdirSync(path.dirname(item.outputPath), { recursive: true });
@@ -468,16 +762,32 @@ const buildPosts = () => {
         content,
         cssHref,
         homeHref,
+        modelsHref,
         newerPost: index > 0 ? items[index - 1] : null,
         olderPost: index < items.length - 1 ? items[index + 1] : null,
         relatedPosts,
+        relatedModels,
       }),
       "utf8"
     );
   });
+};
+
+const buildSite = () => {
+  if (!fs.existsSync(docsDir)) {
+    throw new Error(`Missing docs directory: ${docsDir}`);
+  }
+
+  fs.rmSync(publicSpectrumDir, { recursive: true, force: true });
+  fs.mkdirSync(publicSpectrumDir, { recursive: true });
+
+  const items = buildPosts();
+  const models = buildModels(items);
+
+  writePostPages(items, models);
 
   updateHomepage(items);
-  writeSitemap(items);
+  writeSitemap(items, models);
   writeRobotsTxt();
   fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });
   copyDir(path.join(rootDir, "src", "assets"), path.join(publishDir, "assets"));
@@ -488,10 +798,14 @@ const buildPosts = () => {
 
   fs.rmSync(path.join(publishDir, "tips.json"), { force: true });
 
-  return items;
+  return { items, models };
 };
 
-const items = buildPosts();
+const { items, models } = buildSite();
 const publishedCount = items.filter((item) => item.status === "published").length;
 const draftCount = items.filter((item) => item.status === "draft").length;
-console.log(`Built ${items.length} post(s): ${publishedCount} published, ${draftCount} draft.`);
+const publishedModelCount = models.filter((item) => item.status === "published").length;
+const draftModelCount = models.filter((item) => item.status === "draft").length;
+console.log(
+  `Built ${items.length} post(s): ${publishedCount} published, ${draftCount} draft. Built ${models.length} model(s): ${publishedModelCount} published, ${draftModelCount} draft.`
+);

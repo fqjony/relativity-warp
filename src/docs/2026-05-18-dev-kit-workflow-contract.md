@@ -5,6 +5,9 @@ status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:45
 labels: engineering, dev.kit, workflow, repositories, agents, repository-centric-engineering, workflow-automation, runtime-evidence, operational-truth
+classification: Pattern
+models:
+questions: how-should-repo-output-guide-the-next-action
 ---
 
 # Turning Repo Output Into a Workflow Contract

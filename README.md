@@ -13,7 +13,7 @@ npm run preview
 
 ## Scripts
 
-- `npm run build` - build markdown posts into `docs/`.
+- `npm run build` - build markdown posts and models into `docs/`.
 - `npm run post:new -- "Post title"` - create a dated draft markdown post in `src/docs/`.
 - `npm run preview` - serve `docs/` locally.
 - `npm run hooks:install` - enable repo git hooks (`.githooks/`).
@@ -27,6 +27,29 @@ npm run build
 ```
 
 New posts start as `status: draft`. Publish by changing that frontmatter field to `published`.
+
+## Model workflow
+
+Models are living research structures that connect observations into reusable engineering knowledge. They live in `src/models/` and render under `/models/`.
+
+To add a model page:
+
+1. Create `src/models/<slug>.md`.
+2. Use flat frontmatter compatible with the current parser.
+3. Keep early work as `status: draft`.
+4. Run `npm run build`.
+
+Model frontmatter:
+
+- `title`
+- `version` (for example, `v0.1`)
+- `status` (`published` or `draft`)
+- `date` (`YYYY-MM-DD`)
+- `summary`
+- `labels` (comma-separated, optional)
+- `questions` (comma-separated slugs, optional)
+
+Draft model pages are rendered for preview but receive `noindex, nofollow` metadata. Published model pages are added to `docs/sitemap.xml`.
 
 ## Article tone
 
@@ -116,6 +139,9 @@ Frontmatter contract for `src/docs/*.md`:
 - `datetime` (optional, `YYYY-MM-DD HH:mm`)
 - `date` (optional, `YYYY-MM-DD`)
 - `labels` (comma-separated, optional)
+- `classification` (optional: `Observation`, `Experiment`, `Pattern`, `Model`, or `Principle`)
+- `models` (comma-separated model slugs, optional)
+- `questions` (comma-separated question slugs, optional)
 
 If `datetime` and `date` are not set, build derives them from the markdown file local `mtime`.
 
@@ -123,11 +149,14 @@ Publishing behavior:
 
 - `status: published` is rendered to HTML and marked as published in UI.
 - `status: draft` is rendered to HTML and marked as draft in UI.
+- `classification` is shown near article date/status when present.
+- `models` renders related model links when matching `src/models/<slug>.md` exists.
+- `questions` renders simple text slugs on article pages. Question pages are not implemented yet.
 - date sorting uses resolved datetime (frontmatter first, fallback to file `mtime`).
 
 ## Discovery model
 
-The build script in `scripts/build-research.mjs` is the source of truth for generated publishing metadata. It reads the Markdown frontmatter, renders each post under `docs/spectrum/<slug>/`, and keeps the checked-in GitHub Pages output aligned with the source posts.
+The build script in `scripts/build-research.mjs` is the source of truth for generated publishing metadata. It reads Markdown frontmatter, renders posts under `docs/spectrum/<slug>/`, renders models under `docs/models/<slug>/`, and keeps the checked-in GitHub Pages output aligned with source content.
 
 Generated discovery behavior:
 
@@ -135,9 +164,17 @@ Generated discovery behavior:
 - Article `<title>`, description, canonical URL, Open Graph, Twitter card, published time, and article tags are generated from each post's frontmatter.
 - `seo_title` and `seo_description` can make metadata more searchable while leaving the visible article title and listing description calm and research-oriented.
 - `labels` drive both visible post metadata and the generated "Related" links on article pages. Prefer improving the existing label taxonomy before adding a new navigation system.
+- `classification`, `models`, and `questions` add lightweight research structure without changing `/spectrum/`.
 - `status: draft` pages are rendered for preview but receive `noindex, nofollow` metadata and are excluded from `docs/sitemap.xml`.
-- `docs/sitemap.xml` lists the homepage and published articles with canonical `https://fqjony.com` URLs.
+- `docs/sitemap.xml` lists the homepage, published articles, and published models with canonical `https://fqjony.com` URLs.
 - `docs/robots.txt` allows crawling and points search engines at the sitemap.
+
+Current limitations:
+
+- Frontmatter is parsed as flat `key: value` strings; do not use nested YAML or arrays.
+- `models` and `questions` are comma-separated slug fields.
+- Question pages, RSS, and model version relationships are not implemented.
+- `/spectrum/` remains the article route.
 
 SEO guide for every new article:
 
@@ -162,6 +199,7 @@ SKIP_PRECOMMIT_BUILD=1 git commit -m "message"
 ## Structure
 
 - `src/docs/` - markdown source posts.
+- `src/models/` - markdown source model pages.
 - `src/templates/` - source HTML templates.
 - `src/assets/` - source CSS/JS/images.
 - `guides/` - repo-owned editorial and publishing guidance.
@@ -172,5 +210,7 @@ SKIP_PRECOMMIT_BUILD=1 git commit -m "message"
 
 - `docs/index.html`
 - `docs/spectrum/<post-slug>/index.html`
+- `docs/models/index.html`
+- `docs/models/<model-slug>/index.html`
 - `docs/sitemap.xml`
 - `docs/robots.txt`

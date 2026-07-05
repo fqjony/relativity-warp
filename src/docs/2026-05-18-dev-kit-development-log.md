@@ -5,6 +5,9 @@ status: published
 date: 2026-05-18
 datetime: 2026-05-18 10:15
 labels: engineering, dev.kit, development-log, repositories, agents, repository-centric-engineering, engineering-memory, workflow-automation
+classification: Observation
+models:
+questions:
 ---
 
 # How dev.kit Changed While Building It
