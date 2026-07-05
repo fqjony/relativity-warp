@@ -78,6 +78,11 @@ a:hover {
   font-size: 0.9rem;
 }
 
+.site-mark {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .home .site-nav {
   margin-bottom: 2.25rem;
 }
@@ -637,6 +642,19 @@ a:hover {
   font-family: var(--sans);
   font-size: 0.76rem;
   text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem 0.85rem;
+  margin-bottom: 0.45rem;
+}
+
+.footer-links a:first-child {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .footer p {
