@@ -134,16 +134,20 @@ const getDescription = (body, meta) => {
 
 const renderSiteNav = (homeHref = "/", modelsHref = "/models/", researchHref = "/research/") => `<nav class="site-nav" aria-label="Main navigation">
           <span class="ua-flag" role="img" aria-label="Ukrainian flag"></span>
-          <a href="${homeHref}">Home</a>
+          <a class="site-mark" href="${homeHref}">${siteName}</a>
           <a href="${researchHref}">Research</a>
           <a href="${modelsHref}">Models</a>
-          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
         </nav>`;
 
 const renderFooter = () => `<footer class="footer">
-        <p>© 2026 Dmytro Smirnov · ${siteName}</p>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/">${siteName}</a>
+          <a href="/research/">Research</a>
+          <a href="/models/">Models</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
+        <p>Engineering experience framed into reusable knowledge models.</p>
       </footer>`;
 
 const getSeoDescription = (meta, description) =>
