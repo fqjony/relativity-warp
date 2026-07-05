@@ -168,6 +168,8 @@ const getListField = (meta, key) =>
     .map((value) => value.trim())
     .filter(Boolean);
 
+const uniqueValues = (values) => Array.from(new Set(values));
+
 const getTemporalMeta = (meta, filePath) => {
   const stats = fs.statSync(filePath);
   const fallbackDatetime = formatLocalDateTime(stats.mtime);
@@ -204,16 +206,29 @@ const renderPostNav = (newerPost, olderPost) => {
       </nav>`;
 };
 
-const renderRelatedPosts = (relatedPosts) => {
+const getRelatedPostReason = (post, sourcePost) => {
+  if (!sourcePost) return "";
+  const broadLabels = new Set(["engineering", "research", "operations", "repositories", "agents", "workflow"]);
+  const shared = post.labels.filter((label) => sourcePost.labels.includes(label));
+  const specificShared = shared.filter((label) => !broadLabels.has(label));
+  const reasonLabels = specificShared.length ? specificShared : shared;
+  if (reasonLabels.length) return `Shared thread: ${reasonLabels.slice(0, 2).join(", ")}`;
+  return post.classification || "Related note";
+};
+
+const renderRelatedPosts = (relatedPosts, sourcePost = null) => {
   if (!relatedPosts.length) return "";
 
   return `<section class="related-posts" aria-labelledby="related-posts-title">
-        <h2 id="related-posts-title" class="section-title">Related</h2>
+        <h2 id="related-posts-title" class="section-title">Related Notes</h2>
         <ul class="related-list" role="list">
 ${relatedPosts
   .map(
     (post) => `          <li>
-            <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
+            <div>
+              <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
+              ${sourcePost ? `<p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>` : ""}
+            </div>
             <span>${escapeHtml(post.date)}</span>
           </li>`
   )
@@ -258,6 +273,79 @@ ${items
       </section>`;
 };
 
+const renderEvidenceTrailGroup = (label, items, itemRenderer) =>
+  items.length
+    ? `<div class="evidence-trail-group">
+          <h3>${escapeHtml(label)}</h3>
+          <ul class="model-link-list" role="list">
+${items.map(itemRenderer).join("\n")}
+          </ul>
+        </div>`
+    : "";
+
+const renderEvidenceTrail = ({ relatedResearchObjects, relatedModels, relatedPosts, sourcePost }) => {
+  const supportedConcepts = relatedResearchObjects.filter((item) => item.type === "concept");
+  const otherResearch = relatedResearchObjects.filter((item) => item.type !== "concept");
+  const relationRows = relatedResearchObjects.flatMap((item) => {
+    const rows = [];
+    if (item.dependsOn.length) rows.push([`${item.title} depends on`, item.dependsOn.join(", ")]);
+    if (item.supports.length) rows.push([`${item.title} supports`, item.supports.join(", ")]);
+    return rows;
+  });
+
+  if (!supportedConcepts.length && !relatedModels.length && !otherResearch.length && !relatedPosts.length && !relationRows.length) {
+    return "";
+  }
+
+  return `<section class="evidence-trail" aria-labelledby="evidence-trail-title">
+        <h2 id="evidence-trail-title" class="section-title">Evidence Trail</h2>
+        <p>How this dated note connects back into the durable research system.</p>
+        ${renderEvidenceTrailGroup(
+          "Concept Supported",
+          supportedConcepts,
+          (item) => `            <li>
+              <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+              <span>${escapeHtml(item.maturity || item.status)}</span>
+            </li>`
+        )}
+        ${renderEvidenceTrailGroup(
+          "Related Model",
+          relatedModels,
+          (model) => `            <li>
+              <a href="${escapeHtml(model.url)}">${escapeHtml(model.title)}</a>
+              <span>${escapeHtml(model.version || model.status)}</span>
+            </li>`
+        )}
+        ${renderEvidenceTrailGroup(
+          "Related Research Object",
+          otherResearch,
+          (item) => `            <li>
+              <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+              <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
+            </li>`
+        )}
+        ${renderEvidenceTrailGroup(
+          "Related Notes",
+          relatedPosts,
+          (post) => `            <li>
+              <div>
+                <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
+                ${sourcePost ? `<p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>` : ""}
+              </div>
+              <span>${escapeHtml(post.date)}</span>
+            </li>`
+        )}
+        ${renderEvidenceTrailGroup(
+          "Depends On / Supports",
+          relationRows,
+          ([label, value]) => `            <li>
+              <span>${escapeHtml(label)}</span>
+              <span>${escapeHtml(value)}</span>
+            </li>`
+        )}
+      </section>`;
+};
+
 const getResearchObjectTypeLabel = (type) =>
   String(type || "note")
     .split(/[-_\s]+/)
@@ -293,8 +381,15 @@ ${rows
 
 const getResearchFieldId = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-const renderResearchReferenceItem = (value, objectBySlug) => {
-  const item = objectBySlug.get(value);
+const getReferenceTypeLabel = (item) => {
+  if (!item) return "";
+  if (item.kind === "post") return item.classification || "Research Note";
+  if (item.kind === "model") return item.version || "Model";
+  return getResearchObjectTypeLabel(item.type) || item.status;
+};
+
+const renderResearchReferenceItem = (value, referenceBySlug) => {
+  const item = referenceBySlug.get(value);
   if (!item) {
     return `<li>
             <span>${escapeHtml(value)}</span>
@@ -303,11 +398,11 @@ const renderResearchReferenceItem = (value, objectBySlug) => {
 
   return `<li>
             <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
-            <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
+            <span>${escapeHtml(getReferenceTypeLabel(item))}</span>
           </li>`;
 };
 
-const renderResearchLinks = (title, values, objectBySlug) => {
+const renderResearchLinks = (title, values, referenceBySlug) => {
   if (!values.length) return "";
 
   const id = getResearchFieldId(title);
@@ -315,8 +410,54 @@ const renderResearchLinks = (title, values, objectBySlug) => {
   return `<section class="research-links" aria-labelledby="${escapeHtml(id)}">
         <h2 id="${escapeHtml(id)}" class="section-title">${escapeHtml(title)}</h2>
         <ul class="model-link-list" role="list">
-${values.map((value) => `          ${renderResearchReferenceItem(value, objectBySlug)}`).join("\n")}
+${values.map((value) => `          ${renderResearchReferenceItem(value, referenceBySlug)}`).join("\n")}
         </ul>
+      </section>`;
+};
+
+const filterReferencesByKind = (values, referenceBySlug, kind) =>
+  values.filter((value) => referenceBySlug.get(value)?.kind === kind);
+
+const renderResearchOverview = (item, referenceBySlug) => {
+  const sourceRefs = uniqueValues([...item.evidence, ...item.references]);
+  const supportingNotes = filterReferencesByKind(sourceRefs, referenceBySlug, "post");
+  const relatedModels = filterReferencesByKind(sourceRefs, referenceBySlug, "model");
+  const openQuestions =
+    item.type === "question"
+      ? [item.slug]
+      : uniqueValues(item.related.filter((value) => referenceBySlug.get(value)?.type === "question"));
+  const sections = [
+    item.summary
+      ? `<section class="research-overview-section">
+          <h2 class="section-title">Why This Matters</h2>
+          <p>${escapeHtml(item.summary)}</p>
+        </section>`
+      : "",
+    item.status || item.maturity || item.confidence
+      ? `<section class="research-overview-section">
+          <h2 class="section-title">Current Maturity</h2>
+          <p>${escapeHtml(
+            [
+              item.status ? `status: ${item.status}` : "",
+              item.maturity ? `maturity: ${item.maturity}` : "",
+              item.confidence ? `confidence: ${item.confidence}` : "",
+            ]
+              .filter(Boolean)
+              .join("; ")
+          )}.</p>
+        </section>`
+      : "",
+    renderResearchLinks("Supporting Notes", supportingNotes, referenceBySlug),
+    renderResearchLinks("Related Models", relatedModels, referenceBySlug),
+    renderResearchLinks("Open Questions", openQuestions, referenceBySlug),
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  if (!sections) return "";
+
+  return `<section class="research-overview" aria-label="Research object overview">
+        ${sections}
       </section>`;
 };
 
@@ -421,10 +562,10 @@ ${articleTags}
         </div>
       </main>
       ${renderRelatedModels(relatedModels)}
+      ${renderEvidenceTrail({ relatedResearchObjects, relatedModels, relatedPosts, sourcePost: { labels } })}
       ${renderRelatedResearchObjects(relatedResearchObjects)}
       ${renderQuestions(questions)}
       ${renderPostNav(newerPost, olderPost)}
-      ${renderRelatedPosts(relatedPosts)}
       ${renderFooter()}
     </div>
   </body>
@@ -686,16 +827,16 @@ ${renderResearchIndexGroups(items)}
 </html>
 `;
 
-const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref, researchHref, objectBySlug }) => {
+const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref, researchHref, referenceBySlug }) => {
   const safeTitle = escapeHtml(item.title);
   const safeDescription = escapeHtml(item.summary || `Research object: ${item.title}`);
   const safeCanonicalUrl = escapeHtml(absoluteUrl(item.url));
   const relatedSections = [
-    renderResearchLinks("Related", item.related, objectBySlug),
-    renderResearchLinks("Depends On", item.dependsOn, objectBySlug),
-    renderResearchLinks("Supports", item.supports, objectBySlug),
-    renderResearchLinks("Contradicts", item.contradicts, objectBySlug),
-    renderResearchLinks("Evidence", item.evidence, objectBySlug),
+    renderResearchLinks("Related Research", item.related, referenceBySlug),
+    renderResearchLinks("Depends On", item.dependsOn, referenceBySlug),
+    renderResearchLinks("Supports", item.supports, referenceBySlug),
+    renderResearchLinks("Contradicts", item.contradicts, referenceBySlug),
+    renderResearchLinks("Evidence", item.evidence, referenceBySlug),
   ]
     .filter(Boolean)
     .join("\n");
@@ -737,6 +878,7 @@ const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref
         ${renderResearchObjectMeta(item)}
       </header>
       <main id="content" class="article research-object-page">
+        ${renderResearchOverview(item, referenceBySlug)}
         <div class="article-content">
           ${content}
         </div>
@@ -921,6 +1063,7 @@ const buildModels = (posts) => {
           const summary = (meta.summary || "").trim() || getDescription(body, meta);
 
           return {
+            kind: "model",
             raw,
             body,
             title,
@@ -983,7 +1126,7 @@ const buildModels = (posts) => {
   return items;
 };
 
-const buildResearchObjects = () => {
+const buildResearchObjects = (posts, models) => {
   fs.rmSync(publicResearchDir, { recursive: true, force: true });
   fs.mkdirSync(publicResearchDir, { recursive: true });
 
@@ -1004,6 +1147,7 @@ const buildResearchObjects = () => {
           const summary = (meta.summary || "").trim() || getDescription(body, meta);
 
           return {
+            kind: "research",
             raw,
             body,
             title,
@@ -1036,7 +1180,11 @@ const buildResearchObjects = () => {
         })
     : [];
 
-  const objectBySlug = new Map(items.map((item) => [item.slug, item]));
+  const referenceBySlug = new Map([
+    ...posts.map((item) => [item.slug, { ...item, kind: "post" }]),
+    ...models.map((item) => [item.slug, { ...item, kind: "model" }]),
+    ...items.map((item) => [item.slug, item]),
+  ]);
 
   items.forEach((item) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
@@ -1064,7 +1212,7 @@ const buildResearchObjects = () => {
         homeHref,
         modelsHref,
         researchHref,
-        objectBySlug,
+        referenceBySlug,
       }),
       "utf8"
     );
@@ -1163,7 +1311,7 @@ const buildSite = () => {
 
   const items = buildPosts();
   const models = buildModels(items);
-  const researchObjects = buildResearchObjects();
+  const researchObjects = buildResearchObjects(items, models);
 
   writePostPages(items, models, researchObjects);
 

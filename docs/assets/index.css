@@ -423,6 +423,22 @@ a:hover {
   font-size: 0.78rem;
 }
 
+.related-list p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.model-link-list p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .article-nav-link strong {
   color: var(--text);
   font-size: 1rem;
@@ -452,6 +468,40 @@ a:hover {
   margin-top: 2.4rem;
   padding-top: 1.35rem;
   border-top: 1px solid var(--line-soft);
+}
+
+.evidence-trail,
+.research-overview {
+  margin-top: 2.4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line-warm);
+}
+
+.evidence-trail > p,
+.research-overview-section p {
+  max-width: 62ch;
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+.evidence-trail-group {
+  margin-top: 1.3rem;
+}
+
+.evidence-trail-group h3 {
+  margin: 0 0 0.35rem;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.research-overview {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.research-overview-section {
+  margin-bottom: 1.35rem;
 }
 
 .related-list {

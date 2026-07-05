@@ -90,6 +90,25 @@ Avoid titles that sound like a generic DevOps article, marketing page, or SEO qu
 - `models`: optional comma-separated model slugs. Add a model only when the article directly supports, tests, or explains that model.
 - `questions`: optional comma-separated question slugs. Use only for questions the note materially raises or advances.
 
+## Research Memory Declarations
+
+Write source metadata so the site can explain relationships without turning dated articles into mutable landing pages.
+
+- Articles under `src/docs/` are evidence. Preserve their `/spectrum/<slug>/` URLs and improve their relationships through metadata, not route changes.
+- Concepts under `src/research/` are durable research objects. Use them for current vocabulary, claims, status, maturity, and open questions.
+- Models under `src/models/` explain relationships. Link notes to models only when the note provides evidence for the model, tests it, or clarifies one of its boundaries.
+- Do not fabricate a relationship to fill a UI section. Empty metadata is better than a false trail.
+- Prefer existing slugs in `labels`, `models`, `questions`, `evidence`, `references`, `related`, `depends_on`, and `supports` so generated pages can link real source records.
+
+When adding or revising a research object, check whether these fields are known:
+
+- `summary`: why the object matters in one sentence.
+- `status`, `maturity`, `confidence`: current state and strength.
+- `evidence`: supporting research objects, Spectrum article slugs, or model slugs.
+- `references`: related source notes that are useful but not direct evidence.
+- `related`, `depends_on`, `supports`, `contradicts`: explicit research graph edges.
+- body section `## Open Questions`: unresolved questions not yet represented as their own research objects.
+
 ## Classifications
 
 - `Concept`: a canonical research idea or vocabulary object. Prefer a `src/research/` page when the object should remain current.

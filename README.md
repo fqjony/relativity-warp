@@ -227,6 +227,40 @@ Classify new public source records by the role they play in the research memory 
 
 Published Spectrum URLs under `/spectrum/<slug>/` are stable artifacts. Do not rename, move, or delete those source files to revise information architecture; improve navigation, metadata, and relationships around them instead.
 
+## Research Memory Relationships
+
+The site is organized as a research memory system, not a chronological blog:
+
+- Research asks questions.
+- Concepts preserve durable ideas.
+- Models explain relationships.
+- Research Notes provide dated evidence.
+- Everything should point back to the source that can verify or revise it.
+
+Declare relationships in source frontmatter instead of hand-editing generated pages. The build uses existing metadata to render overview sections, evidence trails, related models, supporting notes, and open questions. If a relationship is not supported by source metadata or article content, leave it blank.
+
+For `src/research/*.md`:
+
+- `type` declares the durable object role: `concept`, `hypothesis`, `question`, `evidence`, `framework`, `principle`, or `note`.
+- `status`, `maturity`, and `confidence` describe current maturity without implying finality.
+- `summary` is reused as the short "why this matters" explanation.
+- `related`, `depends_on`, `supports`, and `contradicts` connect research objects by slug.
+- `evidence` should point to supporting research objects, Spectrum article slugs, or model slugs.
+- `references` can point to related models, articles, papers, URLs, or other source notes that are not direct evidence.
+
+For `src/models/*.md`:
+
+- Use `status: draft` until the model is ready to be treated as published.
+- `questions` should name the question slugs the model tries to explain.
+- Keep versioned model pages stable; create a new source file only when the model needs a new public version.
+
+For `src/docs/*.md` Spectrum articles:
+
+- Use `classification: Research Note` for dated evidence notes unless the article is intentionally acting as a stable reference.
+- Use `models` only when the article directly supports, tests, or explains that model.
+- Use `questions` only when the note materially raises or advances those questions.
+- Use labels that match existing concept slugs where accurate, so related notes and evidence trails can be inferred without inventing relationships.
+
 ## Discovery model
 
 The build script in `scripts/build-research.mjs` is the source of truth for generated publishing metadata. It reads Markdown frontmatter, renders posts under `docs/spectrum/<slug>/`, renders models under `docs/models/<slug>/`, and keeps the checked-in GitHub Pages output aligned with source content.
