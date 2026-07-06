@@ -18,6 +18,7 @@ const publicResearchDir = path.join(publishDir, "research");
 const siteUrl = "https://fqjony.com";
 const siteName = "Relativity Warp";
 const googleAnalyticsId = "G-G2LLCNLPPD";
+const ahrefsAnalyticsKey = "nTxxW8yvpmpHWQp+zwBIhw";
 
 const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
@@ -152,6 +153,18 @@ const renderFooter = () => `<footer class="footer">
         </nav>
         <p>© 2026 Dmytro Smirnov · Engineering experience framed into reusable knowledge models.</p>
       </footer>`;
+
+const renderAhrefsScript = () =>
+  `    <script src="https://analytics.ahrefs.com/analytics.js" data-key="${ahrefsAnalyticsKey}" async></script>`;
+
+const renderAnalyticsScripts = () => `    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "${googleAnalyticsId}");
+    </script>
+${renderAhrefsScript()}`;
 
 const getSeoDescription = (meta, description) =>
   meta.seo_description || meta.seoDescription || description;
@@ -544,13 +557,7 @@ ${articleTags}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${safeSeoTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag("js", new Date());
-      gtag("config", "${googleAnalyticsId}");
-    </script>
+${renderAnalyticsScripts()}
     <link rel="stylesheet" href="${cssHref}" />
   </head>
   <body>
@@ -643,6 +650,7 @@ const renderModelIndexPage = (items) => {
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b1220" />
 ${robotsMeta}    <link rel="canonical" href="${absoluteUrl("/models/")}" />
+${renderAhrefsScript()}
     <link rel="stylesheet" href="../assets/index.css" />
   </head>
   <body>
@@ -711,13 +719,7 @@ ${modelTags}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag("js", new Date());
-      gtag("config", "${googleAnalyticsId}");
-    </script>
+${renderAnalyticsScripts()}
     <link rel="stylesheet" href="${cssHref}" />
   </head>
   <body>
@@ -808,6 +810,7 @@ const renderResearchIndexPage = (items) => `<!doctype html>
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b1220" />
     <link rel="canonical" href="${absoluteUrl("/research/")}" />
+${renderAhrefsScript()}
     <link rel="stylesheet" href="../assets/index.css" />
   </head>
   <body>
@@ -866,13 +869,7 @@ const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag("js", new Date());
-      gtag("config", "${googleAnalyticsId}");
-    </script>
+${renderAnalyticsScripts()}
     <link rel="stylesheet" href="${cssHref}" />
   </head>
   <body>
