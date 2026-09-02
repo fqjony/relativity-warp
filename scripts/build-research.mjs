@@ -256,111 +256,86 @@ ${sourcePost ? `              <p>${escapeHtml(getRelatedPostReason(post, sourceP
       </section>`;
 };
 
-const renderRelatedModels = (models) => {
-  if (!models.length) return "";
-
-  return `<section class="related-models" aria-labelledby="related-models-title">
-        <h2 id="related-models-title" class="section-title">Related Models</h2>
-        <ul class="model-link-list" role="list">
-${models
-  .map(
-    (model) => `          <li>
-            <a href="${escapeHtml(model.url)}">${escapeHtml(model.title)}</a>
-            <span>${escapeHtml(model.version || model.status)}</span>
-          </li>`
-  )
-  .join("\n")}
-        </ul>
-      </section>`;
-};
-
-const renderRelatedResearchObjects = (items) => {
+const renderResearchContextLinks = (title, items, renderItem) => {
   if (!items.length) return "";
 
-  return `<section class="related-research" aria-labelledby="related-research-title">
-        <h2 id="related-research-title" class="section-title">Related Research</h2>
-        <ul class="model-link-list" role="list">
-${items
-  .map(
-    (item) => `          <li>
-            <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
-            <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
-          </li>`
-  )
-  .join("\n")}
-        </ul>
-      </section>`;
+  return `<div class="research-context-group">
+          <h3>${escapeHtml(title)}</h3>
+          <ul class="model-link-list" role="list">
+${items.map(renderItem).join("\n")}
+          </ul>
+        </div>`;
 };
 
-const renderEvidenceTrailGroup = (label, items, itemRenderer) =>
-  items.length
-    ? `<div class="evidence-trail-group">
-          <h3>${escapeHtml(label)}</h3>
-          <ul class="model-link-list" role="list">
-${items.map(itemRenderer).join("\n")}
-          </ul>
-        </div>`
-    : "";
-
-const renderEvidenceTrail = ({ relatedResearchObjects, relatedModels, relatedPosts, sourcePost }) => {
-  const supportedConcepts = relatedResearchObjects.filter((item) => item.type === "concept");
-  const otherResearch = relatedResearchObjects.filter((item) => item.type !== "concept");
-  const relationRows = relatedResearchObjects.flatMap((item) => {
-    const rows = [];
-    if (item.dependsOn.length) rows.push([`${item.title} depends on`, item.dependsOn.join(", ")]);
-    if (item.supports.length) rows.push([`${item.title} supports`, item.supports.join(", ")]);
-    return rows;
-  });
-
-  if (!supportedConcepts.length && !relatedModels.length && !otherResearch.length && !relatedPosts.length && !relationRows.length) {
+const renderResearchContext = ({ directResearchObjects, relatedModels, relatedPosts, nearbyResearchObjects, sourcePost }) => {
+  if (!directResearchObjects.length && !relatedModels.length && !relatedPosts.length && !nearbyResearchObjects.length) {
     return "";
   }
 
-  return `<section class="evidence-trail" aria-labelledby="evidence-trail-title">
-        <h2 id="evidence-trail-title" class="section-title">Evidence Trail</h2>
-        <p>How this dated note connects back into the durable research system.</p>
-${renderEvidenceTrailGroup(
-          "Concept Supported",
-          supportedConcepts,
-          (item) => `            <li>
+  const directConnections = [
+    renderResearchContextLinks(
+      "This note contributes to",
+      directResearchObjects,
+      (item) => `            <li>
               <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
               <span>${escapeHtml(item.maturity || item.status)}</span>
             </li>`
-        )}
-${renderEvidenceTrailGroup(
-          "Related Model",
-          relatedModels,
-          (model) => `            <li>
+    ),
+    renderResearchContextLinks(
+      "Model connection",
+      relatedModels,
+      (model) => `            <li>
               <a href="${escapeHtml(model.url)}">${escapeHtml(model.title)}</a>
               <span>${escapeHtml(model.version || model.status)}</span>
             </li>`
-        )}
-${renderEvidenceTrailGroup(
-          "Related Research Object",
-          otherResearch,
-          (item) => `            <li>
-              <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
-              <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
-            </li>`
-        )}
-${renderEvidenceTrailGroup(
-          "Related Notes",
-          relatedPosts,
-          (post) => `            <li>
+    ),
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const continuation = relatedPosts.length
+    ? `<div class="research-context-reading">
+          <h3>Continue reading</h3>
+          <ul class="related-list" role="list">
+${relatedPosts
+  .map(
+    (post) => `            <li>
               <div>
                 <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
 ${sourcePost ? `                <p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>\n` : ""}              </div>
               <span>${escapeHtml(post.date)}</span>
             </li>`
-        )}
-${renderEvidenceTrailGroup(
-          "Depends On / Supports",
-          relationRows,
-          ([label, value]) => `            <li>
-              <span>${escapeHtml(label)}</span>
-              <span>${escapeHtml(value)}</span>
+  )
+  .join("\n")}
+          </ul>
+        </div>`
+    : "";
+
+  const widerSystem = nearbyResearchObjects.length
+    ? `<details class="research-context-system">
+          <summary>
+            <span>Explore the wider research system</span>
+            <span>${nearbyResearchObjects.length} nearby ${nearbyResearchObjects.length === 1 ? "connection" : "connections"}</span>
+          </summary>
+          <p>These topic connections help with exploration. They are not direct evidence from this note.</p>
+          <ul class="model-link-list" role="list">
+${nearbyResearchObjects
+  .map(
+    (item) => `            <li>
+              <a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+              <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
             </li>`
-        )}
+  )
+  .join("\n")}
+          </ul>
+        </details>`
+    : "";
+
+  return `<section class="research-context" aria-labelledby="research-context-title">
+        <h2 id="research-context-title" class="section-title">Research context</h2>
+${directConnections ? `        <div class="research-context-direct">${directConnections}</div>` : ""}
+${continuation}
+${widerSystem}
       </section>`;
 };
 
@@ -510,7 +485,8 @@ const renderPostPage = ({
   olderPost,
   relatedPosts,
   relatedModels,
-  relatedResearchObjects,
+  directResearchObjects,
+  nearbyResearchObjects,
   questions,
 }) => {
   const safeTitle = escapeHtml(title);
@@ -573,9 +549,7 @@ ${renderAnalyticsScripts()}
           ${content}
         </div>
       </main>
-      ${renderRelatedModels(relatedModels)}
-      ${renderEvidenceTrail({ relatedResearchObjects, relatedModels, relatedPosts, sourcePost: { labels } })}
-      ${renderRelatedResearchObjects(relatedResearchObjects)}
+      ${renderResearchContext({ directResearchObjects, relatedModels, relatedPosts, nearbyResearchObjects, sourcePost: { labels } })}
       ${renderQuestions(questions)}
       ${renderPostNav(newerPost, olderPost)}
       ${renderFooter()}
@@ -1247,11 +1221,13 @@ const writePostPages = (items, models, researchObjects) => {
       })
       .slice(0, 3);
     const relatedModels = item.modelSlugs.map((slug) => modelBySlug.get(slug)).filter(Boolean);
-    const relatedResearchObjects = publicResearchObjects
+    const directResearchObjects = publicResearchObjects.filter(
+      (candidate) => candidate.evidence.includes(item.slug) || candidate.references.includes(item.slug)
+    );
+    const directResearchSlugs = new Set(directResearchObjects.map((candidate) => candidate.slug));
+    const nearbyResearchObjects = publicResearchObjects
       .map((candidate) => {
         let relationScore = 0;
-        if (candidate.evidence.includes(item.slug)) relationScore += 4;
-        if (candidate.references.includes(item.slug)) relationScore += 3;
         if (itemLabels.has(candidate.slug)) relationScore += 3;
         relationScore += candidate.concepts.filter((concept) => itemLabels.has(concept)).length;
         relationScore += candidate.references.filter((reference) => itemModelSlugs.has(reference)).length;
@@ -1263,7 +1239,7 @@ const writePostPages = (items, models, researchObjects) => {
           relationScore,
         };
       })
-      .filter((candidate) => candidate.relationScore > 0)
+      .filter((candidate) => candidate.relationScore > 0 && !directResearchSlugs.has(candidate.slug))
       .sort((a, b) => {
         if (a.relationScore !== b.relationScore) return b.relationScore - a.relationScore;
         return a.title.localeCompare(b.title);
@@ -1296,7 +1272,8 @@ const writePostPages = (items, models, researchObjects) => {
         olderPost: index < items.length - 1 ? items[index + 1] : null,
         relatedPosts,
         relatedModels,
-        relatedResearchObjects,
+        directResearchObjects,
+        nearbyResearchObjects,
       }),
       "utf8"
     );

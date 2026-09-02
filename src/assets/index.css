@@ -457,47 +457,82 @@ a:hover {
   border-top: 1px solid var(--line-warm);
 }
 
-.related-models {
-  margin-top: 2.4rem;
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--line-warm);
-}
-
-.related-research {
-  margin-top: 2.4rem;
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--line-warm);
-}
-
 .article-questions {
   margin-top: 2.4rem;
   padding-top: 1.35rem;
   border-top: 1px solid var(--line-soft);
 }
 
-.evidence-trail,
+.research-context,
 .research-overview {
   margin-top: 2.4rem;
   padding-top: 1.35rem;
   border-top: 1px solid var(--line-warm);
 }
 
-.evidence-trail > p,
 .research-overview-section p {
   max-width: 62ch;
   margin: 0 0 1rem;
   color: var(--muted);
 }
 
-.evidence-trail-group {
-  margin-top: 1.3rem;
+.research-context-direct {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0 0.15rem 1.1rem;
+  border-left: 2px solid var(--quiet);
 }
 
-.evidence-trail-group h3 {
+.research-context h3 {
   margin: 0 0 0.35rem;
   color: var(--text);
+  font-family: var(--sans);
   font-size: 1rem;
+  font-weight: 500;
+}
+
+.research-context-reading {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.research-context-system {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.research-context-system summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
+.research-context-system summary::marker {
+  color: var(--link);
+}
+
+.research-context-system summary span:last-child {
+  color: var(--muted);
+  font-size: 0.78rem;
   font-weight: 400;
+}
+
+.research-context-system p {
+  max-width: 62ch;
+  margin: 0.85rem 0 0.35rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 .research-overview {
