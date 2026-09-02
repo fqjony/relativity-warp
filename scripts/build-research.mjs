@@ -247,8 +247,7 @@ ${relatedPosts
     (post) => `          <li>
             <div>
               <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
-              ${sourcePost ? `<p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>` : ""}
-            </div>
+${sourcePost ? `              <p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>\n` : ""}            </div>
             <span>${escapeHtml(post.date)}</span>
           </li>`
   )
@@ -320,7 +319,7 @@ const renderEvidenceTrail = ({ relatedResearchObjects, relatedModels, relatedPos
   return `<section class="evidence-trail" aria-labelledby="evidence-trail-title">
         <h2 id="evidence-trail-title" class="section-title">Evidence Trail</h2>
         <p>How this dated note connects back into the durable research system.</p>
-        ${renderEvidenceTrailGroup(
+${renderEvidenceTrailGroup(
           "Concept Supported",
           supportedConcepts,
           (item) => `            <li>
@@ -328,7 +327,7 @@ const renderEvidenceTrail = ({ relatedResearchObjects, relatedModels, relatedPos
               <span>${escapeHtml(item.maturity || item.status)}</span>
             </li>`
         )}
-        ${renderEvidenceTrailGroup(
+${renderEvidenceTrailGroup(
           "Related Model",
           relatedModels,
           (model) => `            <li>
@@ -336,7 +335,7 @@ const renderEvidenceTrail = ({ relatedResearchObjects, relatedModels, relatedPos
               <span>${escapeHtml(model.version || model.status)}</span>
             </li>`
         )}
-        ${renderEvidenceTrailGroup(
+${renderEvidenceTrailGroup(
           "Related Research Object",
           otherResearch,
           (item) => `            <li>
@@ -344,18 +343,17 @@ const renderEvidenceTrail = ({ relatedResearchObjects, relatedModels, relatedPos
               <span>${escapeHtml(getResearchObjectTypeLabel(item.type) || item.status)}</span>
             </li>`
         )}
-        ${renderEvidenceTrailGroup(
+${renderEvidenceTrailGroup(
           "Related Notes",
           relatedPosts,
           (post) => `            <li>
               <div>
                 <a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a>
-                ${sourcePost ? `<p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>` : ""}
-              </div>
+${sourcePost ? `                <p>${escapeHtml(getRelatedPostReason(post, sourcePost))}</p>\n` : ""}              </div>
               <span>${escapeHtml(post.date)}</span>
             </li>`
         )}
-        ${renderEvidenceTrailGroup(
+${renderEvidenceTrailGroup(
           "Depends On / Supports",
           relationRows,
           ([label, value]) => `            <li>

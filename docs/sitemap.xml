@@ -86,6 +86,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://fqjony.com/research/session-traces/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://fqjony.com/research/postmortems-create-knowledge-but-rarely-create-memory/</loc>
     <lastmod>2026-07-05</lastmod>
     <priority>0.6</priority>
