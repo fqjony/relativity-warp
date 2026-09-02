@@ -1,7 +1,7 @@
 ---
 title: Session Traces Are Orientation, Not Authority
 description: Session history can recover the next useful question, but live repository, workflow, and runtime evidence must still establish what is true.
-status: draft
+status: published
 date: 2026-09-02
 datetime: 2026-09-02 22:20
 labels: engineering-memory, operational-truth, session-boundaries, repository-centric-engineering, ai-assisted-engineering
