@@ -632,10 +632,11 @@ ${renderAhrefsScript()}
         ${renderSiteNav("../index.html", "index.html", "../research/")}
         <h1 class="article-title">Models</h1>
         <div class="post-meta">
-          <span>Working research structures</span>
+          <span>Current version of each research model</span>
         </div>
       </header>
       <main id="content" class="model-index">
+        <p>Older versions remain available from each model's version history.</p>
         <ul class="model-index-list" role="list">
 ${renderModelIndexList(items)}
         </ul>
@@ -661,6 +662,28 @@ const compareModelVersions = (left, right) => {
   }
 
   return left.sortValue - right.sortValue;
+};
+
+const selectCurrentModels = (items) => {
+  const modelsBySeries = new Map();
+
+  items.forEach((item) => {
+    const key = item.series || `model:${item.slug}`;
+    const members = modelsBySeries.get(key) || [];
+    members.push(item);
+    modelsBySeries.set(key, members);
+  });
+
+  return [...modelsBySeries.values()]
+    .map((members) => {
+      const published = members.filter((item) => item.status === "published");
+      const candidates = published.length ? published : members;
+      return [...candidates].sort(compareModelVersions).at(-1);
+    })
+    .sort((left, right) => {
+      if (left.sortValue !== right.sortValue) return right.sortValue - left.sortValue;
+      return left.title.localeCompare(right.title);
+    });
 };
 
 const renderModelVersionHistory = (item, seriesModels) => {
@@ -1144,7 +1167,11 @@ const buildModels = (posts) => {
     );
   });
 
-  fs.writeFileSync(path.join(publicModelsDir, "index.html"), renderModelIndexPage(items), "utf8");
+  fs.writeFileSync(
+    path.join(publicModelsDir, "index.html"),
+    renderModelIndexPage(selectCurrentModels(items)),
+    "utf8"
+  );
 
   return items;
 };

@@ -114,7 +114,7 @@ Model frontmatter:
 
 Draft model pages are rendered for preview but receive `noindex, nofollow` metadata. Published model pages are added to `docs/sitemap.xml`.
 
-Models that share a `series` identifier render a version history on every version page. Keep each version's source stable so readers can move between the versions and read the revision in its original context.
+Models that share a `series` identifier render a version history on every version page. The `/models/` index shows the newest published version in each series; if a series has no published version, it shows its newest draft for local preview. Keep each version's source stable so readers can move between the versions and read the revision in its original context.
 
 ### Model evolution
 
@@ -343,7 +343,7 @@ Current limitations:
 
 - Frontmatter is parsed as flat `key: value` strings; do not use nested YAML or arrays.
 - `models` and `questions` are comma-separated slug fields.
-- Question pages, RSS, and model version relationships are not implemented.
+- RSS is not implemented.
 - `/spectrum/` remains the article route.
 
 SEO guide for every new article:
