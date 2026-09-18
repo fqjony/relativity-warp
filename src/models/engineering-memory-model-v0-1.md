@@ -60,7 +60,20 @@ This keeps the model grounded. The useful path is not from chat to memory. It is
 - [Operational Truth and Engineering Memory](/spectrum/2026-06-17-operational-truth-and-engineering-memory/)
 - [Session Start Is an Operational Boundary](/spectrum/2026-07-04-session-start-operational-boundary/)
 - [When Experience Becomes Automation](/spectrum/2026-07-04-when-experience-becomes-automation/)
+- [A Lesson Needs a Destination](/spectrum/2026-09-13-a-lesson-needs-a-destination/)
+
+## First Classification Test
+
+The model's first practical classification test is whether a candidate lesson can be routed to the smallest durable owner that can revise and reuse it.
+
+- observation: a session or other execution trace reveals a candidate pattern
+- evidence: the current owning source confirms the pattern still applies
+- boundary: no lesson becomes general guidance until its owner and revision path are clear
+- generalization: the smallest statement that survives verification
+- application: a repository document, workflow, test, skill, research object, or other owned surface makes the lesson available in context
+
+This test also permits a valid negative result: some execution residue has no durable destination and should not be promoted.
 
 ## Next Revision
 
-The next revision should test whether the five-part model can classify existing notes cleanly without forcing every article into the same structure.
+The next revision should test the classification rule across existing notes without forcing every article into the same structure, and should identify when a lesson needs a new owner rather than a better route to an existing one.
