@@ -24,6 +24,7 @@ const markerStart = "<!-- RESEARCH:START -->";
 const markerEnd = "<!-- RESEARCH:END -->";
 const navMarker = "<!-- SITE_NAV -->";
 const footerMarker = "<!-- SITE_FOOTER -->";
+const currentModelHrefMarker = "<!-- CURRENT_MODEL_HREF -->";
 
 const cleanText = (value) =>
   value
@@ -140,11 +141,11 @@ const renderSiteNav = (homeHref = "/", modelsHref = "/models/", researchHref = "
           <a href="${modelsHref}">Models</a>
         </nav>`;
 
-const renderFooter = () => `<footer class="footer">
+const renderFooter = (modelsHref = "/models/") => `<footer class="footer">
         <nav class="footer-links" aria-label="Footer navigation">
           <a href="/">${siteName}</a>
           <a href="/research/">Research</a>
-          <a href="/models/">Models</a>
+          <a href="${modelsHref}">Models</a>
           <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
           <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
@@ -552,7 +553,7 @@ ${renderAnalyticsScripts()}
       ${renderResearchContext({ directResearchObjects, relatedModels, relatedPosts, nearbyResearchObjects, sourcePost: { labels } })}
       ${renderQuestions(questions)}
       ${renderPostNav(newerPost, olderPost)}
-      ${renderFooter()}
+      ${renderFooter(modelsHref)}
     </div>
   </body>
 </html>
@@ -654,7 +655,7 @@ ${renderAhrefsScript()}
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        ${renderSiteNav("../index.html", "index.html", "../research/")}
+        ${renderSiteNav("/", "index.html", "../research/")}
         <h1 class="article-title">Models</h1>
         <div class="post-meta">
           <span>Current version of each research model</span>
@@ -709,6 +710,11 @@ const selectCurrentModels = (items) => {
       if (left.sortValue !== right.sortValue) return right.sortValue - left.sortValue;
       return left.title.localeCompare(right.title);
     });
+};
+
+const getModelsNavigationHref = (models) => {
+  const currentModels = selectCurrentModels(models);
+  return currentModels.length === 1 ? currentModels[0].url : "/models/";
 };
 
 const renderModelVersionHistory = (item, seriesModels) => {
@@ -802,7 +808,7 @@ ${renderAnalyticsScripts()}
         ${questionList}
       </main>
       ${renderRelatedPosts(relatedPosts)}
-      ${renderFooter()}
+      ${renderFooter(modelsHref)}
     </div>
   </body>
 </html>
@@ -862,7 +868,7 @@ ${renderResearchIndexList(groupItems)}
     .join("\n");
 };
 
-const renderResearchIndexPage = (items) => `<!doctype html>
+const renderResearchIndexPage = (items, modelsHref = "../models/") => `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -879,7 +885,7 @@ ${renderAhrefsScript()}
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="container">
       <header class="site-header article-header">
-        ${renderSiteNav("../index.html", "../models/", "index.html")}
+        ${renderSiteNav("/", modelsHref, "index.html")}
         <h1 class="article-title">Research</h1>
         <p class="model-summary">An evolving research corpus for turning software engineering experience into reusable understanding. These objects are working material, not a finished publication archive.</p>
       </header>
@@ -893,7 +899,7 @@ ${renderAhrefsScript()}
 ${renderResearchIndexGroups(items)}
         </section>
       </main>
-      ${renderFooter()}
+      ${renderFooter(modelsHref)}
     </div>
   </body>
 </html>
@@ -950,14 +956,14 @@ ${renderAnalyticsScripts()}
         </div>
       </main>
       ${relatedSections}
-      ${renderFooter()}
+      ${renderFooter(modelsHref)}
     </div>
   </body>
 </html>
 `;
 };
 
-const updateHomepage = (items) => {
+const updateHomepage = (items, models) => {
   const raw = fs.readFileSync(homepagePath, "utf8");
   const start = raw.indexOf(markerStart);
   const end = raw.indexOf(markerEnd);
@@ -970,11 +976,18 @@ const updateHomepage = (items) => {
   if (!raw.includes(footerMarker)) {
     throw new Error("Homepage footer marker not found.");
   }
+  if (!raw.includes(currentModelHrefMarker)) {
+    throw new Error("Homepage current model marker not found.");
+  }
 
   const withPosts = `${raw.slice(0, start + markerStart.length)}
 ${renderPostList(items)}
 ${raw.slice(end)}`;
-  const updated = withPosts.replace(navMarker, renderSiteNav()).replace(footerMarker, renderFooter());
+  const modelsHref = getModelsNavigationHref(models);
+  const updated = withPosts
+    .replaceAll(currentModelHrefMarker, modelsHref)
+    .replace(navMarker, renderSiteNav("/", modelsHref, "/research/"))
+    .replace(footerMarker, renderFooter(modelsHref));
 
   fs.mkdirSync(publishDir, { recursive: true });
   fs.writeFileSync(path.join(publishDir, "index.html"), updated, "utf8");
@@ -1153,6 +1166,8 @@ const buildModels = (posts) => {
         })
     : [];
 
+  const modelsNavigationHref = getModelsNavigationHref(items);
+
   items.forEach((item) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
     const content = marked.parse(strippedBody);
@@ -1166,12 +1181,8 @@ const buildModels = (posts) => {
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
-    const homeHref = path
-      .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
-      .replace(/\\/g, "/");
-    const modelsHref = path
-      .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
-      .replace(/\\/g, "/");
+    const homeHref = "/";
+    const modelsHref = modelsNavigationHref;
     const researchHref = path
       .relative(path.dirname(item.outputPath), path.join(publicResearchDir, "index.html"))
       .replace(/\\/g, "/");
@@ -1261,6 +1272,7 @@ const buildResearchObjects = (posts, models) => {
     ...models.map((item) => [item.slug, { ...item, kind: "model" }]),
     ...items.map((item) => [item.slug, item]),
   ]);
+  const modelsNavigationHref = getModelsNavigationHref(models);
 
   items.forEach((item) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
@@ -1268,12 +1280,8 @@ const buildResearchObjects = (posts, models) => {
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
-    const homeHref = path
-      .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
-      .replace(/\\/g, "/");
-    const modelsHref = path
-      .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
-      .replace(/\\/g, "/");
+    const homeHref = "/";
+    const modelsHref = modelsNavigationHref;
     const researchHref = path
       .relative(path.dirname(item.outputPath), path.join(publicResearchDir, "index.html"))
       .replace(/\\/g, "/");
@@ -1294,7 +1302,11 @@ const buildResearchObjects = (posts, models) => {
     );
   });
 
-  fs.writeFileSync(path.join(publicResearchDir, "index.html"), renderResearchIndexPage(items), "utf8");
+  fs.writeFileSync(
+    path.join(publicResearchDir, "index.html"),
+    renderResearchIndexPage(items, modelsNavigationHref),
+    "utf8"
+  );
 
   return items;
 };
@@ -1302,6 +1314,7 @@ const buildResearchObjects = (posts, models) => {
 const writePostPages = (items, models, researchObjects) => {
   const modelBySlug = new Map(models.map((model) => [model.slug, model]));
   const publicResearchObjects = researchObjects.filter((item) => item.status !== "draft");
+  const modelsNavigationHref = getModelsNavigationHref(models);
 
   items.forEach((item, index) => {
     const strippedBody = item.body.replace(/^# .+?\n+/, "");
@@ -1348,12 +1361,8 @@ const writePostPages = (items, models, researchObjects) => {
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
-    const homeHref = path
-      .relative(path.dirname(item.outputPath), path.join(publishDir, "index.html"))
-      .replace(/\\/g, "/");
-    const modelsHref = path
-      .relative(path.dirname(item.outputPath), path.join(publicModelsDir, "index.html"))
-      .replace(/\\/g, "/");
+    const homeHref = "/";
+    const modelsHref = modelsNavigationHref;
     const researchHref = path
       .relative(path.dirname(item.outputPath), path.join(publicResearchDir, "index.html"))
       .replace(/\\/g, "/");
@@ -1394,7 +1403,7 @@ const buildSite = () => {
 
   writePostPages(items, models, researchObjects);
 
-  updateHomepage(items);
+  updateHomepage(items, models);
   writeSitemap(items, models, researchObjects);
   writeRobotsTxt();
   fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });

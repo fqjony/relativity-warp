@@ -69,6 +69,11 @@
       gtag("config", "G-G2LLCNLPPD");
     </script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="nTxxW8yvpmpHWQp+zwBIhw" async></script>
+    <script>
+      if (window.location.pathname === "/index.html") {
+        window.history.replaceState(null, "", `/${window.location.search}${window.location.hash}`);
+      }
+    </script>
     <link rel="stylesheet" href="assets/index.css" />
     <script src="assets/index.js" defer></script>
   </head>
@@ -104,7 +109,7 @@
               <p>Start with the core concept: how execution evidence becomes reusable understanding without replacing the systems that own truth.</p>
             </article>
             <article class="research-map-item">
-              <h3><a href="/models/">Engineering Memory Model</a></h3>
+              <h3><a href="<!-- CURRENT_MODEL_HREF -->">Engineering Memory Model</a></h3>
               <p>Then read the current model for how evidence stays available, revisable, and usable in later work.</p>
             </article>
             <article class="research-map-item">
@@ -125,7 +130,7 @@
               <strong>Concepts</strong>
               <span>Concept pages preserve durable vocabulary and current claims as the dated evidence changes.</span>
             </a>
-            <a href="/models/">
+            <a href="<!-- CURRENT_MODEL_HREF -->">
               <strong>Models</strong>
               <span>Models explain relationships between concepts, evidence, boundaries, and reuse paths.</span>
             </a>
