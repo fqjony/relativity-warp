@@ -647,7 +647,48 @@ ${renderModelIndexList(items)}
 `;
 };
 
-const renderModelPage = ({ title, version, summary, content, cssHref, homeHref, modelsHref, researchHref, labels, questions, status, date, url, relatedPosts }) => {
+const compareModelVersions = (left, right) => {
+  const parseVersion = (value) => {
+    const match = String(value || "").match(/^v(\d+)(?:\.(\d+))?$/i);
+    return match ? [Number(match[1]), Number(match[2] || 0)] : null;
+  };
+  const leftVersion = parseVersion(left.version);
+  const rightVersion = parseVersion(right.version);
+
+  if (leftVersion && rightVersion) {
+    if (leftVersion[0] !== rightVersion[0]) return leftVersion[0] - rightVersion[0];
+    if (leftVersion[1] !== rightVersion[1]) return leftVersion[1] - rightVersion[1];
+  }
+
+  return left.sortValue - right.sortValue;
+};
+
+const renderModelVersionHistory = (item, seriesModels) => {
+  if (seriesModels.length < 2) return "";
+
+  return `<section class="model-version-history" aria-labelledby="model-versions-title">
+          <h2 id="model-versions-title" class="section-title">Model versions</h2>
+          <p>Each version keeps the claim and evidence available when it was written.</p>
+          <ol class="model-link-list" role="list">
+${seriesModels
+  .map((candidate) => {
+    const label = candidate.version || candidate.title;
+    const versionLabel = candidate === item ? `${label} (this version)` : label;
+    const versionLink =
+      candidate === item
+        ? `<span aria-current="page">${escapeHtml(versionLabel)}</span>`
+        : `<a href="${escapeHtml(candidate.url)}">${escapeHtml(versionLabel)}</a>`;
+    return `            <li>
+              ${versionLink}
+              <span>${escapeHtml(candidate.date)}</span>
+            </li>`;
+  })
+  .join("\n")}
+          </ol>
+        </section>`;
+};
+
+const renderModelPage = ({ title, version, summary, content, cssHref, homeHref, modelsHref, researchHref, labels, questions, status, date, url, relatedPosts, versionHistory }) => {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(summary || `Research model: ${title}`);
   const safeCanonicalUrl = escapeHtml(absoluteUrl(url));
@@ -706,6 +747,7 @@ ${renderAnalyticsScripts()}
         ${summary ? `<p class="model-summary">${escapeHtml(summary)}</p>` : ""}
       </header>
       <main id="content" class="article model-page">
+        ${versionHistory}
         <div class="article-content">
           ${content}
         </div>
@@ -1049,6 +1091,7 @@ const buildModels = (posts) => {
             labels: getLabels(meta),
             questions: getListField(meta, "questions"),
             version: (meta.version || "").trim(),
+            series: (meta.series || "").trim(),
             slug,
             url: `/models/${slug}/`,
             outputPath: path.join(publicModelsDir, slug, "index.html"),
@@ -1068,6 +1111,9 @@ const buildModels = (posts) => {
       .filter((post) => post.modelSlugs.includes(item.slug))
       .sort((a, b) => b.sortValue - a.sortValue)
       .slice(0, 5);
+    const seriesModels = item.series
+      ? items.filter((candidate) => candidate.series === item.series).sort(compareModelVersions)
+      : [];
     const cssHref = path
       .relative(path.dirname(item.outputPath), path.join(publishDir, "assets", "index.css"))
       .replace(/\\/g, "/");
@@ -1092,6 +1138,7 @@ const buildModels = (posts) => {
         modelsHref,
         researchHref,
         relatedPosts,
+        versionHistory: renderModelVersionHistory(item, seriesModels),
       }),
       "utf8"
     );

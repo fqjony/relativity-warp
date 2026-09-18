@@ -6,7 +6,7 @@ date: 2026-09-13
 datetime: 2026-09-13 12:00
 labels: engineering-memory, knowledge-promotion, operational-truth, session-boundaries, ai-assisted-engineering
 classification: Research Note
-models: engineering-memory-model-v0-1
+models: engineering-memory-model-v0-1, engineering-memory-model-v0-2
 questions: what-makes-engineering-knowledge-reusable, can-software-engineering-become-a-cumulative-discipline
 ---
 

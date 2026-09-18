@@ -6,8 +6,13 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://fqjony.com/models/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://fqjony.com/research/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -86,13 +91,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://fqjony.com/models/engineering-memory-model-v0-2/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://fqjony.com/research/engineering-memory/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://fqjony.com/research/operational-truth/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -102,7 +112,7 @@
   </url>
   <url>
     <loc>https://fqjony.com/research/session-traces/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -112,7 +122,7 @@
   </url>
   <url>
     <loc>https://fqjony.com/research/knowledge-promotion/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -127,7 +137,12 @@
   </url>
   <url>
     <loc>https://fqjony.com/research/what-makes-engineering-knowledge-reusable/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-09-18</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fqjony.com/research/why-does-engineering-experience-not-compound/</loc>
+    <lastmod>2026-09-18</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>
