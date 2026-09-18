@@ -110,8 +110,71 @@ Model frontmatter:
 - `summary`
 - `labels` (comma-separated, optional)
 - `questions` (comma-separated slugs, optional)
+- `series` (shared identifier for versioned models, optional)
 
 Draft model pages are rendered for preview but receive `noindex, nofollow` metadata. Published model pages are added to `docs/sitemap.xml`.
+
+Models that share a `series` identifier render a version history on every version page. Keep each version's source stable so readers can move between the versions and read the revision in its original context.
+
+### Model evolution
+
+Models turn repeated, source-backed engineering experience into a compact explanation that later work can test, revise, or reject. They do not replace the sources that own current behavior, decisions, or runtime state.
+
+Use this working loop:
+
+```text
+experience -> evidence -> bounded claim -> owned application -> later use -> returned evidence
+```
+
+An observation begins the loop. Inspectable sources establish what happened. A model states the smallest claim that the evidence supports, names its boundary, and points to an owner where later work can improve it. Later use either confirms the claim, exposes a limit, or produces a repair. The repair belongs with the owner, not in an unverified summary.
+
+#### Start from evidence
+
+- Begin with a dated research note, research object, repository change, test, workflow result, decision record, or other inspectable source. A session trace may recover the question and sources to reopen, but is not sufficient evidence on its own.
+- State what the source can establish. Tests, scripts, manifests, and runtime records can establish observed behavior. Documentation and decision records establish intended scope or accepted tradeoffs. Generated context is a derived view and must retain provenance and gaps.
+- Keep claims proportional to their evidence. One local experiment can support a bounded test; it does not establish a universal rule about teams, repositories, or tools.
+
+#### Choose the right research surface
+
+- Add or improve a research note when the evidence is a dated observation, experiment, or synthesis.
+- Add or improve a research object when the work establishes durable vocabulary, a question, a hypothesis, or a framework that needs ongoing revision.
+- Correct an existing model when a change clarifies language, fixes provenance, or improves presentation without changing its conditions, relationships, or tests.
+- Create a new `v0.x` model source when evidence changes the model's conditions, relationships, practical tests, or stated boundary. Keep the earlier version stable and say what the revision adds.
+- Leave the material as temporary execution residue when it has no durable owner, reuse path, or source-backed claim.
+
+#### Preserve the research thread
+
+Before drafting a revision, read the previous model, its direct evidence notes, and the research objects it changes. Keep the model's enduring purpose visible; a version should develop the same question rather than rename it.
+
+In the revision's `Status` and `What Changed` sections, say:
+
+1. The engineering problem the model continues to explain.
+2. The observed gap that the earlier version did not cover.
+3. The earlier claim that remains useful.
+4. The condition, relationship, or test the revision adds.
+5. The question the revision still cannot answer.
+
+The result should be expressible in one sentence: “v0.1 explains ___; v0.2 adds ___ because ___.” If that sentence only describes broader language or better examples, revise the existing model instead of creating a new version.
+
+#### Keep the model bounded
+
+- Name both the conditions where the model helps and the evidence or environments it cannot cover.
+- Distinguish the source from its owner: the source carries a claim; the owner can revise it.
+- Do not treat convenience copies, chat summaries, or generated context as authority over their inputs.
+- When continuity depends on a work host, state which instructions, state, controls, and checks are available there, and which remote facts remain unavailable.
+- Link a note to a model only when the note directly supports, tests, or refines that model. Keep prior links when a note is evidence for more than one version.
+
+#### Review before publishing
+
+Before proposing a model revision, confirm that it answers these questions:
+
+1. What new evidence changes the model?
+2. What can each cited source actually establish?
+3. What is the smallest revised claim, and where does it stop applying?
+4. Where will later work return evidence or repairs?
+5. What would justify a correction instead of another version?
+
+Keep new model versions as `status: draft`, run `npm run build`, and preview the rendered model and directly related research objects. Publishing follows the normal pull-request workflow only after explicit review.
 
 ## Article tone
 

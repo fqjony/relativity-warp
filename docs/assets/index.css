@@ -664,6 +664,21 @@ a:hover {
   border-top: 1px solid var(--line-soft);
 }
 
+.model-page .model-version-history {
+  margin: 0 0 2.2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.model-version-history p {
+  max-width: 62ch;
+  margin: 0.45rem 0 0.7rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
 .model-link-list span {
   color: var(--muted);
   font-family: var(--sans);

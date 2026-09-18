@@ -6,7 +6,7 @@ date: 2026-09-02
 datetime: 2026-09-02 22:20
 labels: engineering-memory, operational-truth, session-boundaries, repository-centric-engineering, ai-assisted-engineering
 classification: Research Note
-models: engineering-memory-model-v0-1
+models: engineering-memory-model-v0-1, engineering-memory-model-v0-2
 questions: what-makes-engineering-knowledge-reusable, can-software-engineering-become-a-cumulative-discipline
 ---
 

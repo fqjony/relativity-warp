@@ -6,6 +6,7 @@ date: 2026-07-05
 summary: Engineering memory is the structured, reusable, and improvable record of how engineering knowledge is created, validated, preserved, generalized, and applied by humans, tools, and AI agents.
 labels: engineering-memory, operational-truth, ai-native-engineering
 questions: why-does-engineering-experience-not-compound
+series: engineering-memory
 ---
 
 # Engineering Memory Model
