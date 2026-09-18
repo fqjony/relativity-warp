@@ -608,7 +608,32 @@ const renderModelIndexList = (items) => {
     .join("\n");
 };
 
+const renderSingleModelRedirect = (item) => {
+  const safeTitle = escapeHtml(item.title);
+  const safeUrl = escapeHtml(item.url);
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0; url=${safeUrl}" />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="${escapeHtml(absoluteUrl(item.url))}" />
+    <title>Opening ${safeTitle} | ${siteName}</title>
+  </head>
+  <body>
+    <main>
+      <p>Opening <a href="${safeUrl}">${safeTitle}</a>.</p>
+    </main>
+  </body>
+</html>
+`;
+};
+
 const renderModelIndexPage = (items) => {
+  if (items.length === 1) return renderSingleModelRedirect(items[0]);
+
   const hasPublishedModels = items.some((item) => item.status === "published");
   const robotsMeta = hasPublishedModels ? "" : '    <meta name="robots" content="noindex, nofollow" />\n';
 
@@ -970,6 +995,7 @@ Sitemap: ${absoluteUrl("/sitemap.xml")}
 const writeSitemap = (items, models, researchObjects) => {
   const publishedItems = items.filter((item) => item.status === "published");
   const publishedModels = models.filter((item) => item.status === "published");
+  const currentModels = selectCurrentModels(models);
   const publishedResearchObjects = researchObjects.filter((item) => item.status !== "draft");
   const urls = [
     {
@@ -977,7 +1003,7 @@ const writeSitemap = (items, models, researchObjects) => {
       lastmod: publishedItems[0]?.date || formatLocalDate(new Date()),
       priority: "1.0",
     },
-    ...(publishedModels.length
+    ...(publishedModels.length && currentModels.length > 1
       ? [
           {
             loc: absoluteUrl("/models/"),
