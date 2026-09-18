@@ -61,6 +61,7 @@ This keeps the model grounded. The useful path is not from chat to memory. It is
 - [Session Start Is an Operational Boundary](/spectrum/2026-07-04-session-start-operational-boundary/)
 - [When Experience Becomes Automation](/spectrum/2026-07-04-when-experience-becomes-automation/)
 - [A Lesson Needs a Destination](/spectrum/2026-09-13-a-lesson-needs-a-destination/)
+- [Offline Work Begins at the Work Host](/spectrum/2026-09-18-changing-the-agent-without-losing-the-work/)
 
 ## First Classification Test
 
@@ -74,6 +75,16 @@ The model's first practical classification test is whether a candidate lesson ca
 
 This test also permits a valid negative result: some execution residue has no durable destination and should not be promoted.
 
+## Continuity at the Work Host
+
+An agent, model, or execution tool can change without losing the work only when the instructions, evidence, controls, and verification it needs are current at the work host.
+
+Daily work produces evidence. A capture preserves a candidate lesson. Verification and ownership turn the reusable part into engineering memory. The relevant sources then need to stay in step with the work host and environment where the next session will execute.
+
+The offline/online Codex session provides an initial test. A new session selected a different inference provider, while repository guidance, Git state, approval policy, and local checks remained available in the work environment. The local path had no web search or remote services and was selected only at session start.
+
+This suggests a second practical test for the model: restrict network access and ask whether the next actor can recover the safe, local part of the work from current owners. If that requires rebuilding the task from chat, copying rules into the replacement tool, or treating a trace as current fact, the memory has not yet become reusable structure.
+
 ## Next Revision
 
-The next revision should test the classification rule across existing notes without forcing every article into the same structure, and should identify when a lesson needs a new owner rather than a better route to an existing one.
+The next revision should test both the classification and continuity rules across existing notes without forcing every article into the same structure, and should identify when a lesson needs a new owner rather than a better route to an existing one.

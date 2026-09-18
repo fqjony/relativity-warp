@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline Work Begins at the Work Host | Relativity Warp</title>
+    <meta name="description" content="Offline agent work depends on engineering memory being current where work runs: repository guidance, local state, checks, and the limits that remain when remote services disappear." />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="canonical" href="https://fqjony.com/spectrum/2026-09-18-changing-the-agent-without-losing-the-work/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Relativity Warp" />
+    <meta property="og:title" content="Offline Work Begins at the Work Host" />
+    <meta property="og:description" content="Offline agent work depends on engineering memory being current where work runs: repository guidance, local state, checks, and the limits that remain when remote services disappear." />
+    <meta property="og:url" content="https://fqjony.com/spectrum/2026-09-18-changing-the-agent-without-losing-the-work/" />
+    <meta property="article:published_time" content="2026-09-18T15:10:00+03:00" />
+    <meta property="article:tag" content="engineering-memory" />
+    <meta property="article:tag" content="operational-truth" />
+    <meta property="article:tag" content="session-boundaries" />
+    <meta property="article:tag" content="repository-centric-engineering" />
+    <meta property="article:tag" content="ai-assisted-engineering" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Offline Work Begins at the Work Host" />
+    <meta name="twitter:description" content="Offline agent work depends on engineering memory being current where work runs: repository guidance, local state, checks, and the limits that remain when remote services disappear." />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G2LLCNLPPD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-G2LLCNLPPD");
+    </script>
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="nTxxW8yvpmpHWQp+zwBIhw" async></script>
+    <link rel="stylesheet" href="../../assets/index.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <span class="ua-flag" role="img" aria-label="Ukrainian flag"></span>
+          <a class="site-mark" href="../../index.html">Relativity Warp</a>
+          <a href="../../research/index.html">Research</a>
+          <a href="../../models/index.html">Models</a>
+        </nav>
+        <h1 class="article-title">Offline Work Begins at the Work Host</h1>
+        <div class="post-meta">
+          <span class="classification-badge">Research Note</span>
+          <span>2026-09-18 15:10</span>
+        </div>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+          <p>Engineering memory matters most when the usual shortcuts disappear. Wi-Fi may be unavailable, restricted, or prohibited by organizational policy. Web search, remote repositories, connectors, and current service state can disappear with it. A local model may still be available, but a model alone cannot continue engineering work responsibly.</p>
+<p>Earlier notes established that operational truth stays with its owner and that a new session must recover its boundary from current sources rather than carry the whole project in chat. Offline work adds an availability question: are the sources that govern the next safe step already present where the work will run?</p>
+<p>For offline work to remain useful, the agent needs current instructions, local repository state, its permission boundary, and checks it can run without reaching elsewhere. In other words, it needs engineering memory that is already present at the work host.</p>
+<p>Today&#39;s offline/online Codex CLI work made that concrete. A new session selects the remote provider when it can use it and a local provider when it cannot. The agent still begins from the same local sources: its instructions, repository guidance such as <code>AGENTS.md</code> and the README, the current Git state, the sandbox and approval boundary, and the checks that can verify a change.</p>
+<p>The path is simple. Daily work produces evidence. A capture preserves the part worth checking. Verification and ownership turn the reusable part into engineering memory. Keeping the relevant sources current at the work host and in its environment lets online and offline modes use that memory within their different capabilities.</p>
+<p>The provider changes capability. It does not need to take the working context with it. That is the practical promise of organized engineering memory.</p>
+<h2>How Memory Reaches the Place Where Work Runs</h2>
+<p>Engineering memory is often discussed as if it were a separate system that collects what happened. That view misses a simpler requirement. The useful part of memory has to be available at the place where the next piece of work will run.</p>
+<p>For a repository-based task, that local working set is ordinary engineering material:</p>
+<ul>
+<li>repository guidance and contribution rules</li>
+<li>the checked-out files, current branch, and Git history</li>
+<li>scripts, tests, and build output that can still be run locally</li>
+<li>local agent instructions and the approval or sandbox policy</li>
+</ul>
+<p>These sources stay in step with the work through the normal lifecycle. Documentation changes with the repository. Git records the current checkout. Scripts and tests exercise the code that is actually present. Local instructions and environment rules change where they are used. A new session can inspect that current working set instead of rehydrating a project from a copied conversation.</p>
+<p>This does not mean every source becomes local. A decision that exists only in a remote issue, a current production observation, or a web reference remains unavailable offline. That is a real limit and should be stated at session start. It is better to recognize the missing source than to fill the gap with an old summary.</p>
+<h2>A Bounded Offline Session</h2>
+<p>The <a href="/spectrum/2026-07-04-session-start-operational-boundary/">session-start boundary</a> still applies when the provider changes. The session recovers its operating context from local owners before it acts. The <a href="/spectrum/2026-09-02-session-traces-are-orientation-not-authority/">session-trace boundary</a> still applies too: an old trace can point toward a source, but cannot replace current local evidence.</p>
+<p>The offline session is deliberately smaller. Its local provider has different speed, reasoning capacity, and context limits. It cannot use web search, remote connectors, or a source that was never synchronized to the work host. The mode selector makes this visible at the start of a new session and keeps network access for agent commands disabled. An active session never silently changes provider.</p>
+<p>Within that boundary, the agent can inspect and edit local files, run local commands, use repository guidance, and validate changes with local checks. That is limited functionality, but it is useful functionality because the context is current enough to govern the work.</p>
+<h2>The Tooling Can Stay Small</h2>
+<p>A mode selector is enough to choose the provider. It does not need to duplicate the project&#39;s memory. The repository and work environment already carry the working context; the selector only has to identify which capabilities are available and start a new session with the appropriate boundary.</p>
+<p>A well-organized memory system lets other tools work the same way. A cloud agent, local agent, or human starts from the repository and the environment that owns the task. A session helper can recover the local boundary. A build or test can continue to distinguish verified work from a plausible edit. The tool changes; the sources that govern the work remain available and revisable.</p>
+<p>This is also why the <a href="/spectrum/2026-09-13-a-lesson-needs-a-destination/">route-by-ownership rule</a> matters. A lesson placed in a personal summary or a cloud-only store may be convenient while connected, yet absent exactly when the local work host needs it. The smallest durable owner should also be reachable by the work that depends on it.</p>
+<h2>A Locality Test for the Model</h2>
+<p>This session adds a test to the engineering-memory model. Disconnect the work host, or place it under a network restriction. Can a new local agent recover the part of the task that is safe to continue from current local owners?</p>
+<p>In this case, the answer was yes for repository work. The configuration, checkout, guidance, policy, and local checks remained. The boundary was explicit: a new session, a local provider, no web search, no remote services, and no silent cloud fallback. The result was not a complete replacement for connected engineering. It was a trustworthy local mode.</p>
+<p>The test will fail when essential evidence remains remote, stale, or unowned. That failure is valuable. It tells us which source needs a local representation, which work must wait for connectivity, and which summary should never have been treated as authority.</p>
+<p>Engineering memory makes this kind of system possible when it is organized, current, and present at the work host. <a href="/spectrum/2026-06-17-operational-truth-and-engineering-memory/">Operational truth</a> still belongs with sources that can be checked and changed. Offline mode simply shows which of those sources remain within reach.</p>
+
+        </div>
+      </main>
+      <section class="research-context" aria-labelledby="research-context-title">
+        <h2 id="research-context-title" class="section-title">Research context</h2>
+        <div class="research-context-direct"><div class="research-context-group">
+          <h3>Model connection</h3>
+          <ul class="model-link-list" role="list">
+            <li>
+              <a href="/models/engineering-memory-model-v0-1/">Engineering Memory Model</a>
+              <span>v0.1</span>
+            </li>
+          </ul>
+        </div></div>
+<div class="research-context-reading">
+          <h3>Continue reading</h3>
+          <ul class="related-list" role="list">
+            <li>
+              <div>
+                <a href="/spectrum/2026-09-02-session-traces-are-orientation-not-authority/">Session Traces Are Orientation, Not Authority</a>
+                <p>Shared thread: engineering-memory, operational-truth</p>
+              </div>
+              <span>2026-09-02</span>
+            </li>
+            <li>
+              <div>
+                <a href="/spectrum/2026-09-13-a-lesson-needs-a-destination/">A Lesson Needs a Destination</a>
+                <p>Shared thread: engineering-memory, operational-truth</p>
+              </div>
+              <span>2026-09-13</span>
+            </li>
+            <li>
+              <div>
+                <a href="/spectrum/2026-07-04-when-experience-becomes-automation/">When Experience Becomes Automation</a>
+                <p>Shared thread: engineering-memory, session-boundaries</p>
+              </div>
+              <span>2026-07-04</span>
+            </li>
+          </ul>
+        </div>
+<details class="research-context-system">
+          <summary>
+            <span>Explore the wider research system</span>
+            <span>4 nearby connections</span>
+          </summary>
+          <p>These topic connections help with exploration. They are not direct evidence from this note.</p>
+          <ul class="model-link-list" role="list">
+            <li>
+              <a href="/research/engineering-memory/">Engineering Memory</a>
+              <span>Concept</span>
+            </li>
+            <li>
+              <a href="/research/repository-centric-engineering/">Repository-Centric Engineering</a>
+              <span>Concept</span>
+            </li>
+            <li>
+              <a href="/research/operational-truth/">Operational Truth</a>
+              <span>Concept</span>
+            </li>
+            <li>
+              <a href="/research/software-organizations-preserve-artifacts-better-than-reusable-understanding/">Software organizations preserve artifacts better than reusable understanding</a>
+              <span>Hypothesis</span>
+            </li>
+          </ul>
+        </details>
+      </section>
+      <section class="article-questions" aria-labelledby="article-questions-title">
+        <h2 id="article-questions-title" class="section-title">Questions</h2>
+        <ul class="model-link-list" role="list">
+          <li><span>what-makes-engineering-knowledge-reusable</span></li>
+          <li><span>can-software-engineering-become-a-cumulative-discipline</span></li>
+        </ul>
+      </section>
+      <nav class="article-nav" aria-label="Article navigation">
+        <a class="article-nav-link" href="/spectrum/2026-09-13-a-lesson-needs-a-destination/">
+          <span>Older</span>
+          <strong>A Lesson Needs a Destination</strong>
+        </a>
+      </nav>
+      <footer class="footer">
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/">Relativity Warp</a>
+          <a href="/research/">Research</a>
+          <a href="/models/">Models</a>
+          <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
+          <a href="https://udx.dev" target="_blank" rel="noopener">UDX Dev</a>
+          <a href="https://rabbit.ci" target="_blank" rel="noopener">Rabbit CI</a>
+        </nav>
+        <p>© 2026 Dmytro Smirnov · Engineering experience framed into reusable knowledge models.</p>
+      </footer>
+    </div>
+  </body>
+</html>
