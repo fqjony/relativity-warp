@@ -114,7 +114,7 @@ Model frontmatter:
 
 Draft model pages are rendered for preview but receive `noindex, nofollow` metadata. Published model pages are added to `docs/sitemap.xml`.
 
-Models that share a `series` identifier render a version history on every version page. The `/models/` index shows the newest published version in each series; if a series has no published version, it shows its newest draft for local preview. Keep each version's source stable so readers can move between the versions and read the revision in its original context.
+Models that share a `series` identifier render a version history on every version page. When one current series exists, `/models/` opens its newest published version; with more than one series, it shows the newest published version from each. If a series has no published version, local preview uses its newest draft. Keep each version's source stable so readers can move between the versions and read the revision in its original context.
 
 ### Model evolution
 
