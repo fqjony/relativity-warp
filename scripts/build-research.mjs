@@ -10,6 +10,7 @@ const docsDir = path.join(rootDir, "src", "docs");
 const modelsDir = path.join(rootDir, "src", "models");
 const researchDir = path.join(rootDir, "src", "research");
 const homepagePath = path.join(rootDir, "src", "templates", "index.html");
+const aboutPath = path.join(rootDir, "src", "pages", "about.md");
 const publishDir = path.join(rootDir, "docs");
 const publicSpectrumDir = path.join(publishDir, "spectrum");
 const publicModelsDir = path.join(publishDir, "models");
@@ -134,11 +135,12 @@ const getDescription = (body, meta) => {
   return paragraph ? cleanText(paragraph) : "";
 };
 
-const renderSiteNav = (homeHref = "/", modelsHref = "/models/", researchHref = "/research/") => `<nav class="site-nav" aria-label="Main navigation">
+const renderSiteNav = (homeHref = "/", modelsHref = "/models/", researchHref = "/research/", activePath = "") => `<nav class="site-nav" aria-label="Main navigation">
           <span class="ua-flag" role="img" aria-label="Ukrainian flag"></span>
           <a class="site-mark" href="${homeHref}">${siteName}</a>
           <a href="${researchHref}">Research</a>
           <a href="${modelsHref}">Models</a>
+          <a href="/about/"${activePath === "/about/" ? ' aria-current="page"' : ""}>About me</a>
         </nav>`;
 
 const renderFooter = (modelsHref = "/models/") => `<footer class="footer">
@@ -146,6 +148,7 @@ const renderFooter = (modelsHref = "/models/") => `<footer class="footer">
           <a href="/">${siteName}</a>
           <a href="/research/">Research</a>
           <a href="${modelsHref}">Models</a>
+          <a href="/about/">About me</a>
           <a href="https://github.com/fqjony" target="_blank" rel="noopener">GitHub</a>
           <a href="https://linkedin.com/in/fqjony" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://udx.io" target="_blank" rel="noopener">UDX</a>
@@ -963,6 +966,76 @@ ${renderAnalyticsScripts()}
 `;
 };
 
+const writeAboutPage = (models) => {
+  const { body, meta } = parseFrontmatter(fs.readFileSync(aboutPath, "utf8"));
+  for (const field of ["title", "description", "intro"]) {
+    if (!meta[field]) throw new Error(`About page is missing ${field}.`);
+  }
+  const title = escapeHtml(meta.title);
+  const seoTitle = escapeHtml(meta.seo_title || `About ${meta.title}`);
+  const description = escapeHtml(meta.description);
+  const url = absoluteUrl("/about/");
+  const structuredData = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": url,
+    url,
+    name: meta.seo_title || `About ${meta.title}`,
+    mainEntity: {
+      "@type": "Person",
+      "@id": absoluteUrl("/#person"),
+      name: meta.title,
+      alternateName: "fqjony",
+      url,
+      sameAs: ["https://github.com/fqjony", "https://www.linkedin.com/in/fqjony/"],
+    },
+  }).replaceAll("<", "\\u003c");
+  const modelsHref = getModelsNavigationHref(models);
+  const outputDir = path.join(publishDir, "about");
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(path.join(outputDir, "index.html"), `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${seoTitle} | ${siteName}</title>
+    <meta name="description" content="${description}" />
+    <meta name="author" content="${title}" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0e0f12" />
+    <link rel="canonical" href="${url}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="${siteName}" />
+    <meta property="og:title" content="${seoTitle}" />
+    <meta property="og:description" content="${description}" />
+    <meta property="og:url" content="${url}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${seoTitle}" />
+    <meta name="twitter:description" content="${description}" />
+    <script type="application/ld+json">${structuredData}</script>
+${renderAnalyticsScripts()}
+    <link rel="stylesheet" href="../assets/index.css" />
+  </head>
+  <body class="about-page">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+      <header class="site-header article-header">
+        ${renderSiteNav("/", modelsHref, "/research/", "/about/")}
+        <h1 class="article-title">${title}</h1>
+        <p class="about-intro">${escapeHtml(meta.intro)}</p>
+      </header>
+      <main id="content" class="article">
+        <div class="article-content">
+${marked.parse(body)}
+        </div>
+      </main>
+      ${renderFooter(modelsHref)}
+    </div>
+  </body>
+</html>
+`, "utf8");
+};
+
 const updateHomepage = (items, models) => {
   const raw = fs.readFileSync(homepagePath, "utf8");
   const start = raw.indexOf(markerStart);
@@ -1016,6 +1089,10 @@ const writeSitemap = (items, models, researchObjects) => {
       lastmod: publishedItems[0]?.date || formatLocalDate(new Date()),
       priority: "1.0",
     },
+    {
+      loc: absoluteUrl("/about/"),
+      priority: "0.5",
+    },
     ...(publishedModels.length && currentModels.length > 1
       ? [
           {
@@ -1055,8 +1132,7 @@ const writeSitemap = (items, models, researchObjects) => {
     .map(
       (item) => `  <url>
     <loc>${escapeXml(item.loc)}</loc>
-    <lastmod>${escapeXml(item.lastmod)}</lastmod>
-    <priority>${item.priority}</priority>
+${item.lastmod ? `    <lastmod>${escapeXml(item.lastmod)}</lastmod>\n` : ""}    <priority>${item.priority}</priority>
   </url>`
     )
     .join("\n");
@@ -1404,6 +1480,7 @@ const buildSite = () => {
   writePostPages(items, models, researchObjects);
 
   updateHomepage(items, models);
+  writeAboutPage(models);
   writeSitemap(items, models, researchObjects);
   writeRobotsTxt();
   fs.rmSync(path.join(publishDir, "assets"), { recursive: true, force: true });

@@ -376,6 +376,41 @@ a:hover {
   line-height: 1.25;
 }
 
+.about-page .site-header {
+  border-bottom-color: var(--line-warm);
+}
+
+.about-intro {
+  max-width: 48ch;
+  margin: 1.25rem 0 0;
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  line-height: 1.5;
+}
+
+.about-page .article-content h2 {
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.about-page .article-content h2:first-child {
+  margin-top: 0;
+}
+
+.about-page .article-content a {
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.about-page .footer {
+  margin-top: 2.75rem;
+}
+
 .article-content p,
 .article-content ul,
 .article-content ol,
@@ -710,6 +745,12 @@ a:hover {
 .footer p {
   margin: 0;
   opacity: 0.82;
+}
+
+@media (max-width: 480px) {
+  .site-nav .site-mark {
+    flex-basis: calc(100% - 2.1rem);
+  }
 }
 
 @media (max-width: 640px) {

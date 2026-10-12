@@ -14,10 +14,23 @@ npm run preview
 ## Scripts
 
 - `npm run build` - build markdown posts and models into `docs/`.
+- `npm run check` - build, test the published output, and audit dependencies.
+- `npm test` - verify the built About page, discovery metadata, and shared navigation (run the build first).
 - `npm run post:new -- "Post title"` - create a dated draft markdown post in `src/docs/`.
 - `npm run preview` - serve `docs/` locally.
 - `npm run hooks:install` - enable repo git hooks (`.githooks/`).
 - `npm run hooks:uninstall` - disable repo git hooks for this clone.
+
+## About page
+
+The public introduction lives in `src/pages/about.md` and renders at `/about/`.
+Edit that source, then run `npm run check` and `npm run preview`. The build adds
+the page to shared navigation and the sitemap; commit the source and generated
+`docs/` output together. Publish through the pull-request and local-review
+workflow below, never by editing `docs/about/index.html` directly.
+
+The preview server stays on `serve` 14. Its `compression` dependency is overridden
+to the patched 1.8.2 range until `serve` updates its pinned dependency.
 
 ## Research note workflow
 
