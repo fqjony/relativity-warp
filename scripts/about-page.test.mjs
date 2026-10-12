@@ -22,6 +22,7 @@ test("About renders its maintained Markdown source without article metadata", ()
   const body = source.slice(source.indexOf("\n---", 3) + 4).trimStart();
   assert.ok(html.includes(marked.parse(body)), "Markdown body must reach the public page");
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
+  assert.match(html, /<h1 class="article-title">Dmytro Smirnov \(fqjony\)<\/h1>/);
   assert.match(html, /<main id="content"/);
   assert.match(html, /href="#content">Skip to content/);
   assert.match(html, /class="about-intro">[^<]+<\/p>/);
