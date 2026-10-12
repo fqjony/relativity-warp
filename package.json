@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-research.mjs",
-    "check": "npm run build && npm audit --audit-level=moderate",
+    "check": "npm run build && npm test && npm audit --audit-level=moderate",
+    "test": "node --test",
     "post:new": "node scripts/new-post.mjs",
     "preview": "serve docs",
     "hooks:install": "git config core.hooksPath .githooks",
@@ -13,5 +14,10 @@
   "devDependencies": {
     "marked": "^12.0.2",
     "serve": "^14.2.6"
+  },
+  "overrides": {
+    "serve": {
+      "compression": "^1.8.2"
+    }
   }
 }
