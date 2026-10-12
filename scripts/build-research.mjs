@@ -979,6 +979,7 @@ const writeAboutPage = (models) => {
     if (!meta[field]) throw new Error(`About page is missing ${field}.`);
   }
   const title = escapeHtml(meta.title);
+  const displayTitle = escapeHtml(meta.display_title || meta.title);
   const seoTitle = escapeHtml(meta.seo_title || `About ${meta.title}`);
   const description = escapeHtml(meta.description);
   const url = absoluteUrl("/about/");
@@ -1028,7 +1029,7 @@ ${renderAnalyticsScripts()}
     <div class="container">
       <header class="site-header article-header">
         ${renderSiteNav("/", modelsHref, "/research/", "/about/")}
-        <h1 class="article-title">${title}</h1>
+        <h1 class="article-title">${displayTitle}</h1>
         <p class="about-intro">${escapeHtml(meta.intro)}</p>
       </header>
       <main id="content" class="article">
