@@ -12,6 +12,12 @@ const source = fs.readFileSync(path.join(root, "src/pages/about.md"), "utf8");
 const html = fs.readFileSync(path.join(publishDir, "about/index.html"), "utf8");
 const canonical = "https://fqjony.com/about/";
 
+test("About section titles inherit the shared notes styling", () => {
+  const css = fs.readFileSync(path.join(root, "src/assets/index.css"), "utf8");
+  assert.match(html, /class="article-content"/);
+  assert.doesNotMatch(css, /\.about-page\s+\.article-content\s+h[23]\b/);
+});
+
 test("About renders its maintained Markdown source without article metadata", () => {
   const body = source.slice(source.indexOf("\n---", 3) + 4).trimStart();
   assert.ok(html.includes(marked.parse(body)), "Markdown body must reach the public page");
