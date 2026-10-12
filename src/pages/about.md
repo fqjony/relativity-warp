@@ -23,6 +23,8 @@ Automation means understanding something well enough to make it repeatable while
 
 ## Why Relativity Warp
 
+The name is a nod to [Einstein’s work on relativity](https://www.einstein-online.info/en/spotlights/): frames of reference and the curvature of spacetime. It made me think about engineering differently—how the way I understand a system shapes the way I build it, and how changing perspective can reveal another path through the same problem. Here, “warp” is a metaphor for that shift in thinking.
+
 Useful understanding often disappears between tasks, tools, and sessions. A problem gets solved, but the reasoning stays in a conversation, a temporary file, or someone’s head.
 
 This site is where I turn that experience into questions, concepts, models, and dated notes. The [Engineering Memory Model](/models/) explores how a lesson remains checkable, revisable, and useful in later work. [A Lesson Needs a Destination](/spectrum/2026-09-13-a-lesson-needs-a-destination/) asks where that understanding can live and be maintained.
