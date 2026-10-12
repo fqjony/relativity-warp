@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import { marked } from "marked";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +27,12 @@ const markerEnd = "<!-- RESEARCH:END -->";
 const navMarker = "<!-- SITE_NAV -->";
 const footerMarker = "<!-- SITE_FOOTER -->";
 const currentModelHrefMarker = "<!-- CURRENT_MODEL_HREF -->";
+const stylesheetHrefMarker = "<!-- STYLESHEET_HREF -->";
+const stylesheetVersion = createHash("sha256")
+  .update(fs.readFileSync(path.join(rootDir, "src", "assets", "index.css")))
+  .digest("hex")
+  .slice(0, 12);
+const versionStylesheet = (href) => `${href}?v=${stylesheetVersion}`;
 
 const cleanText = (value) =>
   value
@@ -536,7 +543,7 @@ ${articleTags}
     <meta name="twitter:title" content="${safeSeoTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
 ${renderAnalyticsScripts()}
-    <link rel="stylesheet" href="${cssHref}" />
+    <link rel="stylesheet" href="${versionStylesheet(cssHref)}" />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -652,7 +659,7 @@ const renderModelIndexPage = (items) => {
     <meta name="theme-color" content="#0b1220" />
 ${robotsMeta}    <link rel="canonical" href="${absoluteUrl("/models/")}" />
 ${renderAhrefsScript()}
-    <link rel="stylesheet" href="../assets/index.css" />
+    <link rel="stylesheet" href="${versionStylesheet("../assets/index.css")}" />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -790,7 +797,7 @@ ${modelTags}
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
 ${renderAnalyticsScripts()}
-    <link rel="stylesheet" href="${cssHref}" />
+    <link rel="stylesheet" href="${versionStylesheet(cssHref)}" />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -882,7 +889,7 @@ const renderResearchIndexPage = (items, modelsHref = "../models/") => `<!doctype
     <meta name="theme-color" content="#0b1220" />
     <link rel="canonical" href="${absoluteUrl("/research/")}" />
 ${renderAhrefsScript()}
-    <link rel="stylesheet" href="../assets/index.css" />
+    <link rel="stylesheet" href="${versionStylesheet("../assets/index.css")}" />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -941,7 +948,7 @@ const renderResearchObjectPage = ({ item, content, cssHref, homeHref, modelsHref
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDescription}" />
 ${renderAnalyticsScripts()}
-    <link rel="stylesheet" href="${cssHref}" />
+    <link rel="stylesheet" href="${versionStylesheet(cssHref)}" />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -1014,7 +1021,7 @@ const writeAboutPage = (models) => {
     <meta name="twitter:description" content="${description}" />
     <script type="application/ld+json">${structuredData}</script>
 ${renderAnalyticsScripts()}
-    <link rel="stylesheet" href="../assets/index.css" />
+    <link rel="stylesheet" href="${versionStylesheet("../assets/index.css")}" />
   </head>
   <body class="about-page">
     <a class="skip-link" href="#content">Skip to content</a>
@@ -1052,12 +1059,16 @@ const updateHomepage = (items, models) => {
   if (!raw.includes(currentModelHrefMarker)) {
     throw new Error("Homepage current model marker not found.");
   }
+  if (!raw.includes(stylesheetHrefMarker)) {
+    throw new Error("Homepage stylesheet marker not found.");
+  }
 
   const withPosts = `${raw.slice(0, start + markerStart.length)}
 ${renderPostList(items)}
 ${raw.slice(end)}`;
   const modelsHref = getModelsNavigationHref(models);
   const updated = withPosts
+    .replace(stylesheetHrefMarker, versionStylesheet("assets/index.css"))
     .replaceAll(currentModelHrefMarker, modelsHref)
     .replace(navMarker, renderSiteNav("/", modelsHref, "/research/"))
     .replace(footerMarker, renderFooter(modelsHref));

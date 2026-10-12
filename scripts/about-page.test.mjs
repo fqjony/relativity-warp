@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { createHash } from "node:crypto";
 import { marked } from "marked";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -44,6 +45,22 @@ const htmlFiles = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap(
   const fullPath = path.join(dir, entry.name);
   if (entry.isDirectory()) return htmlFiles(fullPath);
   return entry.name.endsWith(".html") ? [fullPath] : [];
+});
+
+test("Rendered pages use the stylesheet content version to avoid stale styles", () => {
+  const version = createHash("sha256")
+    .update(fs.readFileSync(path.join(root, "src/assets/index.css")))
+    .digest("hex")
+    .slice(0, 12);
+  let checked = 0;
+  for (const file of htmlFiles(publishDir)) {
+    const page = fs.readFileSync(file, "utf8");
+    for (const [, href] of page.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)) {
+      assert.equal(new URL(href, canonical).searchParams.get("v"), version, path.relative(root, file));
+      checked += 1;
+    }
+  }
+  assert.ok(checked > 2);
 });
 
 test("All shared navigation and footer instances expose About", () => {

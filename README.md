@@ -344,6 +344,7 @@ The build script in `scripts/build-research.mjs` is the source of truth for gene
 Generated discovery behavior:
 
 - The homepage metadata lives in `src/templates/index.html`.
+- Stylesheet URLs include a content hash so a deployment with new CSS does not reuse a browser's older stylesheet. The hash is derived from `src/assets/index.css` during the build.
 - Article `<title>`, description, canonical URL, Open Graph, Twitter card, published time, and article tags are generated from each post's frontmatter.
 - `seo_title` and `seo_description` can make metadata more searchable while leaving the visible article title and listing description calm and research-oriented.
 - `labels` drive both visible post metadata and the generated "Related" links on article pages. Prefer improving the existing label taxonomy before adding a new navigation system.
