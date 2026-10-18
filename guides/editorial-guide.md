@@ -141,7 +141,7 @@ Current limitations:
 - Frontmatter is flat `key: value`; do not use YAML arrays.
 - `models` and `questions` are comma-separated slugs.
 - Questions do not have pages yet.
-- Model version relationships are not represented yet.
+- Models with the same `series` render a shared version history; see [Model workflow](../README.md#model-workflow).
 
 ## New Note Checklist
 
