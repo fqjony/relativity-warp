@@ -13,7 +13,7 @@ series: engineering-memory
 
 ## Status
 
-Draft model, version 0.2. Version 0.1 explains how an observation becomes a reusable lesson. This revision adds the conditions that let the lesson remain useful across session, tool, provider, and work-environment changes.
+Published model, version 0.2. Version 0.1 explains how an observation becomes a reusable lesson. This revision adds the conditions that let the lesson remain useful across session, tool, provider, and work-environment changes.
 
 ## What Changed
 
