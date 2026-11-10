@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "marked": "^18.1.0",
-    "serve": "^14.2.6"
+    "serve": "^14.2.7"
   },
   "overrides": {
     "serve": {
